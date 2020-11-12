@@ -14,7 +14,7 @@ import java.sql.SQLException;
  */
 
 
-public class ConnectionPostgreSQL{
+public class ConnectionMySQL{
 
     /**
      * URL de connexion

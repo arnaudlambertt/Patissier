@@ -58,10 +58,10 @@ public class ProjetJava extends Application {
         //scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         
         BackgroundImage myBI= new BackgroundImage(new javafx.scene.image.Image("http://93.3.238.99/index.jpg"),
-BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-BackgroundSize.DEFAULT);
-//then you set to your node
-root.setBackground(new Background(myBI));
+        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundSize.DEFAULT);
+        //then you set to your node
+        root.setBackground(new Background(myBI));
         //then you set to your node
         root.setBackground(new Background(myBI));
         
@@ -76,7 +76,7 @@ root.setBackground(new Background(myBI));
     public static void main(String[] args) {
         DBBConnexion();
         
-        Utilisateur test = new Utilisateur(1, null, null, "benji@test.com", "c'estuntest", "Utilisateur");
+        Utilisateur test = new Utilisateur("benji@test2.com", "c'estuntest");
         UtilisateurDAO DAO = new UtilisateurDAO();
         DAO.create(test);
         

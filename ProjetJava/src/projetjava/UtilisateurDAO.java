@@ -37,15 +37,29 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                                                         "INSERT INTO utilisateurs (id, nom, prenom, email, mot_de_passe, role)"+
                                                         "VALUES(?, ?, ?, ?, ?, ?)"
                                                     );
-                prepare.setNull(1, 92);
-                prepare.setNull(2, 92);
-                prepare.setNull(3, 92);
+                if(obj.getId()==-1)
+                {
+                    prepare.setNull(1, 92);
+                }else prepare.setInt(1, obj.getId());
+                
+                if(obj.getNom().isEmpty())
+                {
+                    prepare.setNull(2, 92);
+                }else prepare.setString(2, obj.getNom());
+                
+                if(obj.getPrenom().isEmpty())
+                {
+                    prepare.setNull(3, 92);
+                }else prepare.setString(3, obj.getPrenom());
+                
+                String motDePasse = obj.getMotDePasse();
+                String email = obj.getEmail();
                 prepare.setString(4, obj.getEmail());
-                prepare.setString(5, obj.getMotDePasse());
+                prepare.setString(5, motDePasse);
                 prepare.setString(6, obj.getRole());
                 
                 prepare.executeUpdate();
-                //obj = this.find(id);    
+                obj = this.find(email, motDePasse);    
                 
             //}
         } catch (SQLException e) {
@@ -54,7 +68,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         return obj;
     }
     
-    public Utilisateur find(int id) {
+    public Utilisateur find(String email, String motDePasse) {
         
         Utilisateur dev = new Utilisateur();
         try {
@@ -63,15 +77,15 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                                         ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                         ResultSet.CONCUR_READ_ONLY
                                      ).executeQuery(
-                                        "SELECT * FROM utilisateurs WHERE id = " + id
+                                        "SELECT * FROM utilisateurs WHERE email = " + email + " AND mot_de_passe = " + motDePasse
                                      );
             if(result.first())
                     dev = new Utilisateur(
-                                            id, 
+                                            result.getInt("id"), 
                                             result.getString("nom"), 
                                             result.getString("prenom"), 
-                                            result.getString("email"), 
-                                            result.getString("mot_de_passe"), 
+                                            email, 
+                                            motDePasse, 
                                             result.getString("role")
                                         );
             
@@ -98,7 +112,7 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                     " WHERE id = " + obj.getId()
                  );
 
-            obj = this.find(obj.getId());
+            obj = this.find(obj.getEmail(),obj.getMotDePasse());
         } catch (SQLException e) {
                 e.printStackTrace();
         }

@@ -10,18 +10,18 @@ package projetjava;
  * @author Benjamin
  */
 import java.sql.Connection;
-//import com.developpez.jdbc.ConnectionPostgreSQL;
+//import com.developpez.jdbc.ConnectionMySQL;
 
 public abstract class DAO<T> {
 
-    public Connection connect = ConnectionPostgreSQL.getInstance();
+    public Connection connect = ConnectionMySQL.getInstance();
     
     /**
      * Permet de récupérer un objet via son ID
      * @param id
      * @return
      */
-    public abstract T find(int id);
+    public abstract T find(String email, String motDePasse);
     
     /**
      * Permet de créer une entrée dans la base de données
