@@ -23,31 +23,31 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
             
             //Vu que nous sommes sous postgres, nous allons chercher manuellement
             //la prochaine valeur de la séquence correspondant à l'id de notre table
-            ResultSet result = this    .connect
+           /* ResultSet result = this    .connect
                                     .createStatement(
                                             ResultSet.TYPE_SCROLL_INSENSITIVE, 
                                             ResultSet.CONCUR_UPDATABLE
                                     ).executeQuery(
-                                            "SELECT NEXTVAL('id') as id"
-                                    );
-            if(result.first()){
-                int id = result.getInt("id");
+                                            "SELECT NEXTVAL(utilisateurs_id) as id"
+                                    );*/
+            //if(result.first()){
+                //int id = result.getInt("id");
                 PreparedStatement prepare = this    .connect
                                                     .prepareStatement(
                                                         "INSERT INTO utilisateurs (id, nom, prenom, email, mot_de_passe, role)"+
                                                         "VALUES(?, ?, ?, ?, ?, ?)"
                                                     );
-                prepare.setInt(1, id);
-                prepare.setString(2, obj.getNom());
-                prepare.setString(3, obj.getPrenom());
+                prepare.setNull(1, 92);
+                prepare.setNull(2, 92);
+                prepare.setNull(3, 92);
                 prepare.setString(4, obj.getEmail());
                 prepare.setString(5, obj.getMotDePasse());
                 prepare.setString(6, obj.getRole());
                 
                 prepare.executeUpdate();
-                obj = this.find(id);    
+                //obj = this.find(id);    
                 
-            }
+            //}
         } catch (SQLException e) {
                 e.printStackTrace();
         }

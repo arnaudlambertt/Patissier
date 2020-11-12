@@ -76,6 +76,10 @@ root.setBackground(new Background(myBI));
     public static void main(String[] args) {
         DBBConnexion();
         
+        Utilisateur test = new Utilisateur(1, null, null, "benji@test.com", "c'estuntest", "Utilisateur");
+        UtilisateurDAO DAO = new UtilisateurDAO();
+        DAO.create(test);
+        
         launch(args);
         
        
@@ -87,7 +91,7 @@ root.setBackground(new Background(myBI));
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            Connection con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             System.out.println("SUCESS");
             con.close();
         }
@@ -106,12 +110,12 @@ root.setBackground(new Background(myBI));
     {
         Connection con;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM medecin");
+            ResultSet res = stmt.executeQuery("SELECT * FROM utilisateurs");
             while (res.next()) 
             {
-                String name = res.getString("Nom");
+                String name = res.getString("nom");
                 System.out.println(name);
             }
             con.close();
@@ -124,12 +128,12 @@ root.setBackground(new Background(myBI));
     {
         Connection con;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM medecin");
+            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM utilisateurs");
             while (res.next()) 
             {
-                String name = res.getString("Prenom");
+                String name = res.getString("prenom");
                 System.out.println(name);
                 
                 

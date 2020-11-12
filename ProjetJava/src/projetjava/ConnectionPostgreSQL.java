@@ -19,7 +19,7 @@ public class ConnectionPostgreSQL{
     /**
      * URL de connexion
      */
-    private static final String url = "jdbc:mysql://93.3.238.99:3307/MED&MOI";
+    private static final String url = "jdbc:mysql://93.3.238.99:3307/patissier";
     /**
      * Nom du user
      */
