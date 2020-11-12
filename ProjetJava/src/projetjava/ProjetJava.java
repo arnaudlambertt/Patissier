@@ -6,6 +6,9 @@
 package projetjava;
 
 import java.awt.Image;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +27,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import java.lang.Object;
+import org.bouncycastle.util.encoders.Hex;
 
 /**
  *
@@ -76,9 +81,17 @@ public class ProjetJava extends Application {
     public static void main(String[] args) {
         DBBConnexion();
         
-        Utilisateur test = new Utilisateur("benji@test2.com", "c'estuntest");
+         
+        Utilisateur test = new Utilisateur("benji@test3.com");
         UtilisateurDAO DAO = new UtilisateurDAO();
-        DAO.create(test);
+        System.out.println(test.toString());
+        test=DAO.create(test,"Truc");
+        System.out.println(test.toString());
+        test.setNom("Arnaud");
+        test.setPrenom("Mathias");
+        test = DAO.update(test);
+        
+        System.out.println(test.toString());
         
         launch(args);
         

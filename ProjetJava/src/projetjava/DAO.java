@@ -12,7 +12,7 @@ package projetjava;
 import java.sql.Connection;
 //import com.developpez.jdbc.ConnectionMySQL;
 
-public abstract class DAO<T> {
+public abstract class DAO<T,E> {
 
     public Connection connect = ConnectionMySQL.getInstance();
     
@@ -21,14 +21,14 @@ public abstract class DAO<T> {
      * @param id
      * @return
      */
-    public abstract T find(String email, String motDePasse);
+    public abstract T find(int id);
     
     /**
      * Permet de créer une entrée dans la base de données
      * par rapport à un objet
-     * @param obj
+     * @param obj, element
      */
-    public abstract T create(T obj);
+    public abstract T create(T obj, E element);
     
     /**
      * Permet de mettre à jour les données d'une entrée dans la base 
