@@ -6,6 +6,9 @@
 package projetjava;
 
 import java.awt.Image;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,6 +27,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import java.lang.Object;
+import org.bouncycastle.util.encoders.Hex;
 
 /**
  *
@@ -58,10 +63,10 @@ public class ProjetJava extends Application {
         //scene.getStylesheets().addAll(this.getClass().getResource("style.css").toExternalForm());
         
         BackgroundImage myBI= new BackgroundImage(new javafx.scene.image.Image("http://93.3.238.99/index.jpg"),
-BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-BackgroundSize.DEFAULT);
-//then you set to your node
-root.setBackground(new Background(myBI));
+        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+        BackgroundSize.DEFAULT);
+        //then you set to your node
+        root.setBackground(new Background(myBI));
         //then you set to your node
         root.setBackground(new Background(myBI));
         
@@ -76,6 +81,18 @@ root.setBackground(new Background(myBI));
     public static void main(String[] args) {
         DBBConnexion();
         
+         
+        Utilisateur test = new Utilisateur("benji@test3.com");
+        UtilisateurDAO DAO = new UtilisateurDAO();
+        System.out.println(test.toString());
+        test=DAO.create(test,"Truc");
+        System.out.println(test.toString());
+        test.setNom("Arnaud");
+        test.setPrenom("Mathias");
+        test = DAO.update(test);
+        
+        System.out.println(test.toString());
+        
         launch(args);
         
        
@@ -87,7 +104,7 @@ root.setBackground(new Background(myBI));
     {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            Connection con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             System.out.println("SUCESS");
             con.close();
         }
@@ -106,12 +123,12 @@ root.setBackground(new Background(myBI));
     {
         Connection con;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM medecin");
+            ResultSet res = stmt.executeQuery("SELECT * FROM utilisateurs");
             while (res.next()) 
             {
-                String name = res.getString("Nom");
+                String name = res.getString("nom");
                 System.out.println(name);
             }
             con.close();
@@ -124,12 +141,12 @@ root.setBackground(new Background(myBI));
     {
         Connection con;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/MED&MOI","PROJET","Azertyu12!");
+            con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM medecin");
+            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM utilisateurs");
             while (res.next()) 
             {
-                String name = res.getString("Prenom");
+                String name = res.getString("prenom");
                 System.out.println(name);
                 
                 
