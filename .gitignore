@@ -1,9 +1,10 @@
 
-ProjetJava/build/built-jar.properties
-ProjetJava/build/classes/projetjava/Produit.class
+ProjetJava/build/
+ProjetJava/dist/
 *.class
-*.html
 *.jnlp
 *.jar
-ProjetJava/build/built-jar.properties
-*.jnlp
+*.png
+*.gif
+*.html
+*.properties
