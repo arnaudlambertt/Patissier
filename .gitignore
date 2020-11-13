@@ -5,3 +5,5 @@ ProjetJava/build/classes/projetjava/Produit.class
 *.html
 *.jnlp
 *.jar
+ProjetJava/build/built-jar.properties
+*.jnlp

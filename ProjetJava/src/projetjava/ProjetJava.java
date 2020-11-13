@@ -5,10 +5,11 @@
  */
 package projetjava;
 
-import java.awt.Image;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import projetjava.produit.*;
+import projetjava.utilisateur.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -27,8 +28,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-import java.lang.Object;
-import org.bouncycastle.util.encoders.Hex;
 
 /**
  *
@@ -81,9 +80,9 @@ public class ProjetJava extends Application {
     public static void main(String[] args) {
         DBBConnexion();
         
-         
+         UtilisateurDAO DAO = new UtilisateurDAO();
         /*Utilisateur test = new Utilisateur("benji@test4.com");
-        UtilisateurDAO DAO = new UtilisateurDAO();
+        
         System.out.println(test.toString());
         test=DAO.create(test,"Truc");
         System.out.println(test.toString());
@@ -94,37 +93,28 @@ public class ProjetJava extends Application {
         System.out.println(test.toString());
         */
         
-        launch(args);
+        //launch(args);
+        
+        
+        String motDePasse = "12345";
+        String email = "arnaud.lambert@outlook.com";
+
+        
+        
+        Utilisateur test2 = DAO.connexionUtilisateur(email, motDePasse);
+        System.out.println("\n\nTEST 2");
+        System.out.println(test2.toString());
         
         /*
-        MessageDigest digest;
-        String messageEncode ="ERREUR";
-        String motDePasse = "Truc";
-        String email = "benji@test5.com";
-
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(motDePasse.getBytes((StandardCharsets.UTF_8)));
-            messageEncode = new String (Hex.encode(hash));
-            
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ProjetJava.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        Utilisateur test2 = DAO.connexionUtilisateur(email, messageEncode);
-        System.out.println("\n\nTEST 2");
-            System.out.println(test2.toString());
-        */
-        
-        Produit nextProduit = new Produit(1,"shuriken", "arme", "Mathias", 100, 1000, 20, 1500, 0.05f, true, "http://patissier.com/arme/Mathias/shuriken");
+        Produit nextProduit = new Produit("shuriken2", "arme", "Mathias", 100, 1000, 20, 1500, 0.05f, true, "http://patissier.com/arme/Mathias/shuriken");
         ProduitDAO DAO = new ProduitDAO();
         System.out.println(nextProduit.toString());
-        //nextProduit=DAO.create(nextProduit, "");
+        nextProduit=DAO.create(nextProduit, "");
         System.out.println("\n\nAFTER");
         System.out.println(nextProduit.toString());
-        DAO.delete(nextProduit);
+        //DAO.delete(nextProduit);
         
-       
+       */
     }
     
     public static void DBBConnexion() 
@@ -152,7 +142,7 @@ public class ProjetJava extends Application {
         try {
             con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT * FROM utilisateurs");
+            ResultSet res = stmt.executeQuery("SELECT * FROM utilisateur");
             while (res.next()) 
             {
                 String name = res.getString("nom");
@@ -170,7 +160,7 @@ public class ProjetJava extends Application {
         try {
             con = DriverManager.getConnection("jdbc:mysql://93.3.238.99:3307/patissier","PROJET","Azertyu12!");
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM utilisateurs");
+            ResultSet res = stmt.executeQuery("SELECT nom,prenom FROM utilisateur");
             while (res.next()) 
             {
                 String name = res.getString("prenom");
