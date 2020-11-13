@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava.utilisateur;
+package utilisateur;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -138,16 +138,16 @@ public class UtilisateurDAO extends DAO<Utilisateur,String> {
         }
     }//end delete
     
-    public Utilisateur connexionUtilisateur(String email, String motDePasseEncode)
+    public Utilisateur connexionUtilisateur(String email, String motDePasse)
     {
         Utilisateur dev = new Utilisateur();
-        if(email.isEmpty() || motDePasseEncode.isEmpty())
+        if(email.isEmpty() || motDePasse.isEmpty())
         {
             System.out.println("ERREUR CONNEXION, EMAIL OU MOT DE PASSE VIDE");
             return new Utilisateur();
         }
         try {
-            String requette = "SELECT * FROM utilisateur WHERE email = \"" + email+"\" AND mot_de_passe = \"" + motDePasseEncode + "\"";
+            String requette = "SELECT * FROM utilisateur WHERE email = \"" + email+"\" AND mot_de_passe = SHA2(\"" + motDePasse + "\",256)";
             ResultSet result = this .connect
                                     .createStatement(
                                         ResultSet.TYPE_SCROLL_INSENSITIVE, 

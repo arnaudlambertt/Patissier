@@ -5,11 +5,11 @@
  */
 package projetjava;
 
+import utilisateur.Utilisateur;
+import utilisateur.UtilisateurDAO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import projetjava.produit.*;
-import projetjava.utilisateur.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -81,23 +81,24 @@ public class ProjetJava extends Application {
         DBBConnexion();
         
          UtilisateurDAO DAO = new UtilisateurDAO();
-        /*Utilisateur test = new Utilisateur("benji@test4.com");
+        /*Utilisateur test = new Utilisateur("benji@test7.com");
         
         System.out.println(test.toString());
         test=DAO.create(test,"Truc");
         System.out.println(test.toString());
-        test.setNom("Arnaud");
-        test.setPrenom("Mathias");
-        test = DAO.update(test);
-        
-        System.out.println(test.toString());
         */
+        //test.setNom("Arnaud");
+        //test.setPrenom("Mathias");
+        //test = DAO.update(test);
         
-        //launch(args);
+        //System.out.println(test.toString());
         
         
-        String motDePasse = "12345";
-        String email = "arnaud.lambert@outlook.com";
+        //
+        
+        
+        String motDePasse = "Truc";
+        String email = "benji@test7.com";
 
         
         
@@ -115,6 +116,7 @@ public class ProjetJava extends Application {
         //DAO.delete(nextProduit);
         
        */
+        launch(args);
     }
     
     public static void DBBConnexion() 

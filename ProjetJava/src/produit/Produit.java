@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava.produit;
+package produit;
 
 
 /**
@@ -11,16 +11,36 @@ package projetjava.produit;
  * @author Benjamin
  */
 public class Produit {
-    private int id=0, quantiteUnLot=0, quantiteEnStock=0;
-    private String nom="", categorie="", nomFournisseur="", lien ="";
-    private float prixUnitaire=0,prixUnLot=0,promotion=0;
+    private int id;
+    private int quantiteUnLot;
+    private int quantiteEnStock;
+    private String nom;
+    private String categorie;
+    private String nomFournisseur;
+    private String lien;
+    private float prixUnitaire;
+    private float prixUnLot;
+    private float promotion;
     private boolean promotionActive=false;
     
-    public Produit(){}
+    public Produit()
+    {
+        this.id=0;
+        this.nom = "";
+        this.categorie= "";
+        this.nomFournisseur= "";
+        this.prixUnitaire=0f;
+        this.quantiteEnStock=0;
+        this.quantiteUnLot=0;
+        this.prixUnLot=0f;
+        this.promotion=0;
+        this.promotionActive=false;
+        this.lien="";
+    }
 
     public Produit(int id, String nom, String categorie, String nomFournisseur
-    , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
-    , float promotion, boolean promotionActive, String lien) 
+        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
+        , float promotion, boolean promotionActive, String lien) 
     {
         this.id=id;
         this.nom = nom;
@@ -35,9 +55,10 @@ public class Produit {
         this.lien=lien;
     }
     public Produit( String nom, String categorie, String nomFournisseur
-    , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
-    , float promotion, boolean promotionActive, String lien) 
+        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
+        , float promotion, boolean promotionActive, String lien) 
     {
+        this.id=0;
         this.nom = nom;
         this.categorie=categorie;
         this.nomFournisseur=nomFournisseur;

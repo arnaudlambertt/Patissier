@@ -10,14 +10,12 @@ package projetjava;
  * @author Benjamin
  */
 import java.sql.Connection;
-import projetjava.utilisateur.Utilisateur;
+import utilisateur.Utilisateur;
 //import com.developpez.jdbc.ConnectionMySQL;
 
 public abstract class DAO<T,E> {
 
-    static Utilisateur connexionUtilisateur(String email, String messageEncode) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     public Connection connect = ConnectionMySQL.getInstance();
     
