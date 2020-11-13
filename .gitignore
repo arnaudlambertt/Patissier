@@ -7,3 +7,8 @@ ProjetJava/build/classes/projetjava/Produit.class
 *.jar
 ProjetJava/build/built-jar.properties
 *.jnlp
+*.png
+*.gif
+ProjetJava/dist/run579405839/web-files/dtjava.js
+ProjetJava/dist/run1847523146/web-files/dtjava.js
+ProjetJava/dist/run1350233662/web-files/dtjava.js
