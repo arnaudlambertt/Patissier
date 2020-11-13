@@ -82,7 +82,7 @@ public class ProjetJava extends Application {
         DBBConnexion();
         
          
-        Utilisateur test = new Utilisateur("benji@test4.com");
+        /*Utilisateur test = new Utilisateur("benji@test4.com");
         UtilisateurDAO DAO = new UtilisateurDAO();
         System.out.println(test.toString());
         test=DAO.create(test,"Truc");
@@ -92,14 +92,15 @@ public class ProjetJava extends Application {
         test = DAO.update(test);
         
         System.out.println(test.toString());
+        */
         
-        //launch(args);
+        launch(args);
         
-        
+        /*
         MessageDigest digest;
         String messageEncode ="ERREUR";
         String motDePasse = "Truc";
-        String email = "";
+        String email = "benji@test5.com";
 
         try {
             digest = MessageDigest.getInstance("SHA-256");
@@ -113,7 +114,15 @@ public class ProjetJava extends Application {
         Utilisateur test2 = DAO.connexionUtilisateur(email, messageEncode);
         System.out.println("\n\nTEST 2");
             System.out.println(test2.toString());
-       
+        */
+        
+        Produit nextProduit = new Produit(1,"shuriken", "arme", "Mathias", 100, 1000, 20, 1500, 0.05f, true, "http://patissier.com/arme/Mathias/shuriken");
+        ProduitDAO DAO = new ProduitDAO();
+        System.out.println(nextProduit.toString());
+        //nextProduit=DAO.create(nextProduit, "");
+        System.out.println("\n\nAFTER");
+        System.out.println(nextProduit.toString());
+        DAO.delete(nextProduit);
         
        
     }

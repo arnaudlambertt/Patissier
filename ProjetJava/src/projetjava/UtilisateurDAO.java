@@ -5,11 +5,9 @@
  */
 package projetjava;
 
-import com.mysql.cj.util.StringUtils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.JDBCType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,8 +24,8 @@ import org.bouncycastle.util.encoders.Hex;
 public class UtilisateurDAO extends DAO<Utilisateur,String> {
 
     @Override
-    public Utilisateur create(Utilisateur obj, String motDePasse) {
-        
+    public Utilisateur create(Utilisateur obj, String motDePasse) 
+    {        
         try 
         {
             PreparedStatement prepare = this    .connect
@@ -159,7 +157,6 @@ public class UtilisateurDAO extends DAO<Utilisateur,String> {
         }
         try {
             String requette = "SELECT * FROM utilisateurs WHERE email = \"" + email+"\" AND mot_de_passe = \"" + motDePasseEncode + "\"";
-            System.out.println("REQUETTE : "+ requette);
             ResultSet result = this .connect
                                     .createStatement(
                                         ResultSet.TYPE_SCROLL_INSENSITIVE, 
