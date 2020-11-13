@@ -82,7 +82,7 @@ public class ProjetJava extends Application {
         DBBConnexion();
         
          
-        Utilisateur test = new Utilisateur("benji@test3.com");
+        Utilisateur test = new Utilisateur("benji@test4.com");
         UtilisateurDAO DAO = new UtilisateurDAO();
         System.out.println(test.toString());
         test=DAO.create(test,"Truc");
@@ -93,8 +93,26 @@ public class ProjetJava extends Application {
         
         System.out.println(test.toString());
         
-        launch(args);
+        //launch(args);
         
+        
+        MessageDigest digest;
+        String messageEncode ="ERREUR";
+        String motDePasse = "Truc";
+        String email = "";
+
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(motDePasse.getBytes((StandardCharsets.UTF_8)));
+            messageEncode = new String (Hex.encode(hash));
+            
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ProjetJava.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Utilisateur test2 = DAO.connexionUtilisateur(email, messageEncode);
+        System.out.println("\n\nTEST 2");
+            System.out.println(test2.toString());
        
         
        
