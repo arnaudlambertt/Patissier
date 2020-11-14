@@ -3,15 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilisateur;
+package MODEL.DAO.utilisateur;
 
 /**
  *
  * @author Benjamin
  */
 public class Utilisateur {
-    private int id = 0;
-    private String nom = "", prenom = "", email = "", role = "";
+    private int id;
+    private String nom;
+    private String prenom;
+    private String email;
+    private String role;
     
     public Utilisateur(){}
     
@@ -35,8 +38,12 @@ public class Utilisateur {
     }
     
     public Utilisateur( String email) {
+        this.id = 0;
+        this.nom = "";
+        this.prenom = "";
         this.email=email;
         this.role="Utilisateur";
+        
     }
     
    public int getId() {

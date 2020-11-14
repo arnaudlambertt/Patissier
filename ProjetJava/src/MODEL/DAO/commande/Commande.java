@@ -3,20 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package commande;
+package MODEL.DAO.commande;
 
+import DAO.produit.Produit;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import javafx.util.Pair;
-import produit.Produit;
+
 
 /**
  *
  * @author Benjamin
  */
 public class Commande {
-    private int idCommande; 
-    private int idProduit;
+    private int idCommande;
     private int quantiteUnitaire;
     private int quantiteUnLot;
     private float prixUnitaire;
@@ -24,9 +24,8 @@ public class Commande {
     private Timestamp horodateur;
     private ArrayList<Pair<Produit,Integer>> produitsCommande;
     
-    public Commande(int idCommande, int idProduit, int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
+    public Commande(int idCommande, int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
         this.idCommande = idCommande;
-        this.idProduit = idProduit;
         this.quantiteUnitaire = quantiteUnitaire;
         this.quantiteUnLot = quantiteUnLot;
         this.prixUnitaire = prixUnitaire;
@@ -35,9 +34,8 @@ public class Commande {
         this.produitsCommande = new ArrayList<>();
     }
     
-    public Commande(int idProduit, int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
+    public Commande(int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
         this.idCommande = 0;
-        this.idProduit = idProduit;
         this.quantiteUnitaire = quantiteUnitaire;
         this.quantiteUnLot = quantiteUnLot;
         this.prixUnitaire = prixUnitaire;
@@ -47,13 +45,12 @@ public class Commande {
     }
     
     public Commande() {
-        this.idCommande = idCommande;
-        this.idProduit = idProduit;
-        this.quantiteUnitaire = quantiteUnitaire;
-        this.quantiteUnLot = quantiteUnLot;
-        this.prixUnitaire = prixUnitaire;
-        this.prixUnLot = prixUnLot;
-        this.horodateur = horodateur;
+        this.idCommande = 0;
+        this.quantiteUnitaire = 0;
+        this.quantiteUnLot = 0;
+        this.prixUnitaire = 0;
+        this.prixUnLot = 0;
+        this.horodateur = new Timestamp(0);
         this.produitsCommande = new ArrayList<>();
     }
 
@@ -97,12 +94,17 @@ public class Commande {
         this.idCommande = idCommande;
     }
 
-    public int getIdProduit() {
-        return idProduit;
+    public ArrayList<Pair<Produit, Integer>> getProduitsCommande() {
+        return produitsCommande;
+    }
+    
+    public Pair<Produit, Integer> getElementProduitsCommande(int i)
+    {
+        return this.produitsCommande.get(i);
     }
 
-    public void setIdProduit(int idProduit) {
-        this.idProduit = idProduit;
+    public void setProduitsCommande(ArrayList<Pair<Produit, Integer>> produitsCommande) {
+        this.produitsCommande = produitsCommande;
     }
 
     public Timestamp getHorodateur() {
@@ -111,6 +113,16 @@ public class Commande {
 
     public void setHorodateur(Timestamp date) {
         this.horodateur = date;
+    }
+    
+    public void clearProduitsCommande()
+    {
+        this.produitsCommande.clear();
+    }
+    
+    public void addProduitsCommande(Produit produit, Integer i)
+    {
+        this.produitsCommande.add(new Pair<Produit, Integer>(produit, i));
     }
     
     @Override

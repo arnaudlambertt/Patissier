@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilisateur;
+package MODEL.DAO.utilisateur;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import projetjava.DAO;
+import MODEL.DAO.DAO.DAO;
 
 /**
  *

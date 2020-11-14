@@ -1,17 +1,16 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package projetjava;
+package MODEL.DAO;
 
 /**
  *
  * @author Benjamin
  */
 import java.sql.Connection;
-import utilisateur.Utilisateur;
-//import com.developpez.jdbc.ConnectionMySQL;
 
 public abstract class DAO<T,E> {
 

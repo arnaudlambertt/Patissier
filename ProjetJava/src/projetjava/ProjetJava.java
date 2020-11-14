@@ -5,8 +5,9 @@
  */
 package projetjava;
 
-import utilisateur.Utilisateur;
-import utilisateur.UtilisateurDAO;
+import DAO.utilisateur.*;
+import DAO.produit.*;
+import DAO.commande.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -80,7 +81,7 @@ public class ProjetJava extends Application {
     public static void main(String[] args) {
         DBBConnexion();
         
-         UtilisateurDAO DAO = new UtilisateurDAO();
+        UtilisateurDAO DAO = new UtilisateurDAO();
         /*Utilisateur test = new Utilisateur("benji@test7.com");
         
         System.out.println(test.toString());
