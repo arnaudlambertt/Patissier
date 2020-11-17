@@ -16,7 +16,14 @@ public class Utilisateur {
     private String email;
     private String role;
     
-    public Utilisateur(){}
+    public Utilisateur()
+    {
+        this.id = 0;
+        this.nom = "";
+        this.prenom = "";
+        this.email= "";
+        this.role="Utilisateur";
+    }
     
     //Constructeur avec tout les paramètres
     

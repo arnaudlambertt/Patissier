@@ -40,6 +40,7 @@ public class Fenetre extends Application{
     Button buttonClose;
     Button buttonClose2;
     Button buttonConnection;
+    Button submitNouveauCompte;
     
     TextField utilisateurTextField;
     PasswordField motDePasseTextField;
@@ -96,8 +97,8 @@ public class Fenetre extends Application{
         
         
         
-        Button submit = new Button("Cree Compte");
-        submit.setOnAction(new SubmitCreationCompte(this, DAO, user));
+        submitNouveauCompte = new Button("Cree Compte");
+        submitNouveauCompte.setOnAction(new SubmitCreationCompte(this, DAO));
 
         //Labels
         Label secondLabel = new Label("Page de creation de compte");
@@ -119,7 +120,7 @@ public class Fenetre extends Application{
         secondaryLayout.getChildren().add(utilisateurTextField);
         secondaryLayout.getChildren().add(motDePasse);
         secondaryLayout.getChildren().add(motDePasseTextField);
-        secondaryLayout.getChildren().add(submit);
+        secondaryLayout.getChildren().add(submitNouveauCompte);
         secondaryLayout.getChildren().add(buttonClose2);
 
         //secondaryLayout.getChildren().add(grid);
@@ -173,6 +174,10 @@ public class Fenetre extends Application{
 
     public Utilisateur getUser() {
         return user;
+    }
+
+    public Button getSubmitNouveauCompte() {
+        return submitNouveauCompte;
     }
     
     

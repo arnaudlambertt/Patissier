@@ -19,28 +19,29 @@ public class SubmitCreationCompte  implements EventHandler<ActionEvent>{
     private Fenetre fenetre;
     private UtilisateurDAO DAO;
     private Utilisateur user;
-    public SubmitCreationCompte(Fenetre fenetre, UtilisateurDAO DAO, Utilisateur user)
+    public SubmitCreationCompte(Fenetre fenetre, UtilisateurDAO DAO)
     {
         super();
         this.fenetre=fenetre;
         this.DAO = DAO;
-        this.user=user;
+        this.user=new Utilisateur();
     }
 
     @Override
     public void handle(ActionEvent event) {
-        System.out.println(fenetre.getUtilisateur().getText());
-        System.out.println(fenetre.getMotDePasse().getText());
         
-        this.user.setEmail(fenetre.getUtilisateur().getText());
-        this.user.setNom("LEOCADIO");
-        this.user.setPrenom("Benjamin");
-        this.user.setRole("Utilisateur");
-        
-        fenetre.setUser(DAO.create(user, fenetre.getMotDePasse().getText()));
-        System.out.println("NEW User");
-        System.out.println(fenetre.getUser().toString());
+        if(event.getSource()== fenetre.getSubmitNouveauCompte())
+        {
+            System.out.println(fenetre.getUtilisateur().getText());
+            System.out.println(fenetre.getMotDePasse().getText());
 
-        fenetre.getPrimaryStage().setScene(fenetre.getInitStage());
+            this.user.setEmail(fenetre.getUtilisateur().getText());
+
+            fenetre.setUser(DAO.create(user, fenetre.getMotDePasse().getText()));
+            System.out.println("NEW User");
+            System.out.println(fenetre.getUser().toString());
+
+            fenetre.getPrimaryStage().setScene(fenetre.getInitStage());
+        }
     }
 }
