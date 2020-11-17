@@ -118,8 +118,9 @@ public class ProjetJava {
         
        
         launch(args);
-*/
         
+*/
+        System.out.println("Je suis dans le main");
     }
     
     public static void DBBConnexion() 

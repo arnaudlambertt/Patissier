@@ -36,12 +36,13 @@ public class UtilisateurDAO extends DAO<Utilisateur,String> {
             if(obj.getNom().isEmpty())
             {
                 prepare.setNull(1, 92);
-            }else prepare.setString(2, obj.getNom());
+            }else prepare.setString(1, obj.getNom());
 
             if(obj.getPrenom().isEmpty())
             {
                 prepare.setNull(2, 92);
             }else prepare.setString(2, obj.getPrenom());
+            System.out.println(obj.toString());
 
                 
             prepare.setString(3, obj.getEmail());
