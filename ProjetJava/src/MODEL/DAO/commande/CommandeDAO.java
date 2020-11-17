@@ -5,14 +5,18 @@
  */
 package MODEL.DAO.commande;
 
-import DAO.produit.Produit;
-import DAO.utilisateur.Utilisateur;
+
+
+import MODEL.DAO.utilisateur.Utilisateur;
+
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import DAO.DAO;
 import javafx.util.Pair;
+import MODEL.DAO.DAO;
+import MODEL.DAO.produit.Produit;
 
 /**
  *
@@ -68,7 +72,7 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
                     idProduit =result.getInt("id_produit");
                     
                 }
-                obj = this.find(idUtilisateur, idProduit);
+                //obj = this.find(idUtilisateur, idProduit);
                 
                 prepare.clearParameters();
                 
@@ -80,7 +84,8 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
         return obj;
     }//end create
     
-    @Override
+    /*
+    
     public Commande find(int idUtilisateur, int idProduit) 
     {
         Commande dev = new Commande();
@@ -151,5 +156,28 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
                 e.printStackTrace();
         }
     }//end delete
+
+    @Override
+    public Commande find(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+*/
+
+    @Override
+    public Commande find(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Commande update(Commande obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(Commande obj) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }//end classe
     

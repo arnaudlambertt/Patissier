@@ -5,7 +5,7 @@
  */
 package MODEL.DAO.commande;
 
-import DAO.produit.Produit;
+import MODEL.DAO.produit.Produit;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import javafx.util.Pair;
@@ -129,7 +129,7 @@ public class Commande {
     public String toString()
     {
         String str = "ID COMMANDE : " + this.getIdCommande()+ "\n";
-        str += "ID PRODUIT : " + this.getIdProduit()+ "\n";
+        //str += "ID PRODUIT : " + this.getIdProduit()+ "\n";
         str += "QUANDITE UNITAIRE : " + this.getQuantiteUnitaire()+ "\n";
         str += "PRIX UNITAIRE : " + this.getPrixUnitaire()+ "\n";
         str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot()+ "\n";
