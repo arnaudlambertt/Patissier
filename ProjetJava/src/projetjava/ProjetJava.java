@@ -34,9 +34,9 @@ import javafx.stage.Stage;
  *
  * @author Benjamin
  */
-public class ProjetJava extends Application {
+public class ProjetJava {
     
-    @Override
+    /*@Override
     public void start(Stage primaryStage) {
         Button nom = new Button();
         Button prenom = new Button();
@@ -73,15 +73,15 @@ public class ProjetJava extends Application {
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
+    }*/
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DBBConnexion();
+        //DBBConnexion();
         
-        UtilisateurDAO DAO = new UtilisateurDAO();
+        //UtilisateurDAO DAO = new UtilisateurDAO();
         /*Utilisateur test = new Utilisateur("benji@test7.com");
         
         System.out.println(test.toString());
@@ -98,14 +98,14 @@ public class ProjetJava extends Application {
         //
         
         
-        String motDePasse = "Truc";
-        String email = "benji@test7.com";
+        //String motDePasse = "Truc";
+        //String email = "benji@test7.com";
 
         
         
-        Utilisateur test2 = DAO.connexionUtilisateur(email, motDePasse);
-        System.out.println("\n\nTEST 2");
-        System.out.println(test2.toString());
+        //Utilisateur test2 = DAO.connexionUtilisateur(email, motDePasse);
+        //System.out.println("\n\nTEST 2");
+        //System.out.println(test2.toString());
         
         /*
         Produit nextProduit = new Produit("shuriken2", "arme", "Mathias", 100, 1000, 20, 1500, 0.05f, true, "http://patissier.com/arme/Mathias/shuriken");
@@ -116,8 +116,10 @@ public class ProjetJava extends Application {
         System.out.println(nextProduit.toString());
         //DAO.delete(nextProduit);
         
-       */
+       
         launch(args);
+*/
+        
     }
     
     public static void DBBConnexion() 
