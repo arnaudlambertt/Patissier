@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VIEW;
+package CONTROLLER;
 
-import MODEL.DAO.utilisateur.Utilisateur;
-import MODEL.DAO.utilisateur.UtilisateurDAO;
+import MODEL.Utilisateur;
+import DAO.UtilisateurDAO;
+import VIEW.View;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -14,13 +15,13 @@ import javafx.event.EventHandler;
  *
  * @author Benjamin
  */
-public class SubmitCreationCompte  implements EventHandler<ActionEvent>
+public class ActionSubmit  implements EventHandler<ActionEvent>
 {
 
     private View fenetre;
     private UtilisateurDAO DAO;
     private Utilisateur user;
-    public SubmitCreationCompte(View fenetre, UtilisateurDAO DAO)
+    public ActionSubmit(View fenetre, UtilisateurDAO DAO)
     {
         super();
         this.fenetre=fenetre;

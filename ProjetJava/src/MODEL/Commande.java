@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODEL.DAO.commande;
+package MODEL;
 
-import MODEL.DAO.produit.Produit;
+import MODEL.Produit;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import javafx.util.Pair;

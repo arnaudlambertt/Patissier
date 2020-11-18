@@ -5,8 +5,10 @@
  */
 package VIEW;
 
-import MODEL.DAO.utilisateur.Utilisateur;
-import MODEL.DAO.utilisateur.UtilisateurDAO;
+import CONTROLLER.ActionCreationCompte;
+import CONTROLLER.ActionSubmit;
+import MODEL.Utilisateur;
+import DAO.UtilisateurDAO;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javafx.application.Application;
@@ -67,7 +69,7 @@ public class View extends Application{
         
         buttonConnection = new Button();
         buttonConnection.setText("Cree compte");
-        buttonConnection.setOnAction(new CreationCompteBoutton(this));
+        buttonConnection.setOnAction(new ActionCreationCompte(this));
         
         
         
@@ -98,7 +100,7 @@ public class View extends Application{
         
         
         submitNouveauCompte = new Button("Cree Compte");
-        submitNouveauCompte.setOnAction(new SubmitCreationCompte(this, DAO));
+        submitNouveauCompte.setOnAction(new ActionSubmit(this, DAO));
 
         //Labels
         Label secondLabel = new Label("Page de creation de compte");

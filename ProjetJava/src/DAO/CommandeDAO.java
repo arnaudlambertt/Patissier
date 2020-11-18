@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package MODEL.DAO.commande;
+package DAO;
 
 
 
-import MODEL.DAO.utilisateur.Utilisateur;
+import MODEL.Utilisateur;
 
 
 import java.sql.PreparedStatement;
@@ -15,8 +15,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.util.Pair;
-import MODEL.DAO.DAO;
-import MODEL.DAO.produit.Produit;
+import DAO.DAO;
+import MODEL.Commande;
+import MODEL.Produit;
 
 /**
  *

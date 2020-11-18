@@ -6,8 +6,8 @@
 package projetjava;
 
 
-import MODEL.DAO.utilisateur.Utilisateur;
-import MODEL.DAO.utilisateur.UtilisateurDAO;
+import MODEL.Utilisateur;
+import DAO.UtilisateurDAO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

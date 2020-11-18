@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package VIEW;
+package CONTROLLER;
 
+import VIEW.View;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -19,10 +20,10 @@ import javafx.stage.Stage;
  *
  * @author Benjamin
  */
-public class CreationCompteBoutton implements EventHandler<ActionEvent>{
+public class ActionCreationCompte implements EventHandler<ActionEvent>{
 
     private View fenetre;
-    public CreationCompteBoutton(View fenetre)
+    public ActionCreationCompte(View fenetre)
     {
         super();
         this.fenetre=fenetre;
