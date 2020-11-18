@@ -36,7 +36,7 @@ import javax.swing.JPanel;
  *
  * @author Benjamin
  */
-public class Fenetre extends Application{
+public class View extends Application{
     Button buttonClose;
     Button buttonClose2;
     Button buttonConnection;

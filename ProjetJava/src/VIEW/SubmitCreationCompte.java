@@ -14,12 +14,13 @@ import javafx.event.EventHandler;
  *
  * @author Benjamin
  */
-public class SubmitCreationCompte  implements EventHandler<ActionEvent>{
+public class SubmitCreationCompte  implements EventHandler<ActionEvent>
+{
 
-    private Fenetre fenetre;
+    private View fenetre;
     private UtilisateurDAO DAO;
     private Utilisateur user;
-    public SubmitCreationCompte(Fenetre fenetre, UtilisateurDAO DAO)
+    public SubmitCreationCompte(View fenetre, UtilisateurDAO DAO)
     {
         super();
         this.fenetre=fenetre;
@@ -28,7 +29,8 @@ public class SubmitCreationCompte  implements EventHandler<ActionEvent>{
     }
 
     @Override
-    public void handle(ActionEvent event) {
+    public void handle(ActionEvent event) 
+    {
         
         if(event.getSource()== fenetre.getSubmitNouveauCompte())
         {

@@ -21,8 +21,8 @@ import javafx.stage.Stage;
  */
 public class CreationCompteBoutton implements EventHandler<ActionEvent>{
 
-    private Fenetre fenetre;
-    public CreationCompteBoutton(Fenetre fenetre)
+    private View fenetre;
+    public CreationCompteBoutton(View fenetre)
     {
         super();
         this.fenetre=fenetre;
