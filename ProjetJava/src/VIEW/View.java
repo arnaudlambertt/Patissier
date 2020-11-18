@@ -38,7 +38,7 @@ import javax.swing.JPanel;
  *
  * @author Benjamin
  */
-public class View extends Application{
+public class View{
     Button buttonClose;
     Button buttonClose2;
     Button buttonConnection;
@@ -53,7 +53,6 @@ public class View extends Application{
     private Utilisateur user;
     private UtilisateurDAO DAO;
     
-    @Override
     public void start(Stage primaryStage) throws Exception
     {
         this.user= new Utilisateur();
