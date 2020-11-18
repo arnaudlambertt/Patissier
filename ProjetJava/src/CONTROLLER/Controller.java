@@ -5,12 +5,80 @@
  */
 package CONTROLLER;
 
+import DAO.UtilisateurDAO;
+import MODEL.Utilisateur;
+import VIEW.View;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 /**
  *
  * @author Benjamin
  */
 public class Controller
 {
+    private UtilisateurDAO DAOUtilisateur;
+    private Utilisateur utilisateur;
+    private VIEW.View view;
+    private Stage primaryStage;
+
+    public Controller(Stage primaryStage)
+    {
+        
+        this.view = new View(this);
+        this.utilisateur = new Utilisateur();
+        this.DAOUtilisateur = new UtilisateurDAO();
+    }
+    
+    public void init()
+    {
+        try
+        {
+            this.view.init(primaryStage);
+        } catch (Exception ex)
+        {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setActionButon();
+    }
+    
+    public void setActionButon()
+    {
+        this.view.getSubmitNouveauCompte().setOnAction(new ActionSubmit(this));
+    }
+
+    public Utilisateur getUtilisateur()
+    {
+        return utilisateur;
+    }
+
+    public View getView()
+    {
+        return view;
+    }
+    
+    public void setEmail(String email)
+    {
+        this.utilisateur.setEmail(email);
+    }
+
+    public void creationUtilisateur()
+    {
+        this.utilisateur = this.DAOUtilisateur.create(this.utilisateur, this.view.getMotDePasse().getText());
+    }
+    
+    public void changeScene(Scene scene)
+    {
+        this.view.getPrimaryStage().setScene(scene);
+    }
+    
+    
+    
+    
+    
+    
     public String toString()
     {
         return "Je suis le controller";

@@ -17,25 +17,17 @@ import javafx.stage.Stage;
  */
 public class ProjetJava extends Application{
 
-    private VIEW.View view;
-    private CONTROLLER.Controller controller;
-    @Override
-    public void init()
-    {
-        this.view = new VIEW.View();
-        this.controller=new Controller();
-    }
+    //private VIEW.View view;
     
     @Override
     public void start(Stage primaryStage) throws Exception
     {
+        Controller controller = new Controller(primaryStage);
+        controller.init();
         System.out.println("Je suis dans projetJava");
-        System.out.println(this.controller.toString());
-        this.view.start(primaryStage);
+        System.out.println(controller.toString());
         
-        
+        //this.view.start(primaryStage);
+        //this.controller.setActionButon();
     }
-    
-    
-    
 }

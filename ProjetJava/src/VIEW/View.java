@@ -7,6 +7,7 @@ package VIEW;
 
 import CONTROLLER.ActionCreationCompte;
 import CONTROLLER.ActionSubmit;
+import CONTROLLER.Controller;
 import MODEL.Utilisateur;
 import DAO.UtilisateurDAO;
 import java.awt.FlowLayout;
@@ -50,13 +51,19 @@ public class View{
     private Stage primaryStage;
     private Scene connectionScene;
     private Scene init;
-    private Utilisateur user;
-    private UtilisateurDAO DAO;
     
-    public void start(Stage primaryStage) throws Exception
+    private CONTROLLER.Controller controller;
+
+    public View(Controller controller)
     {
-        this.user= new Utilisateur();
-        this.DAO = new UtilisateurDAO();
+        this.controller = controller;
+    }
+    
+    
+    
+    
+    public void init(Stage primaryStage) throws Exception
+    {
         
         this.primaryStage=primaryStage;
         buttonClose = new Button();
@@ -99,7 +106,7 @@ public class View{
         
         
         submitNouveauCompte = new Button("Cree Compte");
-        submitNouveauCompte.setOnAction(new ActionSubmit(this, DAO));
+        
 
         //Labels
         Label secondLabel = new Label("Page de creation de compte");
@@ -142,10 +149,15 @@ public class View{
         other.show();
         */
         
+        //this.controller.setActionButon();
     }
-    public TextField getUtilisateur()
+    
+    
+    public String getIdentifiantUtilisateur()
     {
-        return utilisateurTextField;
+        
+        System.out.println("View : "+ utilisateurTextField.getText());
+        return utilisateurTextField.getText();
     }
 
     public PasswordField getMotDePasse()
@@ -167,14 +179,6 @@ public class View{
 
     public Scene getInitStage(){
         return init;
-    }
-
-    public void setUser(Utilisateur user) {
-        this.user = user;
-    }
-
-    public Utilisateur getUser() {
-        return user;
     }
 
     public Button getSubmitNouveauCompte() {

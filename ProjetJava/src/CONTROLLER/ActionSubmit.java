@@ -18,33 +18,28 @@ import javafx.event.EventHandler;
 public class ActionSubmit  implements EventHandler<ActionEvent>
 {
 
-    private View fenetre;
-    private UtilisateurDAO DAO;
-    private Utilisateur user;
-    public ActionSubmit(View fenetre, UtilisateurDAO DAO)
+    private Controller controller;
+    public ActionSubmit(Controller controller)
     {
         super();
-        this.fenetre=fenetre;
-        this.DAO = DAO;
-        this.user=new Utilisateur();
+        this.controller=controller;
     }
 
     @Override
     public void handle(ActionEvent event) 
     {
         
-        if(event.getSource()== fenetre.getSubmitNouveauCompte())
-        {
-            System.out.println(fenetre.getUtilisateur().getText());
-            System.out.println(fenetre.getMotDePasse().getText());
+        //if(event.getSource()== this.controller.getView().getSubmitNouveauCompte())
+        //{
+            System.out.println(this.controller.getView().getIdentifiantUtilisateur());
+            System.out.println(this.controller.getView().getMotDePasse().getText());
 
-            this.user.setEmail(fenetre.getUtilisateur().getText());
-
-            fenetre.setUser(DAO.create(user, fenetre.getMotDePasse().getText()));
+            this.controller.setEmail(this.controller.getView().getIdentifiantUtilisateur());
+            this.controller.creationUtilisateur();
+            this.controller.changeScene(this.controller.getView().getInitStage());
+            
             System.out.println("NEW User");
-            System.out.println(fenetre.getUser().toString());
-
-            fenetre.getPrimaryStage().setScene(fenetre.getInitStage());
-        }
+            System.out.println(controller.getUtilisateur().toString());
+        //}
     }
 }
