@@ -23,7 +23,6 @@ public class Controller
 
     public Controller(Stage primaryStage)
     {
-        
         this.view = new View(primaryStage);
         this.utilisateur = new Utilisateur();
         this.DAOUtilisateur = new UtilisateurDAO();

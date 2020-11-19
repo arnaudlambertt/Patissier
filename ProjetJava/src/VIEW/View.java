@@ -10,6 +10,7 @@ import CONTROLLER.ActionSubmit;
 import CONTROLLER.Controller;
 import MODEL.Utilisateur;
 import DAO.UtilisateurDAO;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javafx.application.Application;
@@ -17,6 +18,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -29,6 +31,8 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -72,19 +76,17 @@ public class View{
         
         primaryStage.setTitle("Patissier");
         
-        BackgroundImage myBI= new BackgroundImage(new javafx.scene.image.Image("http://93.3.238.99/index.jpg"),
-            BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-            BackgroundSize.DEFAULT);
+       
+        SceneAccueil init = new SceneAccueil(new Region());
+        init.init();
         
-        VBox root = new VBox();
-        root.setBackground(new Background(myBI));
-        root.getChildren().add(buttonClose);
-        root.getChildren().add(buttonConnection);
-        root.setAlignment(Pos.CENTER);
-        this.init = new Scene(root);
-        primaryStage.setHeight(500);
-        primaryStage.setWidth(500);
+        //root.setBackground(new Background(myBI));
+        
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        //primaryStage.setHeight((int)dimension.getHeight());
+        //primaryStage.setWidth((int)dimension.getWidth());
         primaryStage.setScene(init);
+        primaryStage.setMaximized(true);
         primaryStage.show();
         primaryStage.centerOnScreen();
         
@@ -127,7 +129,7 @@ public class View{
 
         this.connectionScene = new Scene(secondaryLayout, 250, 300);
         
-        
+        this.connectionScene = new SceneAccueil(new Pane());
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
