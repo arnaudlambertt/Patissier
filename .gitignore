@@ -1,7 +1,9 @@
 
 ProjetJava/build/built-jar.properties
-ProjetJava/build/classes/projetjava/Produit.class
+ProjetJava/nbproject/private/private.xml
 *.class
 *.html
 *.jnlp
 *.jar
+*.png
+*.gif
