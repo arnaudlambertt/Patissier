@@ -52,32 +52,23 @@ public class View{
     private Scene connectionScene;
     private Scene init;
     
-    private CONTROLLER.Controller controller;
-
-    public View(Controller controller)
+    public View(Stage primaryStage)
     {
-        this.controller = controller;
+        this.buttonClose = new Button();
+        this.buttonClose2 = new Button();
+        this.buttonConnection = new Button();
+        this.primaryStage = primaryStage;
     }
     
-    
-    
-    
-    public void init(Stage primaryStage) throws Exception
+    public void init()
     {
-        
-        this.primaryStage=primaryStage;
-        buttonClose = new Button();
         buttonClose.setText("Close");
         buttonClose.setOnAction((ActionEvent) -> Platform.exit());
-        buttonClose2 = new Button();
         buttonClose2.setText("Close");
         buttonClose2.setOnAction((ActionEvent) -> Platform.exit());
         
-        buttonConnection = new Button();
         buttonConnection.setText("Cree compte");
         buttonConnection.setOnAction(new ActionCreationCompte(this));
-        
-        
         
         primaryStage.setTitle("Patissier");
         

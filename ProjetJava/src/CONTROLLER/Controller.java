@@ -8,8 +8,6 @@ package CONTROLLER;
 import DAO.UtilisateurDAO;
 import MODEL.Utilisateur;
 import VIEW.View;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -22,25 +20,18 @@ public class Controller
     private UtilisateurDAO DAOUtilisateur;
     private Utilisateur utilisateur;
     private VIEW.View view;
-    private Stage primaryStage;
 
     public Controller(Stage primaryStage)
     {
         
-        this.view = new View(this);
+        this.view = new View(primaryStage);
         this.utilisateur = new Utilisateur();
         this.DAOUtilisateur = new UtilisateurDAO();
     }
     
     public void init()
     {
-        try
-        {
-            this.view.init(primaryStage);
-        } catch (Exception ex)
-        {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        view.init();
         setActionButon();
     }
     
@@ -74,11 +65,7 @@ public class Controller
         this.view.getPrimaryStage().setScene(scene);
     }
     
-    
-    
-    
-    
-    
+    @Override
     public String toString()
     {
         return "Je suis le controller";
