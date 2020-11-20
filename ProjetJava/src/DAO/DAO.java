@@ -14,8 +14,6 @@ import java.sql.Connection;
 
 public abstract class DAO<T,E> {
 
-    
-
     public Connection connect = ConnectionMySQL.getInstance();
     
     /**
@@ -29,14 +27,17 @@ public abstract class DAO<T,E> {
      * Permet de créer une entrée dans la base de données
      * par rapport à un objet
      * @param obj, element
+     * @param element
+     * @return 
      */
     public abstract T create(T obj, E element);
     
     /**
      * Permet de mettre à jour les données d'une entrée dans la base 
      * @param obj
+     * @return 
      */
-    public abstract T update(T obj);
+    public abstract boolean update(T obj);
     
     /**
      * Permet la suppression d'une entrée de la base

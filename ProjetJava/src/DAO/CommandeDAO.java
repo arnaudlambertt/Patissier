@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.util.Pair;
-import DAO.DAO;
 import MODEL.Commande;
 import MODEL.Produit;
 
@@ -171,7 +170,7 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
     }
 
     @Override
-    public Commande update(Commande obj) {
+    public boolean update(Commande obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

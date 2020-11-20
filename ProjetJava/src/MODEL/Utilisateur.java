@@ -22,7 +22,7 @@ public class Utilisateur {
         this.nom = "";
         this.prenom = "";
         this.email= "";
-        this.role="Utilisateur";
+        this.role="";
     }
     
     //Constructeur avec tout les paramètres

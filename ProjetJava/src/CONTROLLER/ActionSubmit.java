@@ -31,15 +31,15 @@ public class ActionSubmit  implements EventHandler<ActionEvent>
         
         //if(event.getSource()== this.controller.getView().getSubmitNouveauCompte())
         //{
-            System.out.println(this.controller.getView().getIdentifiantUtilisateur());
-            System.out.println(this.controller.getView().getMotDePasse().getText());
-
-            this.controller.setEmail(this.controller.getView().getIdentifiantUtilisateur());
-            this.controller.creationUtilisateur();
-            this.controller.changeScene(this.controller.getView().getInitStage());
-            
-            System.out.println("NEW User");
-            System.out.println(controller.getUtilisateur().toString());
+//            System.out.println(this.controller.getView().getIdentifiantUtilisateur());
+//            System.out.println(this.controller.getView().getMotDePasse().getText());
+//
+//            this.controller.setEmail(this.controller.getView().getIdentifiantUtilisateur());
+//            this.controller.creationUtilisateur();
+//            this.controller.changeScene(this.controller.getView().getInitStage());
+//            
+//            System.out.println("NEW User");
+//            System.out.println(controller.getUtilisateur().toString());
         //}
     }
 }

@@ -5,8 +5,7 @@
  */
 package CONTROLLER;
 
-import DAO.UtilisateurDAO;
-import MODEL.Utilisateur;
+import MODEL.*;
 import VIEW.View;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,16 +16,13 @@ import javafx.stage.Stage;
  */
 public class Controller
 {
-    private UtilisateurDAO DAOUtilisateur;
-    private Utilisateur utilisateur;
-    private VIEW.View view;
+    private final Model model;
+    private final View view;
 
     public Controller(Stage primaryStage)
     {
-        
+        this.model = new Model();
         this.view = new View(primaryStage);
-        this.utilisateur = new Utilisateur();
-        this.DAOUtilisateur = new UtilisateurDAO();
     }
     
     public void init()
@@ -42,23 +38,18 @@ public class Controller
 
     public Utilisateur getUtilisateur()
     {
-        return utilisateur;
-    }
-
-    public View getView()
-    {
-        return view;
+        return model.getUtilisateur();
     }
     
     public void setEmail(String email)
     {
-        this.utilisateur.setEmail(email);
+        model.setEmail(email);
     }
 
-    public void creationUtilisateur()
-    {
-        this.utilisateur = this.DAOUtilisateur.create(this.utilisateur, this.view.getMotDePasse().getText());
-    }
+//    public void creationUtilisateur()
+//    {
+//        model.creationUtilisateur(view.getEmail(),view.getMotDePasse());
+//    }
     
     public void changeScene(Scene scene)
     {

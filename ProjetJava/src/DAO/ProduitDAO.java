@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import DAO.DAO;
 import MODEL.Produit;
 
 /**
@@ -141,8 +140,9 @@ public class ProduitDAO extends DAO<Produit,String> {
     }//end find
     
     @Override
-    public Produit update(Produit obj) 
+    public boolean update(Produit obj) 
     {
+        obj = new Produit();
         try
         {    
             this.connect    
@@ -167,7 +167,7 @@ public class ProduitDAO extends DAO<Produit,String> {
                 e.printStackTrace();
         }
         
-        return obj;
+        return obj.getId() != 0;
     }//end update
     
 
