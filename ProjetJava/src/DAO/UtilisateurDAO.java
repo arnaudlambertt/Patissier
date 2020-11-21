@@ -32,10 +32,13 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        Utilisateur utilisateur = new Utilisateur();
 
         try
         {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (motDePasse == null)
+                throw new NullPointerException("ERREUR: Parametre 2 nul");
             if (obj.getNom().isEmpty())
                 throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getPrenom().isEmpty())
@@ -67,16 +70,17 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             int id = result.getInt(1);
 
-            utilisateur = this.find(id);
+            return this.find(id);
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
+            return new Utilisateur();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return utilisateur;
     }
 
     @Override
@@ -84,12 +88,11 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        Utilisateur utilisateur = new Utilisateur();
 
         try
         {
             if (id == 0)
-                throw new NullPointerException("ERREUR: ID NULLE");
+                throw new NullPointerException("ERREUR: Param 1 nul");
 
             if (connect == null)
                 throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
@@ -104,31 +107,35 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             result = prepare.executeQuery();
 
             if (result.next())
-                utilisateur = new Utilisateur(id,
+                return new Utilisateur(id,
                         result.getString("nom"),
                         result.getString("prenom"),
                         result.getString("email"),
                         result.getString("role")
                 );
-
+            else
+                return new Utilisateur();
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
+            return new Utilisateur();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return utilisateur;
     }
 
     @Override
     public boolean update(Utilisateur obj)
     {
         PreparedStatement prepare = null;
-        boolean bool = false;
+
         try
         {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
             if (obj.getNom().isEmpty())
@@ -157,24 +164,27 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             prepare.executeUpdate();
 
-            bool = true;
+            return true;
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
+            return false;
         } finally
         {
             close(prepare);
         }
-        return bool;
     }
 
     @Override
     public boolean delete(Utilisateur obj)
     {
         PreparedStatement prepare = null;
-        boolean bool = false;
+        
         try
         {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
@@ -188,24 +198,29 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.setInt(1, obj.getId());
             prepare.executeUpdate();
 
-            bool = this.find(obj.getId()).getId() == 0;//true / false
+            return this.find(obj.getId()).getId() == 0;//true / false
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
+            return false;
         } finally
         {
             close(prepare);
         }
-        return bool;
     }
 
     public Utilisateur connexion(String email, String motDePasse)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        Utilisateur utilisateur = new Utilisateur();
+        
         try
         {
+            if (email == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (motDePasse == null)
+                throw new NullPointerException("ERREUR: Parametre 2 nul");
             if (email.isEmpty())
                 throw new NullPointerException("ERREUR: Email vide");
             if (motDePasse.isEmpty())
@@ -232,26 +247,30 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             result = prepare.executeQuery();
 
             if (result.next())
-                utilisateur = this.find(result.getInt(1));
-
+                return this.find(result.getInt(1));
+            else 
+                return new Utilisateur();
+            
         } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " connexion() " + e.getMessage());
+            return new Utilisateur();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return utilisateur;
     }
 
     public boolean emailExistant(String email)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        boolean bool = true;
+        
         try
         {
+            if (email == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (email.isEmpty())
                 throw new NullPointerException("ERREUR: Email vide");
 
@@ -269,28 +288,35 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             result = prepare.executeQuery();
 
-            bool = result.next();//true / false
+            return result.next();//true / false
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " mailExiste() " + e.getMessage());
+            return true;
         } finally
         {
             close(result);
             close(prepare);
         }
-        return bool;
     }
 
     public boolean modifierMotDePasse(Utilisateur obj, String ancienMotDePasse, String nouveauMotDePasse)
     {
         PreparedStatement prepare = null;
-        boolean bool = false;
-
-        if (connexion(obj.getEmail(), ancienMotDePasse).getId() == 0)
-            return bool;
 
         try
         {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (ancienMotDePasse == null)
+                throw new NullPointerException("ERREUR: Parametre 2 nul");
+            if (nouveauMotDePasse == null)
+                throw new NullPointerException("ERREUR: Parametre 3 nul");
+
+            if (connexion(obj.getEmail(), ancienMotDePasse).getId() == 0)
+                return false;
+
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
             if (nouveauMotDePasse.isEmpty())
@@ -315,15 +341,16 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             prepare.executeUpdate();
 
-            bool = true;
+            return true;
+            
         } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " modifierMotDePasse() " + e.getMessage());
+            return false;
         } finally
         {
             close(prepare);
         }
-        return bool;
     }
 
 }

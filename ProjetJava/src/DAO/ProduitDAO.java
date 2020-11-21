@@ -24,15 +24,17 @@ public class ProduitDAO extends DAO<Produit, Object>
         this.className = "ProduitDAO";
     }
 
+    @Deprecated
     @Override
     public Produit create(Produit obj, Object nullObject)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        Produit produit = new Produit();
 
         try
         {
+            if(obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getNom().isEmpty())
                 throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getCategorie().isEmpty())
@@ -81,16 +83,23 @@ public class ProduitDAO extends DAO<Produit, Object>
                 throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
 
             int id = result.getInt(1);
-            produit = this.find(id);
+            
+            return this.find(id);
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
+            return new Produit();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return produit;
+    }
+    
+    public Produit create(Produit obj)
+    {
+        return this.create(obj, null);
     }
 
     @Override
@@ -98,11 +107,11 @@ public class ProduitDAO extends DAO<Produit, Object>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        Produit produit = new Produit();
+        
         try
         {
             if (id == 0)
-                throw new NullPointerException("ERREUR: ID NULLE");
+                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
 
             if (connect == null)
                 throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
@@ -117,7 +126,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             result = prepare.executeQuery();
 
             if (result.next())
-                produit = new Produit(id,
+                return new Produit(id,
                         result.getString("nom"),
                         result.getString("categorie"),
                         result.getString("nom_fournisseur"),
@@ -129,26 +138,29 @@ public class ProduitDAO extends DAO<Produit, Object>
                         result.getBoolean("promotion_active"),
                         result.getString("lien_image")
                 );
-
+            else
+                return new Produit();
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
+            return new Produit();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return produit;
     }
 
     @Override
     public boolean update(Produit obj)
     {
         PreparedStatement prepare = null;
-        boolean bool = false;
 
         try
         {
+            if(obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID vide");
             if (obj.getNom().isEmpty())
@@ -203,24 +215,27 @@ public class ProduitDAO extends DAO<Produit, Object>
 
             prepare.executeUpdate();
 
-            bool = true;
+            return true;
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
+            return false;
         } finally
         {
             close(prepare);
         }
-        return bool;
     }
 
     @Override
     public boolean delete(Produit obj)
     {
         PreparedStatement prepare = null;
-        boolean bool = false;
+        
         try
         {
+            if(obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
@@ -234,21 +249,22 @@ public class ProduitDAO extends DAO<Produit, Object>
             prepare.setInt(1, obj.getId());
             prepare.executeUpdate();
 
-            bool = this.find(obj.getId()).getId() == 0;//true / false
+            return this.find(obj.getId()).getId() == 0;//true / false
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
+            return false;
         } finally
         {
             close(prepare);
         }
-        return bool;
     }
 
     public ArrayList<Produit> getProduits()
     {
         ResultSet result = null;
-        ArrayList<Produit> produits = new ArrayList<>();
+
         try
         {
 
@@ -262,6 +278,8 @@ public class ProduitDAO extends DAO<Produit, Object>
                     .executeQuery("SELECT * FROM produit"
                     );
 
+            ArrayList<Produit> produits = new ArrayList<>();
+            
             while (result.next())
             {
                 Produit obj = new Produit(
@@ -280,23 +298,27 @@ public class ProduitDAO extends DAO<Produit, Object>
                 produits.add(obj);
             }
 
+            return produits;
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits() " + e.getMessage());
+            return new ArrayList<>();
         } finally
         {
             close(result);
         }
-        return produits;
     }
 
     public ArrayList<Produit> getProduits(String categorie)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        ArrayList<Produit> produits = new ArrayList<>();
+        
         try
         {
+            if(categorie == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (categorie.isEmpty())
                 throw new NullPointerException("ERREUR: Categorie vide");
 
@@ -311,7 +333,9 @@ public class ProduitDAO extends DAO<Produit, Object>
                     );
             prepare.setString(1, categorie);
             result = prepare.executeQuery();
-
+            
+            ArrayList<Produit> produits = new ArrayList<>();
+            
             while (result.next())
             {
                 Produit obj = new Produit(
@@ -329,29 +353,33 @@ public class ProduitDAO extends DAO<Produit, Object>
                 );
                 produits.add(obj);
             }
-
+            
+            return produits;
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits(categorie) " + e.getMessage());
+            return new ArrayList<>();
         } finally
         {
             close(result);
             close(prepare);
         }
-        return produits;
     }
 
     public boolean stockSuffisant(Produit obj, int quantiteVoulue)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        boolean bool = false;
+
         try
         {
+            if(obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
             if (quantiteVoulue <= 0)
-                throw new NullPointerException("ERREUR: Quantite incorrecte");
+                throw new NullPointerException("ERREUR: Parametre 2 quantite incorrecte");
 
             if (connect == null)
                 throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
@@ -371,15 +399,16 @@ public class ProduitDAO extends DAO<Produit, Object>
 
             int stock = result.getInt(1);
 
-            bool = stock >= quantiteVoulue;
+            return stock >= quantiteVoulue;
+            
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " stockSuffisant() " + e.getMessage());
+            return true;
         } finally
         {
             close(result);
             close(prepare);
         }
-        return bool;
     }
 }
