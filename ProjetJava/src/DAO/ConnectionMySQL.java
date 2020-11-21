@@ -43,7 +43,7 @@ public class ConnectionMySQL{
             try {
                 connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
             } catch (SQLException e) {
-                System.err.println(e.getMessage());
+                System.err.println("ConnectionMYSQL " + e.getMessage());
             }
         }        
         return connect;    

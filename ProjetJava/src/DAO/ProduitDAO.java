@@ -34,21 +34,24 @@ public class ProduitDAO extends DAO<Produit, String>
         try
         {
             if (obj.getNom().isEmpty())
-                throw new NullPointerException("ERROR : Nom vide");
+                throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getCategorie().isEmpty())
-                throw new NullPointerException("ERROR : Categorie vide");
+                throw new NullPointerException("ERREUR: Categorie vide");
             if (obj.getNomFournisseur().isEmpty())
-                throw new NullPointerException("ERROR : Nom Fournisseur vide");
+                throw new NullPointerException("ERREUR: Nom Fournisseur vide");
             if (obj.getPrixUnitaire() <= 0.0)
-                throw new NullPointerException("ERROR : Prix Unitaire incorrect");
+                throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
             if (obj.getStock() < 0)
-                throw new NullPointerException("ERROR : Stock negatif");
+                throw new NullPointerException("ERREUR: Stock negatif");
             if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
-                throw new NullPointerException("ERROR : Si un lot à un prix alors il faut avoir la quantité de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
-                throw new NullPointerException("ERROR : Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
             if (obj.getLienImage().isEmpty())
-                throw new NullPointerException("ERROR : Lien image vide");
+                throw new NullPointerException("ERREUR: Lien image vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -73,7 +76,7 @@ public class ProduitDAO extends DAO<Produit, String>
 
             result = prepare.getGeneratedKeys();
             if (!result.next())
-                throw new SQLException("SQL ERROR : ID autoIncrement nulle");
+                throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
 
             int id = result.getInt(1);
 
@@ -81,8 +84,7 @@ public class ProduitDAO extends DAO<Produit, String>
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);
@@ -99,7 +101,10 @@ public class ProduitDAO extends DAO<Produit, String>
         try
         {
             if (id == 0)
-                throw new NullPointerException("ERROR : ID NULLE");
+                throw new NullPointerException("ERREUR: ID NULLE");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -124,11 +129,10 @@ public class ProduitDAO extends DAO<Produit, String>
                         result.getString("lien_image")
                 );
 
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);
@@ -145,23 +149,26 @@ public class ProduitDAO extends DAO<Produit, String>
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID vide");
+                throw new NullPointerException("ERREUR: ID vide");
             if (obj.getNom().isEmpty())
-                throw new NullPointerException("ERROR : Nom vide");
+                throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getCategorie().isEmpty())
-                throw new NullPointerException("ERROR : Categorie vide");
+                throw new NullPointerException("ERREUR: Categorie vide");
             if (obj.getNomFournisseur().isEmpty())
-                throw new NullPointerException("ERROR : Nom Fournisseur vide");
+                throw new NullPointerException("ERREUR: Nom Fournisseur vide");
             if (obj.getPrixUnitaire() <= 0.0)
-                throw new NullPointerException("ERROR : Prix Unitaire incorrect");
+                throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
             if (obj.getStock() < 0)
-                throw new NullPointerException("ERROR : Stock negatif");
+                throw new NullPointerException("ERREUR: Stock negatif");
             if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
-                throw new NullPointerException("ERROR : Si un lot à un prix alors il faut avoir la quantité de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
-                throw new NullPointerException("ERROR : Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
             if (obj.getLienImage().isEmpty())
-                throw new NullPointerException("ERROR : Lien image vide");
+                throw new NullPointerException("ERREUR: Lien image vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -194,11 +201,10 @@ public class ProduitDAO extends DAO<Produit, String>
             prepare.executeUpdate();
 
             bool = true;
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(prepare);
         }
@@ -213,7 +219,10 @@ public class ProduitDAO extends DAO<Produit, String>
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
+                throw new NullPointerException("ERREUR: ID nulle");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -223,11 +232,10 @@ public class ProduitDAO extends DAO<Produit, String>
             prepare.executeUpdate();
 
             bool = this.find(obj.getId()).getId() == 0;//true / false
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(prepare);
         }
@@ -240,6 +248,9 @@ public class ProduitDAO extends DAO<Produit, String>
         ArrayList<Produit> produits = new ArrayList<>();
         try
         {
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             result = this.connect
                     .createStatement(
@@ -266,11 +277,10 @@ public class ProduitDAO extends DAO<Produit, String>
                 produits.add(obj);
             }
 
-        } catch (SQLException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
         }
@@ -284,6 +294,12 @@ public class ProduitDAO extends DAO<Produit, String>
         ArrayList<Produit> produits = new ArrayList<>();
         try
         {
+            if (categorie.isEmpty())
+                throw new NullPointerException("ERREUR: Categorie vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+
             prepare = this.connect
                     .prepareStatement(
                             "SELECT * FROM produit WHERE categorie = ? ",
@@ -311,11 +327,10 @@ public class ProduitDAO extends DAO<Produit, String>
                 produits.add(obj);
             }
 
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits(categorie) " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);
@@ -331,9 +346,12 @@ public class ProduitDAO extends DAO<Produit, String>
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
+                throw new NullPointerException("ERREUR: ID nulle");
             if (quantite <= 0)
-                throw new NullPointerException("ERROR : Quantite incorrecte");
+                throw new NullPointerException("ERREUR: Quantite incorrecte");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -346,16 +364,15 @@ public class ProduitDAO extends DAO<Produit, String>
 
             result = prepare.executeQuery();
             if (!result.next())
-                throw new SQLException("SQL ERROR : PAS DE RESULTAT");
+                throw new SQLException("SQL ERREUR: PAS DE RESULTAT");
 
             int stock = result.getInt(1);
 
             bool = quantite >= stock;
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " stockSuffisant() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);

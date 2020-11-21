@@ -37,13 +37,16 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (obj.getNom().isEmpty())
-                throw new NullPointerException("ERROR : Nom vide");
+                throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getPrenom().isEmpty())
-                throw new NullPointerException("ERROR : Prenom vide");
+                throw new NullPointerException("ERREUR: Prenom vide");
             if (obj.getEmail().isEmpty())
-                throw new NullPointerException("ERROR : Email vide");
+                throw new NullPointerException("ERREUR: Email vide");
             if (motDePasse.isEmpty())
-                throw new NullPointerException("ERROR : Mot de passe vide");
+                throw new NullPointerException("ERREUR: Mot de passe vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -60,12 +63,12 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             result = prepare.getGeneratedKeys();
             if (!result.next())
-                throw new SQLException("SQL ERROR : ID autoIncrement nulle");
+                throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
 
             int id = result.getInt(1);
 
             utilisateur = this.find(id);
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
         } finally
@@ -86,7 +89,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (id == 0)
-                throw new NullPointerException("ERROR : ID NULLE");
+                throw new NullPointerException("ERREUR: ID NULLE");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -105,7 +111,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                         result.getString("role")
                 );
 
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
         } finally
@@ -124,13 +130,16 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
+                throw new NullPointerException("ERREUR: ID nulle");
             if (obj.getNom().isEmpty())
-                throw new NullPointerException("ERROR : Nom vide");
+                throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getPrenom().isEmpty())
-                throw new NullPointerException("ERROR : Prenom vide");
+                throw new NullPointerException("ERREUR: Prenom vide");
             if (obj.getEmail().isEmpty())
-                throw new NullPointerException("ERROR : Mail vide");
+                throw new NullPointerException("ERREUR: Mail vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -149,7 +158,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.executeUpdate();
 
             bool = true;
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
         } finally
@@ -167,7 +176,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
+                throw new NullPointerException("ERREUR: ID nulle");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -177,11 +189,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.executeUpdate();
 
             bool = this.find(obj.getId()).getId() == 0;//true / false
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(prepare);
         }
@@ -196,9 +207,12 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (email.isEmpty())
-                throw new NullPointerException("ERROR : Email vide");
+                throw new NullPointerException("ERREUR: Email vide");
             if (motDePasse.isEmpty())
-                throw new NullPointerException("ERROR : Mot de passe vide");
+                throw new NullPointerException("ERREUR: Mot de passe vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -220,11 +234,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (result.next())
                 utilisateur = this.find(result.getInt(1));
 
-        } catch (SQLException | NullPointerException | NoSuchAlgorithmException e)
+        } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " connexion() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);
@@ -240,7 +253,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         try
         {
             if (email.isEmpty())
-                throw new NullPointerException("ERROR : Email vide");
+                throw new NullPointerException("ERREUR: Email vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -254,11 +270,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             result = prepare.executeQuery();
 
             bool = result.next();//true / false
-        } catch (SQLException | NullPointerException e)
+        } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " mailExiste() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(result);
             close(prepare);
@@ -270,16 +285,19 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     {
         PreparedStatement prepare = null;
         boolean bool = false;
-        
+
         if (connexion(obj.getEmail(), ancienMotDePasse).getId() == 0)
             return bool;
 
         try
         {
             if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
+                throw new NullPointerException("ERREUR: ID nulle");
             if (nouveauMotDePasse.isEmpty())
-                throw new NullPointerException("ERROR : Nouveau mot de passe vide");
+                throw new NullPointerException("ERREUR: Nouveau mot de passe vide");
+
+            if (connect == null)
+                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
 
             prepare = this.connect
                     .prepareStatement(
@@ -298,11 +316,10 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.executeUpdate();
 
             bool = true;
-        } catch (SQLException | NullPointerException | NoSuchAlgorithmException e)
+        } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " modifierMotDePasse() " + e.getMessage());
-        }
-        finally
+        } finally
         {
             close(prepare);
         }
