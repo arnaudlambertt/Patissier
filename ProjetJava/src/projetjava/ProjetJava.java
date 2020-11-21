@@ -28,8 +28,9 @@ public class ProjetJava extends Application{
         //System.out.println("Je suis dans projetJava");
         //System.out.println(controller.toString());
         
-        
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+        utilisateurDAO.open();
+        
         Utilisateur test;
         String nom = "LAMBERT";
         String prenom = "Arnaud";
@@ -52,6 +53,8 @@ public class ProjetJava extends Application{
         System.out.println(utilisateurDAO.delete(test));
         test = utilisateurDAO.connexion(email, nouveauMdp);
         System.out.println(test.toString());
+        
+        utilisateurDAO.close();
 
         //this.view.start(primaryStage);
         //this.controller.setActionButon();

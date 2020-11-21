@@ -19,6 +19,11 @@ import java.util.ArrayList;
 public class ProduitDAO extends DAO<Produit, String>
 {
 
+    public ProduitDAO()
+    {
+        this.className = "ProduitDAO";
+    }
+    
     @Override
     public Produit create(Produit obj, String test)
     {
@@ -237,7 +242,7 @@ public class ProduitDAO extends DAO<Produit, String>
 
         } catch (SQLException e)
         {
-            System.err.println("ProduitDAO get() " + e.getMessage());
+            System.err.println("ProduitDAO getProduits() " + e.getMessage());
         }
         return produits;
     }
@@ -276,7 +281,7 @@ public class ProduitDAO extends DAO<Produit, String>
 
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO find() " + e.getMessage());
+            System.err.println("ProduitDAO getProduits(categorie) " + e.getMessage());
         }
         return produits;
     }

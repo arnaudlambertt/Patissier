@@ -11,11 +11,14 @@ package DAO;
  * @author Benjamin
  */
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public abstract class DAO<T,E> {
 
-    public Connection connect = ConnectionMySQL.getInstance();
-    
+    public Connection connect = null;
+    protected String className = "DAO";
     /**
      * Permet de récupérer un objet via son ID
      * @param id
@@ -45,5 +48,50 @@ public abstract class DAO<T,E> {
      * @return 
      */
     public abstract boolean delete(T obj);
+    
+    public void open()
+    {
+        if(connect == null)
+            connect = ConnectionMySQL.getInstance();
+    }
+    
+    public void close()
+    {
+        try
+        {
+            if(connect != null)
+                connect.close();
+        }
+        catch(SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
+    
+    public void close(PreparedStatement prepare)
+    {
+        try
+        {
+            if(prepare != null)
+                prepare.close();
+        }
+        catch(SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
+    
+    public void close(ResultSet result)
+    {
+        try
+        {
+            if(result != null)
+                result.close();
+        }
+        catch(SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
 }
 

@@ -19,15 +19,15 @@ public class ConnectionMySQL{
     /**
      * URL de connexion
      */
-    private static final String url = "jdbc:mysql://93.3.238.99:3307/patissier";
+    private static final String URL = "jdbc:mysql://93.3.238.99:3307/patissier";
     /**
      * Nom du user
      */
-    private static final String utilisateur = "PROJET";
+    private static final String UTILISATEUR = "PROJET";
     /**
      * Mot de passe du user
      */
-    private static final String motDePass = "Azertyu12!";
+    private static final String MOT_DE_PASSE = "Azertyu12!";
     /**
      * Objet Connexion
      */
@@ -41,9 +41,9 @@ public class ConnectionMySQL{
     public static Connection getInstance(){
         if(connect == null){
             try {
-                connect = DriverManager.getConnection(url, utilisateur, motDePass);
+                connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
             }
         }        
         return connect;    
