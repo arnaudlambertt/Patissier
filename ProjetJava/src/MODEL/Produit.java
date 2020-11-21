@@ -41,7 +41,7 @@ public class Produit {
 
     public Produit(int id, String nom, String categorie, String nomFournisseur
         , double prixUnitaire, int stock, int quantiteUnLot, double prixUnLot
-        , double promotion, boolean promotionActive, String lien) 
+        , double promotion, boolean promotionActive, String lienImage) 
     {
         this.id = id;
         this.nom = nom;
@@ -53,7 +53,24 @@ public class Produit {
         this.prixUnLot = prixUnLot;
         this.promotion = promotion;
         this.promotionActive = promotionActive;
-        this.lienImage = lien;
+        this.lienImage = lienImage;
+    }
+    
+    public Produit(String nom, String categorie, String nomFournisseur
+        , double prixUnitaire, int stock, int quantiteUnLot, double prixUnLot
+        , double promotion, boolean promotionActive, String lienImage) 
+    {
+        this.id = 0;
+        this.nom = nom;
+        this.categorie = categorie;
+        this.nomFournisseur = nomFournisseur;
+        this.prixUnitaire = prixUnitaire;
+        this.stock = stock;
+        this.quantiteUnLot = quantiteUnLot;
+        this.prixUnLot = prixUnLot;
+        this.promotion = promotion;
+        this.promotionActive = promotionActive;
+        this.lienImage = lienImage;
     }
     
     public int getId() {
@@ -76,7 +93,7 @@ public class Produit {
         return stock;
     }
 
-    public void setQuantiteEnStock(int stock) {
+    public void setStock(int stock) {
         this.stock = stock;
     }
 
@@ -108,8 +125,8 @@ public class Produit {
         return lienImage;
     }
 
-    public void setLienImage(String lien) {
-        this.lienImage = lien;
+    public void setLienImage(String lienImage) {
+        this.lienImage = lienImage;
     }
 
     public double getPrixUnitaire() {

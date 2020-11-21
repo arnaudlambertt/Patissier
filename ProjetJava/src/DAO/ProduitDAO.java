@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author Benjamin
  */
-public class ProduitDAO extends DAO<Produit, String>
+public class ProduitDAO extends DAO<Produit, Object>
 {
 
     public ProduitDAO()
@@ -25,7 +25,7 @@ public class ProduitDAO extends DAO<Produit, String>
     }
 
     @Override
-    public Produit create(Produit obj, String test)
+    public Produit create(Produit obj, Object nullObject)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
@@ -47,6 +47,8 @@ public class ProduitDAO extends DAO<Produit, String>
                 throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
                 throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+            if (obj.getPromotion() < 0.0)
+                throw new NullPointerException("ERREUR: Promotion negative");
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
@@ -79,7 +81,6 @@ public class ProduitDAO extends DAO<Produit, String>
                 throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
 
             int id = result.getInt(1);
-
             produit = this.find(id);
         } catch (NullPointerException | SQLException e)
         {
@@ -108,7 +109,7 @@ public class ProduitDAO extends DAO<Produit, String>
 
             prepare = this.connect
                     .prepareStatement(
-                            "SELECT * FROM utilisateur WHERE id = ? ",
+                            "SELECT * FROM produit WHERE id = ? ",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     );
@@ -164,6 +165,8 @@ public class ProduitDAO extends DAO<Produit, String>
                 throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
                 throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+            if (obj.getPromotion() < 0.0)
+                throw new NullPointerException("ERREUR: Promotion negative");
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
@@ -338,7 +341,7 @@ public class ProduitDAO extends DAO<Produit, String>
         return produits;
     }
 
-    public boolean stockSuffisant(Produit obj, int quantite)
+    public boolean stockSuffisant(Produit obj, int quantiteVoulue)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
@@ -347,7 +350,7 @@ public class ProduitDAO extends DAO<Produit, String>
         {
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
-            if (quantite <= 0)
+            if (quantiteVoulue <= 0)
                 throw new NullPointerException("ERREUR: Quantite incorrecte");
 
             if (connect == null)
@@ -368,7 +371,7 @@ public class ProduitDAO extends DAO<Produit, String>
 
             int stock = result.getInt(1);
 
-            bool = quantite >= stock;
+            bool = stock >= quantiteVoulue;
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " stockSuffisant() " + e.getMessage());

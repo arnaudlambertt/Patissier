@@ -9,6 +9,7 @@ package projetjava;
 import MODEL.*;
 import DAO.*;
 import CONTROLLER.Controller;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -28,33 +29,55 @@ public class ProjetJava extends Application{
         //System.out.println("Je suis dans projetJava");
         //System.out.println(controller.toString());
         
-        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        //utilisateurDAO.open();
+        ProduitDAO dao = new ProduitDAO();
+        dao.open();
         
-        Utilisateur test;
-        String nom = "LAMBERT";
-        String prenom = "Arnaud";
-        String email = "abc.def@ghi.wtf";
-        String mdp = "123456";
-        test = utilisateurDAO.create(new Utilisateur(nom, prenom, email), mdp);
+        Produit test;
+        String nom = "Clavier";
+        String categorie = "Peripheriques";
+        String nomFournisseur = "Corsair";
+        double prixUnitaire = 3.50;
+        int stock = 30;
+        int quantiteUnLot = 10;
+        double prixUnLot = 25.0;
+        double promotion = 0.1;
+        boolean promotionActive = false;
+        String lienImage = "corsair/clavier.png";
+        test = dao.create(new Produit(nom, categorie, nomFournisseur, prixUnitaire, stock, quantiteUnLot, prixUnLot, promotion, promotionActive, lienImage),null);
         System.out.println(test.toString());
-//        test = utilisateurDAO.connexion(email, mdp);
-//        System.out.println(test.toString());
-//        email = "abc.def@ghi.wtf2";
-//        test.setEmail(email);
-//        System.out.println(utilisateurDAO.update(test));
-//        System.out.println(utilisateurDAO.emailExistant(email));
-//        test = utilisateurDAO.connexion(email, mdp);
-//        System.out.println(test.toString());
-//        String nouveauMdp = "abcdef";
-//        System.out.println(utilisateurDAO.modifierMotDePasse(test, mdp, nouveauMdp));
-//        test = utilisateurDAO.connexion(email, nouveauMdp);
-//        System.out.println(test.toString());
-//        System.out.println(utilisateurDAO.delete(test));
-//        test = utilisateurDAO.connexion(email, nouveauMdp);
-//        System.out.println(test.toString());
-//        
-//        utilisateurDAO.close();
+        prixUnitaire = 3.0;
+        test.setPrixUnitaire(prixUnitaire);
+        stock = 29;
+        test.setStock(stock);
+        System.out.println(dao.stockSuffisant(test,30));
+        System.out.println(dao.update(test));
+        test = dao.find(test.getId());
+        System.out.println(test.toString());
+        System.out.println(dao.stockSuffisant(test,30));
+    
+        dao.getProduits().forEach((p) ->
+        {
+            System.out.println(p.toString());
+        });
+        
+        dao.getProduits(categorie).forEach((p) ->
+        {
+            System.out.println(p.toString());
+        });
+        
+        System.out.println(dao.delete(test));
+
+        dao.getProduits(categorie).forEach((p) ->
+        {
+            System.out.println(p.toString());
+        });
+        
+        dao.getProduits().forEach((p) ->
+        {
+            System.out.println(p.toString());
+        });
+        
+        dao.close();
 
         //this.view.start(primaryStage);
         //this.controller.setActionButon();
