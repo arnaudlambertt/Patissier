@@ -42,7 +42,8 @@ public abstract class DAO<T,E> {
     /**
      * Permet la suppression d'une entrée de la base
      * @param obj
+     * @return 
      */
-    public abstract void delete(T obj);
+    public abstract boolean delete(T obj);
 }
 

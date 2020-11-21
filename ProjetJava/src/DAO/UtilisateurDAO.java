@@ -13,7 +13,6 @@ import MODEL.Utilisateur;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Types;
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -26,7 +25,6 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     @Override
     public Utilisateur create(Utilisateur obj, String motDePasse)
     {
-        obj = new Utilisateur();
         try
         {
             if (obj.getNom().isEmpty())
@@ -41,7 +39,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             PreparedStatement prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe) "
-                            + "VALUES( ? , ? , ? , ? )", Statement.RETURN_GENERATED_KEYS
+                            + "VALUES( ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
                     );
 
             prepare.setString(1, obj.getNom());
@@ -56,15 +54,14 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                 throw new SQLException("SQL ERROR : ID autoIncrement nulle");
 
             int id = result.getInt(1);
-            obj = this.find(id);
-
-            //}
+            
+            return this.find(id);
         } catch (SQLException | NullPointerException e)
         {
             System.err.println("UtilisateurDAO create() " + e.getMessage());
+            return new Utilisateur();
         }
-        return obj;
-    }//end create
+    }
 
     @Override
     public Utilisateur find(int id)
@@ -99,7 +96,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             System.err.println("UtilisateurDAO find() " + e.getMessage());
         }
         return obj;
-    }//end find
+    }
 
     @Override
     public boolean update(Utilisateur obj)
@@ -118,7 +115,9 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             PreparedStatement prepare = this.connect
                     .prepareStatement(
                             "UPDATE utilisateur "
-                            + "SET nom = ? , prenom = ? , email = ? "
+                            + "SET nom = ? , "
+                            + "prenom = ? , "
+                            + "email = ? "
                             + "WHERE id = ?",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
@@ -131,56 +130,16 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             prepare.executeUpdate();
 
-            obj = this.find(obj.getId());
+            return this.find(obj.getId()).getId() != 0;// false / true
         } catch (SQLException | NullPointerException e)
         {
             System.err.println("UtilisateurDAO update() " + e.getMessage());
-        }
-
-        return obj.getId() != 0;
-    }//end update
-
-    public boolean modifierMotDePasse(Utilisateur obj, String ancienMotDePasse, String nouveauMotDePasse)
-    {
-        if (connexion(obj.getEmail(), ancienMotDePasse).getId() == 0)
-            return false;
-
-        try
-        {
-            if (obj.getId() == 0)
-                throw new NullPointerException("ERROR : ID nulle");
-            if (nouveauMotDePasse.isEmpty())
-                throw new NullPointerException("ERROR : Nouveau mot de passe vide");
-
-            PreparedStatement prepare = this.connect
-                    .prepareStatement(
-                            "UPDATE utilisateur "
-                            + "SET mot_de_passe = ? "
-                            + "WHERE id = ?",
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
-                    );
-
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(nouveauMotDePasse.getBytes(StandardCharsets.UTF_8));
-            nouveauMotDePasse = new String(Hex.encode(hash));
-
-            prepare.setString(1, nouveauMotDePasse);
-            prepare.setInt(2, obj.getId());
-
-            prepare.executeUpdate();
-
-        } catch (SQLException | NullPointerException | NoSuchAlgorithmException e)
-        {
-            System.err.println("UtilisateurDAO modifierMotDePasse() " + e.getMessage());
             return false;
         }
-
-        return true;
-    }//end update
+    }
 
     @Override
-    public void delete(Utilisateur obj)
+    public boolean delete(Utilisateur obj)
     {
         try
         {
@@ -196,11 +155,13 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.setInt(1, obj.getId());
             prepare.executeUpdate();
 
+            return this.find(obj.getId()).getId() == 0;//true / false
         } catch (SQLException | NullPointerException e)
         {
             System.err.println("UtilisateurDAO delete() " + e.getMessage());
+            return false;
         }
-    }//end delete
+    }
 
     public Utilisateur connexion(String email, String motDePasse)
     {
@@ -239,7 +200,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         return obj;
     }
 
-    public boolean mailExiste(String email)
+    public boolean emailExistant(String email)
     {
         try
         {
@@ -248,7 +209,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             PreparedStatement prepare = this.connect
                     .prepareStatement(
-                            "SELECT * FROM utilisateur WHERE email = ? ",
+                            "SELECT email FROM utilisateur WHERE email = ? ",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     );
@@ -258,13 +219,49 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             ResultSet result = prepare.executeQuery();
 
             return result.next();//true / false
-
         } catch (SQLException | NullPointerException e)
         {
             System.err.println("UtilisateurDAO mailExiste() " + e.getMessage());
+            return true;
         }
-
-        return true;
     }
-}//end classe
 
+    public boolean modifierMotDePasse(Utilisateur obj, String ancienMotDePasse, String nouveauMotDePasse)
+    {
+        if (connexion(obj.getEmail(), ancienMotDePasse).getId() == 0)
+            return false;
+
+        try
+        {
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERROR : ID nulle");
+            if (nouveauMotDePasse.isEmpty())
+                throw new NullPointerException("ERROR : Nouveau mot de passe vide");
+
+            PreparedStatement prepare = this.connect
+                    .prepareStatement(
+                            "UPDATE utilisateur "
+                            + "SET mot_de_passe = ? "
+                            + "WHERE id = ?",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(nouveauMotDePasse.getBytes(StandardCharsets.UTF_8));
+            nouveauMotDePasse = new String(Hex.encode(hash));
+
+            prepare.setString(1, nouveauMotDePasse);
+            prepare.setInt(2, obj.getId());
+
+            prepare.executeUpdate();
+
+            return true;
+        } catch (SQLException | NullPointerException | NoSuchAlgorithmException e)
+        {
+            System.err.println("UtilisateurDAO modifierMotDePasse() " + e.getMessage());
+            return false;
+        }
+    }
+
+}
