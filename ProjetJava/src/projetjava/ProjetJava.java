@@ -27,8 +27,31 @@ public class ProjetJava extends Application{
         //controller.init();
         //System.out.println("Je suis dans projetJava");
         //System.out.println(controller.toString());
-
-
+        
+        
+        UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+        Utilisateur test;
+        String nom = "LAMBERT";
+        String prenom = "Arnaud";
+        String email = "abc.def@ghi.wtf";
+        String mdp = "123456";
+        test = utilisateurDAO.create(new Utilisateur(nom, prenom, email), mdp);
+        System.out.println(test.toString());
+        test = utilisateurDAO.connexion(email, mdp);
+        System.out.println(test.toString());
+        email = "abc.def@ghi.wtf2";
+        test.setEmail(email);
+        System.out.println(utilisateurDAO.update(test));
+        System.out.println(utilisateurDAO.emailExistant(email));
+        test = utilisateurDAO.connexion(email, mdp);
+        System.out.println(test.toString());
+        String nouveauMdp = "abcdef";
+        System.out.println(utilisateurDAO.modifierMotDePasse(test, mdp, nouveauMdp));
+        test = utilisateurDAO.connexion(email, nouveauMdp);
+        System.out.println(test.toString());
+        System.out.println(utilisateurDAO.delete(test));
+        test = utilisateurDAO.connexion(email, nouveauMdp);
+        System.out.println(test.toString());
 
         //this.view.start(primaryStage);
         //this.controller.setActionButon();

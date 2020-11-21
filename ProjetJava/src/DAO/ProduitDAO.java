@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import MODEL.Produit;
+import java.util.ArrayList;
 
 /**
  *
@@ -66,7 +67,7 @@ public class ProduitDAO extends DAO<Produit, String>
                 throw new SQLException("SQL ERROR : ID autoIncrement nulle");
 
             int id = result.getInt(1);
-            
+
             return this.find(id);
         } catch (NullPointerException | SQLException e)
         {
@@ -93,21 +94,19 @@ public class ProduitDAO extends DAO<Produit, String>
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
 
-            if (!result.next())
-                throw new SQLException("SQL ERROR : PAS DE RESULTAT");
-
-            obj = new Produit(id,
-                    result.getString("nom"),
-                    result.getString("categorie"),
-                    result.getString("nom_fournisseur"),
-                    result.getDouble("prix_unitaire"),
-                    result.getInt("stock"),
-                    result.getInt("quantite_un_lot"),
-                    result.getDouble("prix_un_lot"),
-                    result.getDouble("promotion"),
-                    result.getBoolean("promotion_active"),
-                    result.getString("lien_image")
-            );
+            if (result.next())
+                obj = new Produit(id,
+                        result.getString("nom"),
+                        result.getString("categorie"),
+                        result.getString("nom_fournisseur"),
+                        result.getDouble("prix_unitaire"),
+                        result.getInt("stock"),
+                        result.getInt("quantite_un_lot"),
+                        result.getDouble("prix_un_lot"),
+                        result.getDouble("promotion"),
+                        result.getBoolean("promotion_active"),
+                        result.getString("lien_image")
+                );
 
         } catch (SQLException | NullPointerException e)
         {
@@ -205,6 +204,83 @@ public class ProduitDAO extends DAO<Produit, String>
         }
     }
 
+    public ArrayList<Produit> getProduits()
+    {
+        ArrayList<Produit> produits = new ArrayList<>();
+        try
+        {
+
+            ResultSet result = this.connect
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE)
+                    .executeQuery("SELECT * FROM produit"
+                    );
+
+            while (result.next())
+            {
+                Produit obj = new Produit(
+                        result.getInt("id"),
+                        result.getString("nom"),
+                        result.getString("categorie"),
+                        result.getString("nom_fournisseur"),
+                        result.getDouble("prix_unitaire"),
+                        result.getInt("stock"),
+                        result.getInt("quantite_un_lot"),
+                        result.getDouble("prix_un_lot"),
+                        result.getDouble("promotion"),
+                        result.getBoolean("promotion_active"),
+                        result.getString("lien_image")
+                );
+                produits.add(obj);
+            }
+
+        } catch (SQLException e)
+        {
+            System.err.println("ProduitDAO get() " + e.getMessage());
+        }
+        return produits;
+    }
+
+    public ArrayList<Produit> getProduits(String categorie)
+    {
+        ArrayList<Produit> produits = new ArrayList<>();
+        try
+        {
+            PreparedStatement prepare = this.connect
+                    .prepareStatement(
+                            "SELECT * FROM produit WHERE categorie = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+            prepare.setString(1, categorie);
+            ResultSet result = prepare.executeQuery();
+
+            while (result.next())
+            {
+                Produit obj = new Produit(
+                        result.getInt("id"),
+                        result.getString("nom"),
+                        categorie,
+                        result.getString("nom_fournisseur"),
+                        result.getDouble("prix_unitaire"),
+                        result.getInt("stock"),
+                        result.getInt("quantite_un_lot"),
+                        result.getDouble("prix_un_lot"),
+                        result.getDouble("promotion"),
+                        result.getBoolean("promotion_active"),
+                        result.getString("lien_image")
+                );
+                produits.add(obj);
+            }
+
+        } catch (SQLException | NullPointerException e)
+        {
+            System.err.println("ProduitDAO find() " + e.getMessage());
+        }
+        return produits;
+    }
+    
     public boolean stockSuffisant(Produit obj, int quantite)
     {
         try

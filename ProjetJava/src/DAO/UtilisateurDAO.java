@@ -54,7 +54,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                 throw new SQLException("SQL ERROR : ID autoIncrement nulle");
 
             int id = result.getInt(1);
-            
+
             return this.find(id);
         } catch (SQLException | NullPointerException e)
         {
@@ -81,15 +81,13 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.setInt(1, id);
             ResultSet result = prepare.executeQuery();
 
-            if (!result.next())
-                throw new SQLException("SQL ERROR : PAS DE RESULTAT");
-
-            obj = new Utilisateur(id,
-                    result.getString("nom"),
-                    result.getString("prenom"),
-                    result.getString("email"),
-                    result.getString("role")
-            );
+            if (result.next())
+                obj = new Utilisateur(id,
+                        result.getString("nom"),
+                        result.getString("prenom"),
+                        result.getString("email"),
+                        result.getString("role")
+                );
 
         } catch (SQLException | NullPointerException e)
         {

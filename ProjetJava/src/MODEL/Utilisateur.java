@@ -35,6 +35,14 @@ public class Utilisateur {
         this.role = role;
     }
     
+    public Utilisateur(String nom, String prenom, String email) {
+        this.id = 0;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.email = email;
+        this.role = "";
+    }
+    
     public int getId() {
         return id;
     }

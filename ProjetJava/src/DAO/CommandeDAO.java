@@ -52,7 +52,7 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
                 if(produitActuel.getKey().getPrixUnitaire()==0f)
                 {
                    prepare.setNull(4, 92);
-                }else prepare.setFloat(4, produitActuel.getKey().getPrixUnitaire());
+                }else prepare.setDouble(4, produitActuel.getKey().getPrixUnitaire());
                 if(produitActuel.getKey().getQuantiteUnLot()==0f)
                 {
                     prepare.setNull(5, 92);
@@ -60,7 +60,7 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
                 if(produitActuel.getKey().getPrixUnLot()==0f)
                 {
                     prepare.setNull(6, 92);
-                }else prepare.setFloat(6, produitActuel.getKey().getPrixUnLot());
+                }else prepare.setDouble(6, produitActuel.getKey().getPrixUnLot());
                 
                 prepare.executeUpdate();
                 ResultSet result = prepare.getGeneratedKeys();
@@ -175,7 +175,7 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
     }
 
     @Override
-    public void delete(Commande obj) {
+    public boolean delete(Commande obj) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
