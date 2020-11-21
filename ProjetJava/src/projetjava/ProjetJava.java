@@ -29,11 +29,11 @@ public class ProjetJava extends Application{
         //System.out.println(controller.toString());
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
         String email = "abc.def@ghi.jk5";
-        String mdp = "abcdef";
+        String mdp = "123456";
         Utilisateur test = utilisateurDAO.connexion(email, mdp);
         System.out.println(test.toString());
 
-        String nouveauMdp = "123456";
+        String nouveauMdp = "";
         System.out.println(utilisateurDAO.modifierMotDePasse(test,mdp,nouveauMdp));
         test = utilisateurDAO.connexion(email, nouveauMdp);
         System.out.println(test.toString());

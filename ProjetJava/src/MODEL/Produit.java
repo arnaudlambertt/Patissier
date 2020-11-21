@@ -13,7 +13,7 @@ package MODEL;
 public class Produit {
     private int id;
     private int quantiteUnLot;
-    private int quantiteEnStock;
+    private int stock;
     private String nom;
     private String categorie;
     private String nomFournisseur;
@@ -30,7 +30,7 @@ public class Produit {
         this.categorie= "";
         this.nomFournisseur= "";
         this.prixUnitaire=0f;
-        this.quantiteEnStock=0;
+        this.stock=0;
         this.quantiteUnLot=0;
         this.prixUnLot=0f;
         this.promotion=0;
@@ -39,7 +39,7 @@ public class Produit {
     }
 
     public Produit(int id, String nom, String categorie, String nomFournisseur
-        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
+        , float prixUnitaire, int stock, int quantiteUnLot, float prixUnLot
         , float promotion, boolean promotionActive, String lien) 
     {
         this.id=id;
@@ -47,7 +47,7 @@ public class Produit {
         this.categorie=categorie;
         this.nomFournisseur=nomFournisseur;
         this.prixUnitaire=prixUnitaire;
-        this.quantiteEnStock=quantiteEnStock;
+        this.stock=stock;
         this.quantiteUnLot=quantiteUnLot;
         this.prixUnLot=prixUnLot;
         this.promotion=promotion;
@@ -55,7 +55,7 @@ public class Produit {
         this.lien=lien;
     }
     public Produit( String nom, String categorie, String nomFournisseur
-        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
+        , float prixUnitaire, int stock, int quantiteUnLot, float prixUnLot
         , float promotion, boolean promotionActive, String lien) 
     {
         this.id=0;
@@ -63,7 +63,7 @@ public class Produit {
         this.categorie=categorie;
         this.nomFournisseur=nomFournisseur;
         this.prixUnitaire=prixUnitaire;
-        this.quantiteEnStock=quantiteEnStock;
+        this.stock=stock;
         this.quantiteUnLot=quantiteUnLot;
         this.prixUnLot=prixUnLot;
         this.promotion=promotion;
@@ -87,12 +87,12 @@ public class Produit {
         this.quantiteUnLot = quantiteUnLot;
     }
 
-    public int getQuantiteEnStock() {
-        return quantiteEnStock;
+    public int getStock() {
+        return stock;
     }
 
-    public void setQuantiteEnStock(int quantiteEnStock) {
-        this.quantiteEnStock = quantiteEnStock;
+    public void setQuantiteEnStock(int stock) {
+        this.stock = stock;
     }
 
     public String getNom() {
@@ -167,7 +167,7 @@ public class Produit {
         str += "CATEGORIE : " + this.getCategorie()+ "\n";
         str += "NOM FOURNISSEUR : " + this.getNomFournisseur()+ "\n";
         str += "PRIX UNITAIRE : " + this.getPrixUnitaire()+ "\n";
-        str += "QUANTITE EN STOCK : " + this.getQuantiteEnStock()+ "\n";
+        str += "STOCK : " + this.getStock()+ "\n";
         str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot()+ "\n";
         str += "PRIX POUR UN LOT : " + this.getPrixUnLot()+ "\n";
         str += "PROMOTION : " + this.getPromotion()+ "\n";
