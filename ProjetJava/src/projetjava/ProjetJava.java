@@ -9,7 +9,6 @@ package projetjava;
 import MODEL.*;
 import DAO.*;
 import CONTROLLER.Controller;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -43,7 +42,7 @@ public class ProjetJava extends Application{
         double promotion = 0.1;
         boolean promotionActive = false;
         String lienImage = "corsair/clavier.png";
-        test = dao.create(new Produit(nom, categorie, nomFournisseur, prixUnitaire, stock, quantiteUnLot, prixUnLot, promotion, promotionActive, lienImage),null);
+        test = dao.create(new Produit(nom, categorie, nomFournisseur, prixUnitaire, stock, quantiteUnLot, prixUnLot, promotion, promotionActive, lienImage));
         System.out.println(test.toString());
         prixUnitaire = 3.0;
         test.setPrixUnitaire(prixUnitaire);
@@ -55,7 +54,7 @@ public class ProjetJava extends Application{
         System.out.println(test.toString());
         System.out.println(dao.stockSuffisant(test,30));
     
-        dao.getProduits().forEach((p) ->
+        dao.getProduits().forEach((Produit p) ->
         {
             System.out.println(p.toString());
         });

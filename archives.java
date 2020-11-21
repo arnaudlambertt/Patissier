@@ -104,7 +104,7 @@ public static void DBBConnexion()
     public void start(Stage primaryStage) throws Exception
     {
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        UtilisateurDAO.open();
+        utilisateurDAO.open();
 
         Utilisateur test;
         String nom = "LAMBERT";
@@ -151,7 +151,7 @@ public static void DBBConnexion()
         double promotion = 0.1;
         boolean promotionActive = false;
         String lienImage = "corsair/clavier.png";
-        test = dao.create(new Produit(nom, categorie, nomFournisseur, prixUnitaire, stock, quantiteUnLot, prixUnLot, promotion, promotionActive, lienImage),null);
+        test = dao.create(new Produit(nom, categorie, nomFournisseur, prixUnitaire, stock, quantiteUnLot, prixUnLot, promotion, promotionActive, lienImage));
         System.out.println(test.toString());
         prixUnitaire = 3.0;
         test.setPrixUnitaire(prixUnitaire);
