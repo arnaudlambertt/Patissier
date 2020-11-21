@@ -23,10 +23,14 @@ public class ProduitDAO extends DAO<Produit, String>
     {
         this.className = "ProduitDAO";
     }
-    
+
     @Override
     public Produit create(Produit obj, String test)
     {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+        Produit produit = new Produit();
+
         try
         {
             if (obj.getNom().isEmpty())
@@ -46,7 +50,7 @@ public class ProduitDAO extends DAO<Produit, String>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERROR : Lien image vide");
 
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO produit ( nom, categorie, nom_fournisseur, prix_unitaire, "
                             + "stock, quantite_un_lot, prix_un_lot, promotion, "
@@ -67,40 +71,47 @@ public class ProduitDAO extends DAO<Produit, String>
 
             prepare.executeUpdate();
 
-            ResultSet result = prepare.getGeneratedKeys();
+            result = prepare.getGeneratedKeys();
             if (!result.next())
                 throw new SQLException("SQL ERROR : ID autoIncrement nulle");
 
             int id = result.getInt(1);
 
-            return this.find(id);
+            produit = this.find(id);
         } catch (NullPointerException | SQLException e)
         {
-            System.err.println("ProduitDAO create() " + e.getMessage());
-            return new Produit();
+            System.err.println(className + " create() " + e.getMessage());
         }
+        finally
+        {
+            close(result);
+            close(prepare);
+        }
+        return produit;
     }
 
     @Override
     public Produit find(int id)
     {
-        Produit obj = new Produit();
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+        Produit produit = new Produit();
         try
         {
             if (id == 0)
                 throw new NullPointerException("ERROR : ID NULLE");
 
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
                             "SELECT * FROM utilisateur WHERE id = ? ",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, id);
-            ResultSet result = prepare.executeQuery();
+            result = prepare.executeQuery();
 
             if (result.next())
-                obj = new Produit(id,
+                produit = new Produit(id,
                         result.getString("nom"),
                         result.getString("categorie"),
                         result.getString("nom_fournisseur"),
@@ -115,14 +126,22 @@ public class ProduitDAO extends DAO<Produit, String>
 
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO find() " + e.getMessage());
+            System.err.println(className + " find() " + e.getMessage());
         }
-        return obj;
+        finally
+        {
+            close(result);
+            close(prepare);
+        }
+        return produit;
     }
 
     @Override
     public boolean update(Produit obj)
     {
+        PreparedStatement prepare = null;
+        boolean bool = false;
+
         try
         {
             if (obj.getId() == 0)
@@ -144,7 +163,7 @@ public class ProduitDAO extends DAO<Produit, String>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERROR : Lien image vide");
 
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
                             "UPDATE produit "
                             + "SET nom = ? ,"
@@ -157,9 +176,7 @@ public class ProduitDAO extends DAO<Produit, String>
                             + "promotion = ? , "
                             + "promotion_active = ? , "
                             + "lien_image = ? "
-                            + "WHERE id = ?",
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
+                            + "WHERE id = ?"
                     );
 
             prepare.setString(1, obj.getNom());
@@ -176,46 +193,55 @@ public class ProduitDAO extends DAO<Produit, String>
 
             prepare.executeUpdate();
 
-            return this.find(obj.getId()).getId() != 0;// false / true
+            bool = true;
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO update() " + e.getMessage());
-            return false;
+            System.err.println(className + " update() " + e.getMessage());
         }
+        finally
+        {
+            close(prepare);
+        }
+        return bool;
     }
 
     @Override
     public boolean delete(Produit obj)
     {
+        PreparedStatement prepare = null;
+        boolean bool = false;
         try
         {
             if (obj.getId() == 0)
                 throw new NullPointerException("ERROR : ID nulle");
 
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
-                            "DELETE FROM produit WHERE id = ? ",
-                            ResultSet.TYPE_SCROLL_INSENSITIVE,
-                            ResultSet.CONCUR_UPDATABLE
+                            "DELETE FROM produit WHERE id = ? "
                     );
             prepare.setInt(1, obj.getId());
             prepare.executeUpdate();
 
-            return this.find(obj.getId()).getId() == 0;//true / false
+            bool = this.find(obj.getId()).getId() == 0;//true / false
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO delete() " + e.getMessage());
-            return false;
+            System.err.println(className + " delete() " + e.getMessage());
         }
+        finally
+        {
+            close(prepare);
+        }
+        return bool;
     }
 
     public ArrayList<Produit> getProduits()
     {
+        ResultSet result = null;
         ArrayList<Produit> produits = new ArrayList<>();
         try
         {
 
-            ResultSet result = this.connect
+            result = this.connect
                     .createStatement(
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE)
@@ -242,24 +268,30 @@ public class ProduitDAO extends DAO<Produit, String>
 
         } catch (SQLException e)
         {
-            System.err.println("ProduitDAO getProduits() " + e.getMessage());
+            System.err.println(className + " getProduits() " + e.getMessage());
+        }
+        finally
+        {
+            close(result);
         }
         return produits;
     }
 
     public ArrayList<Produit> getProduits(String categorie)
     {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
         ArrayList<Produit> produits = new ArrayList<>();
         try
         {
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
                             "SELECT * FROM produit WHERE categorie = ? ",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setString(1, categorie);
-            ResultSet result = prepare.executeQuery();
+            result = prepare.executeQuery();
 
             while (result.next())
             {
@@ -281,13 +313,21 @@ public class ProduitDAO extends DAO<Produit, String>
 
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO getProduits(categorie) " + e.getMessage());
+            System.err.println(className + " getProduits(categorie) " + e.getMessage());
+        }
+        finally
+        {
+            close(result);
+            close(prepare);
         }
         return produits;
     }
-    
+
     public boolean stockSuffisant(Produit obj, int quantite)
     {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+        boolean bool = false;
         try
         {
             if (obj.getId() == 0)
@@ -295,7 +335,7 @@ public class ProduitDAO extends DAO<Produit, String>
             if (quantite <= 0)
                 throw new NullPointerException("ERROR : Quantite incorrecte");
 
-            PreparedStatement prepare = this.connect
+            prepare = this.connect
                     .prepareStatement(
                             "SELECT stock FROM produit WHERE id = ? ",
                             ResultSet.TYPE_SCROLL_INSENSITIVE,
@@ -304,18 +344,22 @@ public class ProduitDAO extends DAO<Produit, String>
 
             prepare.setInt(1, obj.getId());
 
-            ResultSet result = prepare.executeQuery();
+            result = prepare.executeQuery();
             if (!result.next())
                 throw new SQLException("SQL ERROR : PAS DE RESULTAT");
 
             int stock = result.getInt(1);
 
-            return quantite >= stock;
+            bool = quantite >= stock;
         } catch (SQLException | NullPointerException e)
         {
-            System.err.println("ProduitDAO stockSuffisant() " + e.getMessage());
-            return false;
+            System.err.println(className + " stockSuffisant() " + e.getMessage());
         }
+        finally
+        {
+            close(result);
+            close(prepare);
+        }
+        return bool;
     }
-
 }
