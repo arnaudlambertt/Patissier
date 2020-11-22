@@ -5,10 +5,7 @@
  */
 package DAO;
 
-
-
 import MODEL.Utilisateur;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,7 +19,8 @@ import MODEL.Produit;
  *
  * @author Benjamin
  */
-public class CommandeDAO extends DAO<Commande,Utilisateur> {
+public class CommandeDAO extends DAO<Commande, Utilisateur>
+{
 
     @Override
     public Commande find(int id)
@@ -48,7 +46,5 @@ public class CommandeDAO extends DAO<Commande,Utilisateur> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-  
-
 }//end classe
-    
+

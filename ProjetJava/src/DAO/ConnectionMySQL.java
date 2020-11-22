@@ -15,7 +15,6 @@ import java.util.logging.Logger;
  *
  * @author Benjamin
  */
-
 public class ConnectionMySQL
 {
 
@@ -40,17 +39,13 @@ public class ConnectionMySQL
      * Méthode qui va nous retourner notre instance et la créer si elle n'existe pas...
      *
      * @return
+     * @throws java.sql.SQLException
      */
-    public static Connection getInstance()
+    public static Connection getInstance() throws SQLException
     {
-        try
-        {
-            if (connect == null || connect.isClosed())
-                connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
-        } catch (SQLException e)
-        {
-            Logger.getLogger("ConnectionMySQL " + e.getMessage());
-        }
+
+        connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
+
         return connect;
     }
 }

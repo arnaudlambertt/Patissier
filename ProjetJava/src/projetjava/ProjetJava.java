@@ -26,19 +26,31 @@ public class ProjetJava extends Application{
         ProduitDAO pdao = new ProduitDAO();
         
         Produit p = pdao.find(2);
-        
         Commande c = new Commande();
         c.setId(1);
         
         ProduitCommandeDAO dao = new ProduitCommandeDAO();
         int idCommande = 1;
-        int quantite = 5;
+        int quantite = 25;
         
         Pair<Produit,Integer> pc = new Pair<>(p,quantite);
         pc = dao.create(pc, idCommande);
-        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue() );
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
         
+        c.addProduitsCommande(pc);
+        System.out.println(c.toString());
         
+        quantite = 24;
+        System.out.println(dao.update(new Pair<>(p,idCommande), quantite));
+        pc = dao.find(idCommande, p.getId());
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
+        c.setProduitsCommande(dao.getProduitsCommande(idCommande));
+        System.out.println(c.toString());
+        System.out.println(dao.delete(new Pair<>(p,idCommande)));
+        pc = dao.find(idCommande, p.getId());
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
+
+        dao.close();
         dao.close();
         
         System.exit(0);

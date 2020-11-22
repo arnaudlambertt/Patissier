@@ -7,6 +7,7 @@ package MODEL;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import javafx.util.Pair;
 
 /**
  *
@@ -108,9 +109,9 @@ public class Commande
         calculerPrix();
     }
 
-    public void addProduitsCommande(Produit produit, Integer i)
+    public void addProduitsCommande(Pair<Produit,Integer> produitCommande)
     {
-        this.produitsCommande.put(produit, i);
+        this.produitsCommande.put(produitCommande.getKey(),produitCommande.getValue());
         calculerPrix();
     }
 

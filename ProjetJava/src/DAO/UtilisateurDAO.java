@@ -48,8 +48,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (motDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Mot de passe vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -71,7 +70,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             int id = result.getInt(1);
 
             return this.find(id);
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
@@ -94,8 +93,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (id == 0)
                 throw new NullPointerException("ERREUR: Param 1 nul");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -104,7 +102,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, id);
-            
+
             result = prepare.executeQuery();
 
             if (result.next())
@@ -116,7 +114,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                 );
             else
                 return new Utilisateur();
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
@@ -146,8 +144,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (obj.getEmail().isEmpty())
                 throw new NullPointerException("ERREUR: Mail vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -166,7 +163,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() != 0;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
@@ -181,7 +178,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     public boolean delete(Utilisateur obj)
     {
         PreparedStatement prepare = null;
-        
+
         try
         {
             if (obj == null)
@@ -189,19 +186,18 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
                             "DELETE FROM utilisateur WHERE id = ? "
                     );
             prepare.setInt(1, obj.getId());
-            
+
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() == 0;//true / false
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
@@ -216,7 +212,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        
+
         try
         {
             if (email == null)
@@ -228,8 +224,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (motDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Mot de passe vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -250,9 +245,9 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             if (result.next())
                 return this.find(result.getInt(1));
-            else 
+            else
                 return new Utilisateur();
-            
+
         } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " connexion() " + e.getMessage());
@@ -268,7 +263,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        
+
         try
         {
             if (email == null)
@@ -276,8 +271,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (email.isEmpty())
                 throw new NullPointerException("ERREUR: Email vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -291,7 +285,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             result = prepare.executeQuery();
 
             return result.next();//true / false
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " mailExiste() " + e.getMessage());
@@ -324,8 +318,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (nouveauMotDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Nouveau mot de passe vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -344,7 +337,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             prepare.executeUpdate();
 
             return true;
-            
+
         } catch (NullPointerException | SQLException | NoSuchAlgorithmException e)
         {
             System.err.println(className + " modifierMotDePasse() " + e.getMessage());

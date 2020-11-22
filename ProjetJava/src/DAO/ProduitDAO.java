@@ -33,7 +33,7 @@ public class ProduitDAO extends DAO<Produit, Object>
 
         try
         {
-            if(obj == null)
+            if (obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getNom().isEmpty())
                 throw new NullPointerException("ERREUR: Nom vide");
@@ -54,8 +54,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -83,9 +82,9 @@ public class ProduitDAO extends DAO<Produit, Object>
                 throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
 
             int id = result.getInt(1);
-            
+
             return this.find(id);
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " create() " + e.getMessage());
@@ -96,7 +95,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             close(prepare);
         }
     }
-    
+
     public Produit create(Produit obj)
     {
         return this.create(obj, null);
@@ -107,14 +106,13 @@ public class ProduitDAO extends DAO<Produit, Object>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        
+
         try
         {
             if (id == 0)
                 throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -123,7 +121,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, id);
-            
+
             result = prepare.executeQuery();
 
             if (result.next())
@@ -141,7 +139,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                 );
             else
                 return new Produit();
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " find() " + e.getMessage());
@@ -160,7 +158,7 @@ public class ProduitDAO extends DAO<Produit, Object>
 
         try
         {
-            if(obj == null)
+            if (obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID vide");
@@ -183,8 +181,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -217,7 +214,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() != 0;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " update() " + e.getMessage());
@@ -232,27 +229,26 @@ public class ProduitDAO extends DAO<Produit, Object>
     public boolean delete(Produit obj)
     {
         PreparedStatement prepare = null;
-        
+
         try
         {
-            if(obj == null)
+            if (obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
                             "DELETE FROM produit WHERE id = ? "
                     );
             prepare.setInt(1, obj.getId());
-            
+
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() == 0;//true / false
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
@@ -270,8 +266,7 @@ public class ProduitDAO extends DAO<Produit, Object>
         try
         {
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             result = this.connect
                     .createStatement(
@@ -281,7 +276,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                     );
 
             ArrayList<Produit> produits = new ArrayList<>();
-            
+
             while (result.next())
             {
                 Produit obj = new Produit(
@@ -301,7 +296,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             }
 
             return produits;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits() " + e.getMessage());
@@ -316,16 +311,15 @@ public class ProduitDAO extends DAO<Produit, Object>
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        
+
         try
         {
-            if(categorie == null)
+            if (categorie == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (categorie.isEmpty())
                 throw new NullPointerException("ERREUR: Categorie vide");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -334,11 +328,11 @@ public class ProduitDAO extends DAO<Produit, Object>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setString(1, categorie);
-            
+
             result = prepare.executeQuery();
-            
+
             ArrayList<Produit> produits = new ArrayList<>();
-            
+
             while (result.next())
             {
                 Produit obj = new Produit(
@@ -356,9 +350,9 @@ public class ProduitDAO extends DAO<Produit, Object>
                 );
                 produits.add(obj);
             }
-            
+
             return produits;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduits(categorie) " + e.getMessage());
@@ -377,15 +371,14 @@ public class ProduitDAO extends DAO<Produit, Object>
 
         try
         {
-            if(obj == null)
+            if (obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
             if (quantiteVoulue <= 0)
                 throw new NullPointerException("ERREUR: Parametre 2 quantite incorrecte");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -403,7 +396,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             int stock = result.getInt(1);
 
             return stock >= quantiteVoulue;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " stockSuffisant() " + e.getMessage());

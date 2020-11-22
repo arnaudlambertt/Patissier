@@ -18,6 +18,7 @@ import javafx.util.Pair;
  */
 public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
 {
+
     //////////////NORMALEMENT PROTECTED///////////////////
     public ProduitCommandeDAO()
     {
@@ -63,8 +64,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             if (produit.getQuantiteUnLot() > 0 && produit.getPrixUnLot() <= 0.0)
                 throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -82,7 +82,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             prepare.setInt(5, produit.getQuantiteUnLot());
             prepare.setDouble(6, produit.getPrixUnLot()
                     * (1 - (produit.isPromotionActive() ? produit.getPromotion() : 0)));
-            
+
             prepare.executeUpdate();
 
             return this.find(idCommande, produit.getId());
@@ -123,8 +123,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             if (idProduit == 0)
                 throw new NullPointerException("ERREUR: Parametre 2 ID nulle");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -135,7 +134,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                     );
             prepare.setInt(1, idCommande);
             prepare.setInt(2, idProduit);
-            
+
             result = prepare.executeQuery();
 
             if (result.next())
@@ -146,6 +145,8 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                 produit.setPrixUnitaire(result.getDouble("prix_unitaire"));
                 produit.setQuantiteUnLot(result.getInt("quantite_un_lot"));
                 produit.setPrixUnLot(result.getDouble("prix_un_lot"));
+                produit.setPromotion(0.0);
+                produit.setPromotionActive(false);
 
                 return new Pair<>(produit, result.getInt("quantite"));
             } else
@@ -203,16 +204,15 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             if (produit.getQuantiteUnLot() > 0 && produit.getPrixUnLot() <= 0.0)
                 throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
-                            "UPDATE produit "
+                            "UPDATE produit_commande "
                             + "SET quantite = ? ,"
                             + "prix_unitaire = ? , "
                             + "quantite_un_lot = ? , "
-                            + "prix_un_lot = ? , "
+                            + "prix_un_lot = ? "
                             + "WHERE id_commande = ? AND id_produit = ?"
                     );
 
@@ -222,7 +222,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             prepare.setDouble(4, produit.getPrixUnLot());
             prepare.setInt(5, idCommande);
             prepare.setInt(6, produit.getId());
-            
+
             prepare.executeUpdate();
 
             return this.find(idCommande, produit.getId()).getValue() != 0;
@@ -247,33 +247,32 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
     public boolean delete(Pair<Produit, Integer> obj)
     {
         PreparedStatement prepare = null;
-        
+
         try
         {
-            if(obj == null)
+            if (obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
-            if(obj.getKey() == null)
+            if (obj.getKey() == null)
                 throw new NullPointerException("ERREUR: Produit nul");
-            if(obj.getValue() == null || obj.getValue() == 0)
+            if (obj.getValue() == null || obj.getValue() == 0)
                 throw new NullPointerException("ERREUR: ID commande nulle");
             if (obj.getKey().getId() == 0)
                 throw new NullPointerException("ERREUR: ID produit nulle");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
-                            "DELETE FROM produit_commande WHERE "
-                            + "id_commande = ? AND id_produit = ?"
+                            "DELETE FROM produit_commande "
+                            + "WHERE id_commande = ? AND id_produit = ?"
                     );
             prepare.setInt(1, obj.getValue());
             prepare.setInt(2, obj.getKey().getId());
-            
+
             prepare.executeUpdate();
 
             return this.find(obj.getValue(), obj.getKey().getId()).getValue() == 0;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " delete() " + e.getMessage());
@@ -283,19 +282,18 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
             close(prepare);
         }
     }
-    
-    public HashMap<Produit,Integer> getProduitsCommande(int idCommande)
+
+    public HashMap<Produit, Integer> getProduitsCommande(int idCommande)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
-        
+
         try
         {
-            if(idCommande == 0)
+            if (idCommande == 0)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
 
-            if (connect == null || connect.isClosed())
-                this.open();
+            this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -304,11 +302,11 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, idCommande);
-            
+
             result = prepare.executeQuery();
-            
-            HashMap<Produit,Integer> produitsCommande = new HashMap<>();
-            
+
+            HashMap<Produit, Integer> produitsCommande = new HashMap<>();
+
             while (result.next())
             {
                 ProduitDAO dao = new ProduitDAO(); //
@@ -317,11 +315,14 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                 produit.setPrixUnitaire(result.getDouble("prix_unitaire"));
                 produit.setQuantiteUnLot(result.getInt("quantite_un_lot"));
                 produit.setPrixUnLot(result.getDouble("prix_un_lot"));
+                produit.setPromotion(0.0);
+                produit.setPromotionActive(false);
+                
                 produitsCommande.put(produit, result.getInt("quantite"));
             }
-            
+
             return produitsCommande;
-            
+
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " getProduitsCommande() " + e.getMessage());
