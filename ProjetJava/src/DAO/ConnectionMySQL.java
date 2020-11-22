@@ -8,13 +8,16 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Benjamin
  */
 
-
-public class ConnectionMySQL{
+public class ConnectionMySQL
+{
 
     /**
      * URL de connexion
@@ -32,20 +35,22 @@ public class ConnectionMySQL{
      * Objet Connexion
      */
     private static Connection connect;
-    
+
     /**
-     * Méthode qui va nous retourner notre instance
-     * et la créer si elle n'existe pas...
+     * Méthode qui va nous retourner notre instance et la créer si elle n'existe pas...
+     *
      * @return
      */
-    public static Connection getInstance(){
-        if(connect == null){
-            try {
+    public static Connection getInstance()
+    {
+        try
+        {
+            if (connect == null || connect.isClosed())
                 connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
-            } catch (SQLException e) {
-                System.err.println("ConnectionMYSQL " + e.getMessage());
-            }
-        }        
-        return connect;    
-    }    
+        } catch (SQLException e)
+        {
+            Logger.getLogger("ConnectionMySQL " + e.getMessage());
+        }
+        return connect;
+    }
 }

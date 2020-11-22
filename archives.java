@@ -104,8 +104,6 @@ public static void DBBConnexion()
     public void start(Stage primaryStage) throws Exception
     {
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-        utilisateurDAO.open();
-
         Utilisateur test;
         String nom = "LAMBERT";
         String prenom = "Arnaud";
@@ -138,8 +136,6 @@ public static void DBBConnexion()
     public void start(Stage primaryStage) throws Exception
     {
         ProduitDAO dao = new ProduitDAO();
-        dao.open();
-
         Produit test;
         String nom = "Clavier";
         String categorie = "Peripheriques";

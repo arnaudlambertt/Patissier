@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 public abstract class DAO<T,E> {
 
-    public Connection connect = null;
+    public Connection connect = ConnectionMySQL.getInstance();
     protected String className = "DAO";
     
     /**
@@ -53,15 +53,14 @@ public abstract class DAO<T,E> {
     
     public void open()
     {
-        if(connect == null)
-            connect = ConnectionMySQL.getInstance();
+        connect = ConnectionMySQL.getInstance();
     }
     
     public void close()
     {
         try
         {
-            if(connect != null)
+            if(connect != null && !connect.isClosed())
                 connect.close();
         }
         catch(SQLException e)

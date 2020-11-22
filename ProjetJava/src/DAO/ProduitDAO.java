@@ -54,8 +54,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -113,8 +113,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (id == 0)
                 throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -183,8 +183,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getLienImage().isEmpty())
                 throw new NullPointerException("ERREUR: Lien image vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -240,8 +240,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -270,8 +270,8 @@ public class ProduitDAO extends DAO<Produit, Object>
         try
         {
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             result = this.connect
                     .createStatement(
@@ -324,8 +324,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (categorie.isEmpty())
                 throw new NullPointerException("ERREUR: Categorie vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -384,8 +384,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (quantiteVoulue <= 0)
                 throw new NullPointerException("ERREUR: Parametre 2 quantite incorrecte");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(

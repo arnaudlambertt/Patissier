@@ -5,12 +5,12 @@
  */
 package projetjava;
 
-
 import MODEL.*;
 import DAO.*;
 import CONTROLLER.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 /**
  *
@@ -23,8 +23,24 @@ public class ProjetJava extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Integer a = 1;
-        System.out.println(a == 1);
+        ProduitDAO pdao = new ProduitDAO();
+        
+        Produit p = pdao.find(2);
+        
+        Commande c = new Commande();
+        c.setId(1);
+        
+        ProduitCommandeDAO dao = new ProduitCommandeDAO();
+        int idCommande = 1;
+        int quantite = 5;
+        
+        Pair<Produit,Integer> pc = new Pair<>(p,quantite);
+        pc = dao.create(pc, idCommande);
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue() );
+        
+        
+        dao.close();
+        
         System.exit(0);
     }
-}//28.5 + 25.5 + 7
+}

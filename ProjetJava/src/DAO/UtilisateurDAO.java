@@ -48,8 +48,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (motDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Mot de passe vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -94,8 +94,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (id == 0)
                 throw new NullPointerException("ERREUR: Param 1 nul");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -146,8 +146,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (obj.getEmail().isEmpty())
                 throw new NullPointerException("ERREUR: Mail vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -189,8 +189,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (obj.getId() == 0)
                 throw new NullPointerException("ERREUR: ID nulle");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -228,8 +228,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (motDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Mot de passe vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -276,8 +276,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (email.isEmpty())
                 throw new NullPointerException("ERREUR: Email vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
@@ -324,8 +324,8 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
             if (nouveauMotDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Nouveau mot de passe vide");
 
-            if (connect == null)
-                throw new NullPointerException("ERREUR: Pas de connexion à la BDD");
+            if (connect == null || connect.isClosed())
+                this.open();
 
             prepare = this.connect
                     .prepareStatement(
