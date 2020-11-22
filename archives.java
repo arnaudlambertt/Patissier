@@ -202,20 +202,20 @@ public static void DBBConnexion()
 
         Pair<Produit,Integer> pc = new Pair<>(p,quantite);
         pc = dao.create(pc, idCommande);
-        System.out.println(pc.getKey().toString() + "Quantite = " + pc.getValue());
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
 
         c.addProduitsCommande(pc);
         System.out.println(c.toString());
 
         quantite = 24;
         System.out.println(dao.update(new Pair<>(p,idCommande), quantite));
-        pc = dao.find(idCommande, p.getId());
-        System.out.println(pc.getKey().toString() + "Quantite = " + pc.getValue());
+        pc = dao.find(p.getId(), idCommande);
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
         c.setProduitsCommande(dao.getProduitsCommande(idCommande));
         System.out.println(c.toString());
         System.out.println(dao.delete(new Pair<>(p,idCommande)));
-        pc = dao.find(idCommande, p.getId());
-        System.out.println(pc.getKey().toString() + "Quantite = " + pc.getValue());
+        pc = dao.find(p.getId(), idCommande);
+        System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
 
         dao.close();
 
