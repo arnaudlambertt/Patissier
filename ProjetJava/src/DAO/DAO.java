@@ -19,12 +19,6 @@ public abstract class DAO<T,E> {
 
     public Connection connect = null;
     protected String className = "DAO";
-    /**
-     * Permet de récupérer un objet via son ID
-     * @param id
-     * @return
-     */
-    public abstract T find(int id);
     
     /**
      * Permet de créer une entrée dans la base de données
@@ -34,6 +28,14 @@ public abstract class DAO<T,E> {
      * @return 
      */
     public abstract T create(T obj, E element);
+    
+    /**
+     * Permet de récupérer un objet via son ID
+     * @param id
+     * @return
+     */
+    public abstract T find(int id);
+    
     
     /**
      * Permet de mettre à jour les données d'une entrée dans la base 

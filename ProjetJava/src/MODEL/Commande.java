@@ -5,138 +5,149 @@
  */
 package MODEL;
 
-import MODEL.Produit;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import javafx.util.Pair;
-
+import java.util.HashMap;
 
 /**
  *
  * @author Benjamin
  */
-public class Commande {
-    private int idCommande;
-    private int quantiteUnitaire;
-    private int quantiteUnLot;
-    private float prixUnitaire;
-    private float prixUnLot ;
+public class Commande
+{
+
+    private int id;
     private Timestamp horodateur;
-    private ArrayList<Pair<Produit,Integer>> produitsCommande;
-    
-    public Commande(int idCommande, int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
-        this.idCommande = idCommande;
-        this.quantiteUnitaire = quantiteUnitaire;
-        this.quantiteUnLot = quantiteUnLot;
-        this.prixUnitaire = prixUnitaire;
-        this.prixUnLot = prixUnLot;
-        this.horodateur = horodateur;
-        this.produitsCommande = new ArrayList<>();
-    }
-    
-    public Commande(int quantiteUnitaire, int quantiteUnLot, float prixUnitaire, float prixUnLot, Timestamp horodateur) {
-        this.idCommande = 0;
-        this.quantiteUnitaire = quantiteUnitaire;
-        this.quantiteUnLot = quantiteUnLot;
-        this.prixUnitaire = prixUnitaire;
-        this.prixUnLot = prixUnLot;
-        this.horodateur = horodateur;
-        this.produitsCommande = new ArrayList<>();
-    }
-    
-    public Commande() {
-        this.idCommande = 0;
-        this.quantiteUnitaire = 0;
-        this.quantiteUnLot = 0;
-        this.prixUnitaire = 0;
-        this.prixUnLot = 0;
-        this.horodateur = new Timestamp(0);
-        this.produitsCommande = new ArrayList<>();
-    }
+    private String adresse;
+    private double prix;
+    private boolean isLivre;
+    private HashMap<Produit, Integer> produitsCommande;
 
-    public int getQuantiteUnitaire() {
-        return quantiteUnitaire;
-    }
-
-    public void setQuantiteUnitaire(int quantiteUnitaire) {
-        this.quantiteUnitaire = quantiteUnitaire;
-    }
-
-    public int getQuantiteUnLot() {
-        return quantiteUnLot;
-    }
-
-    public void setQuantiteUnLot(int quantiteUnLot) {
-        this.quantiteUnLot = quantiteUnLot;
-    }
-
-    public float getPrixUnitaire() {
-        return prixUnitaire;
-    }
-
-    public void setPrixUnitaire(float prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
-    }
-
-    public float getPrixUnLot() {
-        return prixUnLot;
-    }
-
-    public void setPrixUnLot(float prisUnLot) {
-        this.prixUnLot = prisUnLot;
-    }
-
-    public int getIdCommande() {
-        return idCommande;
-    }
-
-    public void setIdCommande(int id) {
-        this.idCommande = idCommande;
-    }
-
-    public ArrayList<Pair<Produit, Integer>> getProduitsCommande() {
-        return produitsCommande;
-    }
-    
-    public Pair<Produit, Integer> getElementProduitsCommande(int i)
+    public Commande()
     {
-        return this.produitsCommande.get(i);
+        this.id = 0;
+        this.horodateur = new Timestamp(0);
+        this.adresse = "";
+        this.prix = 0.0;
+        this.isLivre = false;
+        this.produitsCommande = new HashMap<>();
     }
 
-    public void setProduitsCommande(ArrayList<Pair<Produit, Integer>> produitsCommande) {
-        this.produitsCommande = produitsCommande;
+    public Commande(int id, Timestamp horodateur, String adresse, double prix, boolean isLivre)
+    {
+        this.id = id;
+        this.horodateur = horodateur;
+        this.adresse = adresse;
+        this.prix = prix;
+        this.isLivre = isLivre;
+        this.produitsCommande = new HashMap<>();
     }
 
-    public Timestamp getHorodateur() {
+    public Commande(String adresse)
+    {
+        this.id = 0;
+        this.horodateur = new Timestamp(0);
+        this.adresse = adresse;
+        this.prix = 0.0;
+        this.isLivre = false;
+        this.produitsCommande = new HashMap<>();
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public Timestamp getHorodateur()
+    {
         return horodateur;
     }
 
-    public void setHorodateur(Timestamp date) {
+    public void setHorodateur(Timestamp date)
+    {
         this.horodateur = date;
     }
-    
-    public void clearProduitsCommande()
+
+    public String getAdresse()
     {
-        this.produitsCommande.clear();
+        return adresse;
     }
-    
+
+    public void setAdresse(String adresse)
+    {
+        this.adresse = adresse;
+    }
+
+    public double getPrix()
+    {
+        return prix;
+    }
+
+    public void setIsLivre(boolean isLivre)
+    {
+        this.isLivre = isLivre;
+    }
+
+    public boolean getIsLivre()
+    {
+        return isLivre;
+    }
+
+    public HashMap<Produit, Integer> getProduitsCommande()
+    {
+        return produitsCommande;
+    }
+
+    public void setProduitsCommande(HashMap<Produit, Integer> produitsCommande)
+    {
+        this.produitsCommande = produitsCommande;
+        calculerPrix();
+    }
+
     public void addProduitsCommande(Produit produit, Integer i)
     {
-        this.produitsCommande.add(new Pair<Produit, Integer>(produit, i));
+        this.produitsCommande.put(produit, i);
+        calculerPrix();
     }
-    
+
+    public void calculerPrix()
+    {
+        this.prix = 0.0;
+        produitsCommande.entrySet().stream().map((entry) ->
+        {
+            double temp;
+
+            if (entry.getKey().getQuantiteUnLot() > 0)
+                temp = (entry.getValue() / entry.getKey().getQuantiteUnLot()) * entry.getKey().getPrixUnLot()
+                        + (entry.getValue() % entry.getKey().getQuantiteUnLot()) * entry.getKey().getPrixUnitaire();
+            else
+                temp = entry.getKey().getPrixUnitaire() * entry.getValue();
+
+            if (entry.getKey().isPromotionActive())
+                temp *= (1 - entry.getKey().getPromotion());
+
+            return temp;
+        }).forEachOrdered((temp) ->
+        {
+            this.prix += temp;
+        });
+
+        //Math.round( this.getPrix() * 100.0 ) / 100.0 pour arrondir à 2 décimales
+    }
+
     @Override
     public String toString()
     {
-        String str = "ID COMMANDE : " + this.getIdCommande()+ "\n";
-        //str += "ID PRODUIT : " + this.getIdProduit()+ "\n";
-        str += "QUANDITE UNITAIRE : " + this.getQuantiteUnitaire()+ "\n";
-        str += "PRIX UNITAIRE : " + this.getPrixUnitaire()+ "\n";
-        str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot()+ "\n";
-        str += "PRIX D'UN SEUL LOT : " + this.getPrixUnitaire()+ "\n";
+        String str = "ID : " + this.getId() + "\n";
+        str = produitsCommande.entrySet().stream().map((entry) -> entry.getKey().getNom() + " " + entry.getValue() + "\n").reduce(str, String::concat);
+        str += "PRIX : " + this.getPrix() + "\n";
         str += "\n.....................................\n";
-        
+
         return str;
     }
-    
+
 }

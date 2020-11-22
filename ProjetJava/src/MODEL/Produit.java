@@ -30,10 +30,10 @@ public class Produit {
         this.nom = "";
         this.categorie = "";
         this.nomFournisseur = "";
-        this.prixUnitaire = 0f;
+        this.prixUnitaire = 0.0;
         this.stock = 0;
         this.quantiteUnLot = 0;
-        this.prixUnLot = 0f;
+        this.prixUnLot = 0.0;
         this.promotion = 0;
         this.promotionActive = false;
         this.lienImage = "";

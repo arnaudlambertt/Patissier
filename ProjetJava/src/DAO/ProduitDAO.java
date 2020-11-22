@@ -46,9 +46,9 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getStock() < 0)
                 throw new NullPointerException("ERREUR: Stock negatif");
             if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
-                throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot a un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
-                throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
             if (obj.getPromotion() < 0.0)
                 throw new NullPointerException("ERREUR: Promotion negative");
             if (obj.getLienImage().isEmpty())
@@ -123,6 +123,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, id);
+            
             result = prepare.executeQuery();
 
             if (result.next())
@@ -174,9 +175,9 @@ public class ProduitDAO extends DAO<Produit, Object>
             if (obj.getStock() < 0)
                 throw new NullPointerException("ERREUR: Stock negatif");
             if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
-                throw new NullPointerException("ERREUR: Si un lot à un prix alors il faut avoir la quantité de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot a un prix alors il faut avoir la quantité de produit par lot");
             if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
-                throw new NullPointerException("ERREUR: Si un lot à une quantité alors il faut avoir un prix de produit par lot");
+                throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
             if (obj.getPromotion() < 0.0)
                 throw new NullPointerException("ERREUR: Promotion negative");
             if (obj.getLienImage().isEmpty())
@@ -215,7 +216,7 @@ public class ProduitDAO extends DAO<Produit, Object>
 
             prepare.executeUpdate();
 
-            return true;
+            return this.find(obj.getId()).getId() != 0;
             
         } catch (NullPointerException | SQLException e)
         {
@@ -247,6 +248,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                             "DELETE FROM produit WHERE id = ? "
                     );
             prepare.setInt(1, obj.getId());
+            
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() == 0;//true / false
@@ -332,6 +334,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setString(1, categorie);
+            
             result = prepare.executeQuery();
             
             ArrayList<Produit> produits = new ArrayList<>();
@@ -404,7 +407,7 @@ public class ProduitDAO extends DAO<Produit, Object>
         } catch (NullPointerException | SQLException e)
         {
             System.err.println(className + " stockSuffisant() " + e.getMessage());
-            return true;
+            return false;
         } finally
         {
             close(result);

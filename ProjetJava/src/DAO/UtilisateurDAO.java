@@ -104,6 +104,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                             ResultSet.CONCUR_UPDATABLE
                     );
             prepare.setInt(1, id);
+            
             result = prepare.executeQuery();
 
             if (result.next())
@@ -164,7 +165,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
             prepare.executeUpdate();
 
-            return true;
+            return this.find(obj.getId()).getId() != 0;
             
         } catch (NullPointerException | SQLException e)
         {
@@ -196,6 +197,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                             "DELETE FROM utilisateur WHERE id = ? "
                     );
             prepare.setInt(1, obj.getId());
+            
             prepare.executeUpdate();
 
             return this.find(obj.getId()).getId() == 0;//true / false
