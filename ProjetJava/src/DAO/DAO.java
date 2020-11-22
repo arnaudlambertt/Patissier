@@ -56,7 +56,8 @@ public abstract class DAO<T, E>
 
     public void open() throws SQLException
     {
-        connect = ConnectionMySQL.getInstance();
+        if(connect == null || connect.isClosed())
+            connect = ConnectionMySQL.getInstance();
     }
 
     public void close()

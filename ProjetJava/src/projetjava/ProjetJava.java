@@ -51,7 +51,6 @@ public class ProjetJava extends Application{
         System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
 
         dao.close();
-        dao.close();
         
         System.exit(0);
     }

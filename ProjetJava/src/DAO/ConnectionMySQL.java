@@ -43,7 +43,6 @@ public class ConnectionMySQL
      */
     public static Connection getInstance() throws SQLException
     {
-
         connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
 
         return connect;
