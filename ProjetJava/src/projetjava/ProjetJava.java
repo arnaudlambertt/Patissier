@@ -42,12 +42,12 @@ public class ProjetJava extends Application{
         
         quantite = 24;
         System.out.println(dao.update(new Pair<>(p,idCommande), quantite));
-        pc = dao.find(idCommande, p.getId());
+        pc = dao.find(p.getId(), idCommande);
         System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
         c.setProduitsCommande(dao.getProduitsCommande(idCommande));
         System.out.println(c.toString());
         System.out.println(dao.delete(new Pair<>(p,idCommande)));
-        pc = dao.find(idCommande, p.getId());
+        pc = dao.find(p.getId(), idCommande);
         System.out.println(pc.getKey().toString() + "\n Quantite = " + pc.getValue());
 
         dao.close();

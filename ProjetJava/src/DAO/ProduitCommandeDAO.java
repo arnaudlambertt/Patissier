@@ -85,7 +85,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
 
             prepare.executeUpdate();
 
-            return this.find(idCommande, produit.getId());
+            return this.find(produit.getId(), idCommande);
 
         } catch (NullPointerException | SQLException e)
         {
@@ -111,16 +111,16 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
      * @param idProduit
      * @return
      */
-    public Pair<Produit, Integer> find(int idCommande, int idProduit)
+    public Pair<Produit, Integer> find(int idProduit, int idCommande)
     {
         PreparedStatement prepare = null;
         ResultSet result = null;
 
         try
         {
-            if (idCommande == 0)
-                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
             if (idProduit == 0)
+                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
+            if (idCommande == 0)            
                 throw new NullPointerException("ERREUR: Parametre 2 ID nulle");
 
             this.open();
@@ -225,7 +225,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
 
             prepare.executeUpdate();
 
-            return this.find(idCommande, produit.getId()).getValue() != 0;
+            return this.find(produit.getId(), idCommande).getValue() != 0;
 
         } catch (NullPointerException | SQLException e)
         {
@@ -271,7 +271,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
 
             prepare.executeUpdate();
 
-            return this.find(obj.getValue(), obj.getKey().getId()).getValue() == 0;
+            return this.find(obj.getKey().getId(), obj.getValue()).getValue() == 0;
 
         } catch (NullPointerException | SQLException e)
         {
