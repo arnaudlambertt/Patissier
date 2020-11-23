@@ -10,6 +10,7 @@ package MODEL;
  * @author Benjamin
  */
 public class Utilisateur {
+    
     private int id;
     private String nom;
     private String prenom;
@@ -21,39 +22,28 @@ public class Utilisateur {
         this.id = 0;
         this.nom = "";
         this.prenom = "";
-        this.email= "";
-        this.role="Utilisateur";
+        this.email = "";
+        this.role = "";
     }
     
     //Constructeur avec tout les paramètres
-    
     public Utilisateur(int id, String nom, String prenom, String email, String role) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
-        this.email=email;
-        this.role=role;
+        this.email = email;
+        this.role = role;
     }
     
-    //Constructeur avec tout les paramètres sauf identifiant parce qu'il est auto incrémenté dans la base de donnée
-    public Utilisateur(String nom, String prenom, String email, String role) {
+    public Utilisateur(String nom, String prenom, String email) {
         this.id = 0;
         this.nom = nom;
         this.prenom = prenom;
-        this.email=email;
-        this.role=role;
+        this.email = email;
+        this.role = "";
     }
     
-    public Utilisateur( String email) {
-        this.id = 0;
-        this.nom = "";
-        this.prenom = "";
-        this.email=email;
-        this.role="Utilisateur";
-        
-    }
-    
-   public int getId() {
+    public int getId() {
         return id;
     }
 

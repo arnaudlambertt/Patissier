@@ -8,44 +8,41 @@ package DAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 /**
  *
  * @author Benjamin
  */
-
-
-public class ConnectionMySQL{
+public class ConnectionMySQL
+{
 
     /**
      * URL de connexion
      */
-    private static final String url = "jdbc:mysql://93.3.238.99:3307/patissier";
+    private static final String URL = "jdbc:mysql://93.3.238.99:3307/patissier";
     /**
      * Nom du user
      */
-    private static final String utilisateur = "PROJET";
+    private static final String UTILISATEUR = "PROJET";
     /**
      * Mot de passe du user
      */
-    private static final String motDePass = "Azertyu12!";
+    private static final String MOT_DE_PASSE = "Azertyu12!";
     /**
      * Objet Connexion
      */
     private static Connection connect;
-    
+
     /**
-     * Méthode qui va nous retourner notre instance
-     * et la créer si elle n'existe pas...
+     * Méthode qui va nous retourner notre instance et la créer si elle n'existe pas...
+     *
      * @return
+     * @throws java.sql.SQLException
      */
-    public static Connection getInstance(){
-        if(connect == null){
-            try {
-                connect = DriverManager.getConnection(url, utilisateur, motDePass);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }        
-        return connect;    
-    }    
+    public static Connection getInstance() throws SQLException
+    {
+        connect = DriverManager.getConnection(URL, UTILISATEUR, MOT_DE_PASSE);
+
+        return connect;
+    }
 }

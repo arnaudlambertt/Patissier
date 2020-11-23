@@ -11,37 +11,88 @@ package DAO;
  * @author Benjamin
  */
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public abstract class DAO<T,E> {
+public abstract class DAO<T, E>
+{
 
-    
+    protected Connection connect = null;
+    protected String className = "DAO";
 
-    public Connection connect = ConnectionMySQL.getInstance();
-    
+    /**
+     * Permet de créer une entrée dans la base de données par rapport à un objet
+     *
+     * @param obj, element
+     * @param element
+     * @return
+     */
+    public abstract T create(T obj, E element);
+
     /**
      * Permet de récupérer un objet via son ID
+     *
      * @param id
      * @return
      */
     public abstract T find(int id);
-    
+
     /**
-     * Permet de créer une entrée dans la base de données
-     * par rapport à un objet
-     * @param obj, element
-     */
-    public abstract T create(T obj, E element);
-    
-    /**
-     * Permet de mettre à jour les données d'une entrée dans la base 
+     * Permet de mettre à jour les données d'une entrée dans la base
+     *
      * @param obj
+     * @return
      */
-    public abstract T update(T obj);
-    
+    public abstract boolean update(T obj);
+
     /**
      * Permet la suppression d'une entrée de la base
+     *
      * @param obj
+     * @return
      */
-    public abstract void delete(T obj);
-}
+    public abstract boolean delete(T obj);
 
+    public void open() throws SQLException
+    {
+        if(connect == null || connect.isClosed())
+            connect = ConnectionMySQL.getInstance();
+    }
+
+    public void close()
+    {
+        try
+        {
+            if (connect != null && !connect.isClosed())
+                connect.close();
+        } catch (SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
+
+    public void close(PreparedStatement prepare)
+    {
+        try
+        {
+            if (prepare != null)
+                prepare.close();
+        } catch (SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
+
+    public void close(ResultSet result)
+    {
+        try
+        {
+            if (result != null)
+                result.close();
+        } catch (SQLException e)
+        {
+            System.err.println(className + " " + e.getMessage());
+        }
+    }
+}

@@ -9,185 +9,371 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import DAO.DAO;
 import MODEL.Produit;
+import java.util.ArrayList;
 
 /**
  *
  * @author Benjamin
  */
-public class ProduitDAO extends DAO<Produit,String> {
+public class ProduitDAO extends DAO<Produit, Object>
+{
 
+    public ProduitDAO()
+    {
+        this.className = "ProduitDAO";
+    }
+
+    @Deprecated
     @Override
-    public Produit create(Produit obj, String test) {
-        
-        try 
+    public Produit create(Produit obj, Object nullObject)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
         {
-            PreparedStatement prepare = this    .connect
-                                                    .prepareStatement(
-                                                        "INSERT INTO produit ( nom, categorie, nom_fournisseur, prix_unitaire, "
-                                                                + "quantite_en_stock, quantite_un_lot, prix_un_lot, promotion, "
-                                                                + "promotion_active, lien )"+
-                                                        "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",    Statement.RETURN_GENERATED_KEYS
-                                                    );
-            
-            
-            //Verification des valeurs avant ajout en base de donnée
-            try
-            {
-                if(obj.getNom().isEmpty())
-                {
-                    throw new IllegalAccessException("ERROR : Nom vide");
-                }
-                else if(obj.getCategorie().isEmpty())
-                {
-                    throw new IllegalAccessException("ERROR : Categorie vide");
-                }
-                else if(obj.getNomFournisseur().isEmpty())
-                {
-                    throw new IllegalAccessException("ERROR : Nom Fournisseur vide");
-                }
-                else if(obj.getPrixUnitaire()==0)
-                {
-                    throw new IllegalAccessException("ERROR : Prix Unitaire vide");
-                }
-                else if(obj.getQuantiteEnStock()==0)
-                {
-                    throw new IllegalAccessException("ERROR : Quantite En Stock vide");
-                }
-                else if(obj.getQuantiteUnLot() == 0 && obj.getPrixUnLot() != 0)
-                {
-                    throw new IllegalAccessException("ERROR : Si un lot à un prix alors il faut avoir la quantité de produit par lot");
-                }
-                else if(obj.getQuantiteUnLot() != 0 && obj.getPrixUnLot() == 0)
-                {
-                    throw new IllegalAccessException("ERROR : Si un lot à une quantité alors il faut avoir un prix de produit par lot");
-                }
-                else if(obj.getLien().isEmpty())
-                {
-                    throw new IllegalAccessException("ERROR : Lien vide");
-                }
-                
-            }
-            catch (IllegalAccessException ex) {
-                Logger.getLogger(ProduitDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            //On preparer les valeur pour l'instruction INSERT
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getNom().isEmpty())
+                throw new NullPointerException("ERREUR: Nom vide");
+            if (obj.getCategorie().isEmpty())
+                throw new NullPointerException("ERREUR: Categorie vide");
+            if (obj.getNomFournisseur().isEmpty())
+                throw new NullPointerException("ERREUR: Nom Fournisseur vide");
+            if (obj.getPrixUnitaire() <= 0.0)
+                throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
+            if (obj.getStock() < 0)
+                throw new NullPointerException("ERREUR: Stock negatif");
+            if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
+                throw new NullPointerException("ERREUR: Si un lot a un prix alors il faut avoir la quantité de produit par lot");
+            if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
+                throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
+            if (obj.getPromotion() < 0.0)
+                throw new NullPointerException("ERREUR: Promotion negative");
+            if (obj.getLienImage().isEmpty())
+                throw new NullPointerException("ERREUR: Lien image vide");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "INSERT INTO produit ( nom, categorie, nom_fournisseur, prix_unitaire, "
+                            + "stock, quantite_un_lot, prix_un_lot, promotion, "
+                            + "promotion_active, lien_image ) "
+                            + "VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
+                    );
+
             prepare.setString(1, obj.getNom());
             prepare.setString(2, obj.getCategorie());
             prepare.setString(3, obj.getNomFournisseur());
-            prepare.setFloat(4, obj.getPrixUnitaire());
-            prepare.setInt(5, obj.getQuantiteEnStock());
+            prepare.setDouble(4, obj.getPrixUnitaire());
+            prepare.setInt(5, obj.getStock());
             prepare.setInt(6, obj.getQuantiteUnLot());
-            prepare.setFloat(7, obj.getPrixUnLot());
-            prepare.setFloat(8, obj.getPromotion());
+            prepare.setDouble(7, obj.getPrixUnLot());
+            prepare.setDouble(8, obj.getPromotion());
             prepare.setBoolean(9, obj.isPromotionActive());
-            prepare.setString(10, obj.getLien());
+            prepare.setString(10, obj.getLienImage());
 
-            //On fait l'instruction INSERT
             prepare.executeUpdate();
-            
-            ResultSet result = prepare.getGeneratedKeys();
-            int id=0;
-            if(result.next())
-            {
-                id = result .getInt(1);
-            }
-            obj = this.find(id);
-                
-            //}
-        } catch (SQLException e) 
+
+            result = prepare.getGeneratedKeys();
+            if (!result.next())
+                throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
+
+            int id = result.getInt(1);
+
+            return this.find(id);
+
+        } catch (NullPointerException | SQLException e)
         {
-                e.printStackTrace();
+            System.err.println(className + " create() " + e.getMessage());
+            return new Produit();
+        } finally
+        {
+            close(result);
+            close(prepare);
         }
-        return obj;
-    }//end create
-    
-    @Override
-    public Produit find(int id) 
-    {
-        Produit dev = new Produit();
-        try {
-            ResultSet result = this .connect
-                                    .createStatement(
-                                        ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                        ResultSet.CONCUR_READ_ONLY
-                                     ).executeQuery(
-                                        "SELECT * FROM produit WHERE id = " + id 
-                                     );
-            if(result.first())
-            {
-                dev = new Produit(id, 
-                                result.getString("nom"), 
-                                result.getString("categorie"), 
-                                result.getString("nom_fournisseur"), 
-                                result.getFloat("prix_unitaire"),
-                                result.getInt("quantite_en_stock"),
-                                result.getInt("quantite_un_lot"),
-                                result.getFloat("prix_un_lot"),
-                                result.getFloat("promotion"),
-                                result.getBoolean("promotion_active"),
-                                result.getString("lien")
-                                    );
-            }
-            
-        } catch (SQLException e) {
-                e.printStackTrace();
-        }
-        return dev;
-    }//end find
-    
-    @Override
-    public Produit update(Produit obj) 
-    {
-        try
-        {    
-            this.connect    
-                .createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                    ResultSet.CONCUR_UPDATABLE
-                 ).executeUpdate(
-                    "UPDATE produit SET nom = '" + obj.getNom() + "',"+
-                    " categorie = '" + obj.getCategorie()+ "'"+
-                    " nom_fournisseur = '" + obj.getNomFournisseur()+ "'"+
-                    " prix_unitaire = '" + obj.getPrixUnitaire()+ "'"+
-                    " quantite_en_stock = '" + obj.getQuantiteEnStock()+ "'"+
-                    " quantite_un_lot = '" + obj.getQuantiteUnLot()+ "'"+
-                    " promotion = '" + obj.getPromotion()+ "'"+                      
-                    " promotion_active = '" + obj.isPromotionActive()+ "'"+
-                    " lien = '" + obj.getLien()+ "'"+
-                    " WHERE id = " + obj.getId()
-                 );
+    }
 
-            obj = this.find(obj.getId());
-        } catch (SQLException e) {
-                e.printStackTrace();
-        }
-        
-        return obj;
-    }//end update
-    
+    public Produit create(Produit obj)
+    {
+        return this.create(obj, null);
+    }
 
     @Override
-    public void delete(Produit obj) 
+    public Produit find(int id)
     {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
         try
         {
-            
-            this.connect    
-                .createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                    ResultSet.CONCUR_UPDATABLE
-                 ).executeUpdate(
-                    "DELETE FROM produit WHERE id = " + obj.getId()
-                 );
+            if (id == 0)
+                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
 
-        } catch (SQLException e) {
-                e.printStackTrace();
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "SELECT * FROM produit WHERE id = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+            prepare.setInt(1, id);
+
+            result = prepare.executeQuery();
+
+            if (result.next())
+                return new Produit(id,
+                        result.getString("nom"),
+                        result.getString("categorie"),
+                        result.getString("nom_fournisseur"),
+                        result.getDouble("prix_unitaire"),
+                        result.getInt("stock"),
+                        result.getInt("quantite_un_lot"),
+                        result.getDouble("prix_un_lot"),
+                        result.getDouble("promotion"),
+                        result.getBoolean("promotion_active"),
+                        result.getString("lien_image")
+                );
+            else
+                return new Produit();
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " find() " + e.getMessage());
+            return new Produit();
+        } finally
+        {
+            close(result);
+            close(prepare);
         }
-    }//end delete
-}//end classe
-    
+    }
+
+    @Override
+    public boolean update(Produit obj)
+    {
+        PreparedStatement prepare = null;
+
+        try
+        {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID vide");
+            if (obj.getNom().isEmpty())
+                throw new NullPointerException("ERREUR: Nom vide");
+            if (obj.getCategorie().isEmpty())
+                throw new NullPointerException("ERREUR: Categorie vide");
+            if (obj.getNomFournisseur().isEmpty())
+                throw new NullPointerException("ERREUR: Nom Fournisseur vide");
+            if (obj.getPrixUnitaire() <= 0.0)
+                throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
+            if (obj.getStock() < 0)
+                throw new NullPointerException("ERREUR: Stock negatif");
+            if (obj.getQuantiteUnLot() <= 0 && obj.getPrixUnLot() > 0.0)
+                throw new NullPointerException("ERREUR: Si un lot a un prix alors il faut avoir la quantité de produit par lot");
+            if (obj.getQuantiteUnLot() > 0 && obj.getPrixUnLot() <= 0.0)
+                throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
+            if (obj.getPromotion() < 0.0)
+                throw new NullPointerException("ERREUR: Promotion negative");
+            if (obj.getLienImage().isEmpty())
+                throw new NullPointerException("ERREUR: Lien image vide");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "UPDATE produit "
+                            + "SET nom = ? , "
+                            + "categorie = ? , "
+                            + "nom_fournisseur = ? , "
+                            + "prix_unitaire = ? , "
+                            + "stock = ? , "
+                            + "quantite_un_lot = ? , "
+                            + "prix_un_lot = ? , "
+                            + "promotion = ? , "
+                            + "promotion_active = ? , "
+                            + "lien_image = ? "
+                            + "WHERE id = ?"
+                    );
+
+            prepare.setString(1, obj.getNom());
+            prepare.setString(2, obj.getCategorie());
+            prepare.setString(3, obj.getNomFournisseur());
+            prepare.setDouble(4, obj.getPrixUnitaire());
+            prepare.setInt(5, obj.getStock());
+            prepare.setInt(6, obj.getQuantiteUnLot());
+            prepare.setDouble(7, obj.getPrixUnLot());
+            prepare.setDouble(8, obj.getPromotion());
+            prepare.setBoolean(9, obj.isPromotionActive());
+            prepare.setString(10, obj.getLienImage());
+            prepare.setInt(11, obj.getId());
+
+            prepare.executeUpdate();
+
+            return this.find(obj.getId()).getId() != 0;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " update() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(prepare);
+        }
+    }
+
+    @Override
+    public boolean delete(Produit obj)
+    {
+        PreparedStatement prepare = null;
+
+        try
+        {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID nulle");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "DELETE FROM produit WHERE id = ? "
+                    );
+            prepare.setInt(1, obj.getId());
+
+            prepare.executeUpdate();
+
+            return this.find(obj.getId()).getId() == 0;//true / false
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " delete() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(prepare);
+        }
+    }
+
+    public ArrayList<Produit> getProduits()
+    {
+        ResultSet result = null;
+
+        try
+        {
+            this.open();
+
+            result = this.connect
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE)
+                    .executeQuery("SELECT * FROM produit"
+                    );
+
+            ArrayList<Produit> produits = new ArrayList<>();
+
+            while (result.next())
+                produits.add(this.find(result.getInt("id")));
+            
+            return produits;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " getProduits() " + e.getMessage());
+            return new ArrayList<>();
+        } finally
+        {
+            close(result);
+        }
+    }
+
+    public ArrayList<Produit> getProduits(String categorie)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
+        {
+            if (categorie == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (categorie.isEmpty())
+                throw new NullPointerException("ERREUR: Categorie vide");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "SELECT * FROM produit WHERE categorie = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+            prepare.setString(1, categorie);
+
+            result = prepare.executeQuery();
+
+            ArrayList<Produit> produits = new ArrayList<>();
+
+            while (result.next())
+                produits.add(this.find(result.getInt("id")));
+
+            return produits;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " getProduits(categorie) " + e.getMessage());
+            return new ArrayList<>();
+        } finally
+        {
+            close(result);
+            close(prepare);
+        }
+    }
+
+    public boolean stockSuffisant(Produit obj, int quantiteVoulue)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
+        {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID nulle");
+            if (quantiteVoulue <= 0)
+                throw new NullPointerException("ERREUR: Parametre 2 quantite incorrecte");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "SELECT stock FROM produit WHERE id = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+
+            prepare.setInt(1, obj.getId());
+
+            result = prepare.executeQuery();
+            if (!result.next())
+                throw new SQLException("SQL ERREUR: PAS DE RESULTAT");
+
+            int stock = result.getInt(1);
+
+            return stock >= quantiteVoulue;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " stockSuffisant() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(result);
+            close(prepare);
+        }
+    }
+}
