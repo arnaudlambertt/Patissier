@@ -5,177 +5,220 @@
  */
 package MODEL;
 
+import java.util.Objects;
 
 /**
  *
  * @author Benjamin
  */
-public class Produit {
+public class Produit
+{
+
     private int id;
-    private int quantiteUnLot;
-    private int quantiteEnStock;
     private String nom;
     private String categorie;
     private String nomFournisseur;
-    private String lien;
-    private float prixUnitaire;
-    private float prixUnLot;
-    private float promotion;
-    private boolean promotionActive=false;
-    
+    private double prixUnitaire;
+    private int stock;
+    private int quantiteUnLot;
+    private double prixUnLot;
+    private double promotion;
+    private boolean promotionActive;
+    private String lienImage;
+
     public Produit()
     {
-        this.id=0;
+        this.id = 0;
         this.nom = "";
-        this.categorie= "";
-        this.nomFournisseur= "";
-        this.prixUnitaire=0f;
-        this.quantiteEnStock=0;
-        this.quantiteUnLot=0;
-        this.prixUnLot=0f;
-        this.promotion=0;
-        this.promotionActive=false;
-        this.lien="";
+        this.categorie = "";
+        this.nomFournisseur = "";
+        this.prixUnitaire = 0.0;
+        this.stock = 0;
+        this.quantiteUnLot = 0;
+        this.prixUnLot = 0.0;
+        this.promotion = 0;
+        this.promotionActive = false;
+        this.lienImage = "";
     }
 
-    public Produit(int id, String nom, String categorie, String nomFournisseur
-        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
-        , float promotion, boolean promotionActive, String lien) 
+    public Produit(int id, String nom, String categorie, String nomFournisseur,
+             double prixUnitaire, int stock, int quantiteUnLot, double prixUnLot,
+             double promotion, boolean promotionActive, String lienImage)
     {
-        this.id=id;
+        this.id = id;
         this.nom = nom;
-        this.categorie=categorie;
-        this.nomFournisseur=nomFournisseur;
-        this.prixUnitaire=prixUnitaire;
-        this.quantiteEnStock=quantiteEnStock;
-        this.quantiteUnLot=quantiteUnLot;
-        this.prixUnLot=prixUnLot;
-        this.promotion=promotion;
-        this.promotionActive=promotionActive;
-        this.lien=lien;
+        this.categorie = categorie;
+        this.nomFournisseur = nomFournisseur;
+        this.prixUnitaire = prixUnitaire;
+        this.stock = stock;
+        this.quantiteUnLot = quantiteUnLot;
+        this.prixUnLot = prixUnLot;
+        this.promotion = promotion;
+        this.promotionActive = promotionActive;
+        this.lienImage = lienImage;
     }
-    public Produit( String nom, String categorie, String nomFournisseur
-        , float prixUnitaire, int quantiteEnStock, int quantiteUnLot, float prixUnLot
-        , float promotion, boolean promotionActive, String lien) 
+
+    public Produit(String nom, String categorie, String nomFournisseur,
+             double prixUnitaire, int stock, int quantiteUnLot, double prixUnLot,
+             double promotion, boolean promotionActive, String lienImage)
     {
-        this.id=0;
+        this.id = 0;
         this.nom = nom;
-        this.categorie=categorie;
-        this.nomFournisseur=nomFournisseur;
-        this.prixUnitaire=prixUnitaire;
-        this.quantiteEnStock=quantiteEnStock;
-        this.quantiteUnLot=quantiteUnLot;
-        this.prixUnLot=prixUnLot;
-        this.promotion=promotion;
-        this.promotionActive=promotionActive;
-        this.lien=lien;
+        this.categorie = categorie;
+        this.nomFournisseur = nomFournisseur;
+        this.prixUnitaire = prixUnitaire;
+        this.stock = stock;
+        this.quantiteUnLot = quantiteUnLot;
+        this.prixUnLot = prixUnLot;
+        this.promotion = promotion;
+        this.promotionActive = promotionActive;
+        this.lienImage = lienImage;
     }
-    
-    public int getId() {
+
+    public int getId()
+    {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id)
+    {
         this.id = id;
     }
 
-    public int getQuantiteUnLot() {
+    public int getQuantiteUnLot()
+    {
         return quantiteUnLot;
     }
 
-    public void setQuantiteUnLot(int quantiteUnLot) {
+    public void setQuantiteUnLot(int quantiteUnLot)
+    {
         this.quantiteUnLot = quantiteUnLot;
     }
 
-    public int getQuantiteEnStock() {
-        return quantiteEnStock;
+    public int getStock()
+    {
+        return stock;
     }
 
-    public void setQuantiteEnStock(int quantiteEnStock) {
-        this.quantiteEnStock = quantiteEnStock;
+    public void setStock(int stock)
+    {
+        this.stock = stock;
     }
 
-    public String getNom() {
+    public String getNom()
+    {
         return nom;
     }
 
-    public void setNom(String nom) {
+    public void setNom(String nom)
+    {
         this.nom = nom;
     }
 
-    public String getCategorie() {
+    public String getCategorie()
+    {
         return categorie;
     }
 
-    public void setCategorie(String categorie) {
+    public void setCategorie(String categorie)
+    {
         this.categorie = categorie;
     }
 
-    public String getNomFournisseur() {
+    public String getNomFournisseur()
+    {
         return nomFournisseur;
     }
 
-    public void setNomFournisseur(String nomFournisseur) {
+    public void setNomFournisseur(String nomFournisseur)
+    {
         this.nomFournisseur = nomFournisseur;
     }
 
-    public String getLien() {
-        return lien;
+    public String getLienImage()
+    {
+        return lienImage;
     }
 
-    public void setLien(String lien) {
-        this.lien = lien;
+    public void setLienImage(String lienImage)
+    {
+        this.lienImage = lienImage;
     }
 
-    public float getPrixUnitaire() {
+    public double getPrixUnitaire()
+    {
         return prixUnitaire;
     }
 
-    public void setPrixUnitaire(float prixUnitaire) {
+    public void setPrixUnitaire(double prixUnitaire)
+    {
         this.prixUnitaire = prixUnitaire;
     }
 
-    public float getPrixUnLot() {
+    public double getPrixUnLot()
+    {
         return prixUnLot;
     }
 
-    public void setPrixUnLot(float prixUnLot) {
+    public void setPrixUnLot(double prixUnLot)
+    {
         this.prixUnLot = prixUnLot;
     }
 
-    public float getPromotion() {
+    public double getPromotion()
+    {
         return promotion;
     }
 
-    public void setPromotion(float promotion) {
+    public void setPromotion(double promotion)
+    {
         this.promotion = promotion;
     }
 
-    public boolean isPromotionActive() {
+    public boolean isPromotionActive()
+    {
         return promotionActive;
     }
 
-    public void setPromotionActive(boolean promotionActive) {
+    public void setPromotionActive(boolean promotionActive)
+    {
         this.promotionActive = promotionActive;
     }
-    
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Produit p = (Produit) o;
+        return id == p.getId();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return id;
+    }
+
     @Override
     public String toString()
     {
-        String str = "ID : " + this.getId()+ "\n";
+        String str = "ID : " + this.getId() + "\n";
         str += "NOM : " + this.getNom() + "\n";
-        str += "CATEGORIE : " + this.getCategorie()+ "\n";
-        str += "NOM FOURNISSEUR : " + this.getNomFournisseur()+ "\n";
-        str += "PRIX UNITAIRE : " + this.getPrixUnitaire()+ "\n";
-        str += "QUANTITE EN STOCK : " + this.getQuantiteEnStock()+ "\n";
-        str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot()+ "\n";
-        str += "PRIX POUR UN LOT : " + this.getPrixUnLot()+ "\n";
-        str += "PROMOTION : " + this.getPromotion()+ "\n";
-        str += "PROMOTION ACTIVE : " + this.isPromotionActive()+ "\n";
-        str += "LIEN : " + this.getLien()+ "\n";
+        str += "CATEGORIE : " + this.getCategorie() + "\n";
+        str += "NOM FOURNISSEUR : " + this.getNomFournisseur() + "\n";
+        str += "PRIX UNITAIRE : " + this.getPrixUnitaire() + "\n";
+        str += "STOCK : " + this.getStock() + "\n";
+        str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot() + "\n";
+        str += "PRIX POUR UN LOT : " + this.getPrixUnLot() + "\n";
+        str += "PROMOTION : " + this.getPromotion() + "\n";
+        str += "PROMOTION ACTIVE : " + this.isPromotionActive() + "\n";
+        str += "LIEN : " + this.getLienImage() + "\n";
         str += "\n.....................................\n";
-        
+
         return str;
     }
-    
+
 }

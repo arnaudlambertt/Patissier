@@ -5,180 +5,313 @@
  */
 package DAO;
 
-
-
 import MODEL.Utilisateur;
-
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javafx.util.Pair;
-import DAO.DAO;
 import MODEL.Commande;
 import MODEL.Produit;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  *
  * @author Benjamin
  */
-public class CommandeDAO extends DAO<Commande,Utilisateur> {
+public class CommandeDAO extends DAO<Commande, Utilisateur>
+{
+
+    public CommandeDAO()
+    {
+        this.className = "CommandeDAO";
+    }
 
     @Override
-    public Commande create(Commande obj, Utilisateur utilisateur) 
-    {        
-        try 
+    public Commande create(Commande obj, Utilisateur utilisateur)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
         {
-            PreparedStatement prepare = this    .connect
-                                                    .prepareStatement(
-                                                        "INSERT INTO produit_commande ( id_utilisateur, id_produit, quantite, prix_unitaire, quantite_un_lot, prix_un_lot"+
-                                                        "VALUES( ?, ?, ?, ?, ?, ?)",    Statement.RETURN_GENERATED_KEYS
-                                                    );
-            for (Pair<Produit, Integer> produitActuel : obj.getProduitsCommande()) 
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (utilisateur == null)
+                throw new NullPointerException("ERREUR: Parametre 2 nul");
+            if (utilisateur.getId() == 0)
+                throw new NullPointerException("ERREUR: ID utilisateur nulle");
+            if (obj.getAdresse().isEmpty())
+                throw new NullPointerException("ERREUR: Adresse vide");
+            if (obj.getPrix() <= 0.0)
+                throw new NullPointerException("ERREUR: Prix incorrect");
+            if (obj.getProduitsCommande().isEmpty())
+                throw new NullPointerException("ERREUR: Pas de produits");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "INSERT INTO commande ( id_utilisateur, "
+                            + "adresse, prix) "
+                            + "VALUES( ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
+                    );
+
+            prepare.setInt(1, utilisateur.getId());
+            prepare.setString(2, obj.getAdresse());
+            prepare.setDouble(3, obj.getPrix());
+
+            prepare.executeUpdate();
+
+            result = prepare.getGeneratedKeys();
+            if (!result.next())
+                throw new SQLException("SQL ERREUR: ID autoIncrement nulle");
+
+            int id = result.getInt(1);
+
+            ProduitCommandeDAO dao = new ProduitCommandeDAO();
+            obj.getProduitsCommande().forEach((k, v) -> dao.create(new Pair<>(k, v), id));
+
+            return this.find(id);
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " create() " + e.getMessage());
+            return new Commande();
+        } finally
+        {
+            close(result);
+            close(prepare);
+        }
+    }
+
+    @Override
+    public Commande find(int id)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
+        {
+            if (id == 0)
+                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "SELECT * FROM commande WHERE id = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+            prepare.setInt(1, id);
+
+            result = prepare.executeQuery();
+
+            if (result.next())
             {
-                
-                if(utilisateur.getId()==0)
+                ProduitCommandeDAO dao = new ProduitCommandeDAO();
+                Commande commande = new Commande(id,
+                        result.getTimestamp("horodateur"),
+                        result.getString("adresse"),
+                        result.getDouble("prix"),
+                        result.getBoolean("livre"),
+                        dao.getProduitsCommande(id)
+                );
+                if (!commande.getProduitsCommande().isEmpty())
+                    return commande;
+                else
+                    return new Commande();
+            } else
+                return new Commande();
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " find() " + e.getMessage());
+            return new Commande();
+        } finally
+        {
+            close(result);
+            close(prepare);
+        }
+    }
+
+    @Override
+    public boolean update(Commande obj)
+    {
+        PreparedStatement prepare = null;
+
+        try
+        {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID vide");
+            if (obj.getAdresse().isEmpty())
+                throw new NullPointerException("ERREUR: Adresse vide");
+            if (obj.getPrix() <= 0.0)
+                throw new NullPointerException("ERREUR: Prix incorrect");
+            if (obj.getProduitsCommande().isEmpty())
+                throw new NullPointerException("ERREUR: Pas de produits");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "UPDATE commande "
+                            + "SET adresse = ? , "
+                            + "prix = ? , "
+                            + "livre = ? "
+                            + "WHERE id = ?"
+                    );
+
+            prepare.setString(1, obj.getAdresse());
+            prepare.setDouble(2, obj.getPrix());
+            prepare.setBoolean(3, obj.isLivre());
+            prepare.setInt(4, obj.getId());
+
+            prepare.executeUpdate();
+
+            ProduitCommandeDAO dao = new ProduitCommandeDAO();
+            for(Map.Entry<Produit, Integer> entry : dao.getProduitsCommande(obj.getId()).entrySet())
+            {
+                if(obj.getProduitsCommande().containsKey(entry.getKey()))
                 {
-                    prepare.setNull(1, 92);
-                }else prepare.setInt(2, utilisateur.getId());
-                if(produitActuel.getKey().getId()==0)
-                {
-                    prepare.setNull(2, 92);
-                }else prepare.setInt(2, produitActuel.getKey().getId());
-                if(produitActuel.getValue()==0)
-                {
-                    prepare.setNull(3, 92);
-                }else prepare.setInt(3, produitActuel.getValue());
-                if(produitActuel.getKey().getPrixUnitaire()==0f)
-                {
-                   prepare.setNull(4, 92);
-                }else prepare.setFloat(4, produitActuel.getKey().getPrixUnitaire());
-                if(produitActuel.getKey().getQuantiteUnLot()==0f)
-                {
-                    prepare.setNull(5, 92);
-                }else prepare.setFloat(5, produitActuel.getKey().getQuantiteUnLot());
-                if(produitActuel.getKey().getPrixUnLot()==0f)
-                {
-                    prepare.setNull(6, 92);
-                }else prepare.setFloat(6, produitActuel.getKey().getPrixUnLot());
-                
-                prepare.executeUpdate();
-                ResultSet result = prepare.getGeneratedKeys();
-                int idUtilisateur=0;
-                int idProduit=0;
-                if(result.next())
-                {
-                    idUtilisateur = result .getInt("id_utilisateur");
-                    idProduit =result.getInt("id_produit");
-                    
+                    if(!dao.update(new Pair<>(entry.getKey(),obj.getId()),obj.getProduitsCommande().get(entry.getKey())))
+                        throw new SQLException("ERREUR: Echec mise a jour produit_commande");
                 }
-                //obj = this.find(idUtilisateur, idProduit);
-                
-                prepare.clearParameters();
-                
+                else if(!dao.delete(new Pair<>(entry.getKey(),obj.getId())))
+                    throw new SQLException("ERREUR: Echec suppression produit_commande"); 
             }
-        } catch (SQLException e) 
-        {
-                e.printStackTrace();
-        }
-        return obj;
-    }//end create
-    
-    /*
-    
-    public Commande find(int idUtilisateur, int idProduit) 
-    {
-        Commande dev = new Commande();
-        try {
-            ResultSet result = this .connect
-                                    .createStatement(
-                                        ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                                        ResultSet.CONCUR_READ_ONLY
-                                     ).executeQuery(
-                                        "SELECT * FROM produit_commande WHERE id_utilisateur = " + idUtilisateur
-                                             +" AND id_produit = "+idProduit
-                                     );
-            if(result.first())
+            obj.getProduitsCommande().entrySet().stream().filter((entry) -> (!dao.getProduitsCommande(obj.getId()).containsKey(entry.getKey()))).forEachOrdered((entry) ->
             {
-                dev = new Commande(id, 
-                                    result.getString("nom"), 
-                                    result.getString("prenom"), 
-                                    result.getString("email"), 
-                                    result.getString("role")
-                                        );
-            }
-            
-        } catch (SQLException e) {
-                e.printStackTrace();
-        }
-        return dev;
-    }//end find
-    
-    @Override
-    public Commande update(Commande obj) 
-    {
-        try
-        {    
-            this.connect    
-                .createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                    ResultSet.CONCUR_UPDATABLE
-                 ).executeUpdate(
-                    "UPDATE historique_commande SET nom = '" + obj.getNom() + "',"+
-                    " prenom = '" + obj.getPrenom() + "'"+
-                    " WHERE id = " + obj.getId()
-                 );
+                dao.create(new Pair<>(entry.getKey(),entry.getValue()),obj.getId());
+            });
 
-            obj = this.find(obj.getId());
-        } catch (SQLException e) {
-                e.printStackTrace();
+            return this.find(obj.getId()).getId() != 0;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " update() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(prepare);
         }
-        
-        return obj;
-    }//end update
-    
+    }
 
     @Override
-    public void delete(Commande obj) 
+    public boolean delete(Commande obj)
     {
+        PreparedStatement prepare = null;
+
         try
         {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID nulle");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "DELETE FROM commande WHERE id = ? "
+                    );
+            prepare.setInt(1, obj.getId());
+
+            prepare.executeUpdate();
             
-            this.connect    
-                .createStatement(
-                    ResultSet.TYPE_SCROLL_INSENSITIVE, 
-                    ResultSet.CONCUR_UPDATABLE
-                 ).executeUpdate(
-                    "DELETE FROM historique_commande WHERE id = " + obj.getId()
-                 );
+            ProduitCommandeDAO dao = new ProduitCommandeDAO();
+            for (Map.Entry<Produit, Integer> entry : dao.getProduitsCommande(obj.getId()).entrySet())
+                if(!dao.delete(new Pair<>(entry.getKey(),obj.getId())))
+                    throw new SQLException("ERREUR: Echec suppression produit_commande"); 
 
-        } catch (SQLException e) {
-                e.printStackTrace();
+            return this.find(obj.getId()).getId() == 0;//true / false
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " delete() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(prepare);
         }
-    }//end delete
-
-    @Override
-    public Commande find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-*/
-
-    @Override
-    public Commande find(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Commande update(Commande obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void delete(Commande obj) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-}//end classe
     
+    public ArrayList<Commande> getCommandes(int idUtilisateur)
+    {
+        PreparedStatement prepare = null;
+        ResultSet result = null;
+
+        try
+        {
+            if (idUtilisateur == 0)
+                throw new NullPointerException("ERREUR: Parametre 1 ID nulle");
+
+            this.open();
+
+            prepare = this.connect
+                    .prepareStatement(
+                            "SELECT * FROM commande WHERE id_utilisateur = ? ",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE
+                    );
+            prepare.setInt(1, idUtilisateur);
+
+            result = prepare.executeQuery();
+
+            ArrayList<Commande> commandes = new ArrayList<>();
+
+            while (result.next())
+                commandes.add(this.find(result.getInt("id")));
+
+            return commandes;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " getCommandes(idUtilisateur) " + e.getMessage());
+            return new ArrayList<>();
+        } finally
+        {
+            close(result);
+            close(prepare);
+        }
+    }
+    
+    public ArrayList<Commande> getCommandes()
+    {
+        ResultSet result = null;
+
+        try
+        {
+            this.open();
+
+            result = this.connect
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE)
+                    .executeQuery("SELECT * FROM commande"
+                    );
+
+            ArrayList<Commande> commandes = new ArrayList<>();
+
+            while (result.next())
+                commandes.add(this.find(result.getInt("id")));
+
+            return commandes;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " getCommandes() " + e.getMessage());
+            return new ArrayList<>();
+        } finally
+        {
+            close(result);
+        }
+    }
+
+}
+

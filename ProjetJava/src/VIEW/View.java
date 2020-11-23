@@ -49,7 +49,7 @@ public class View{
     Button buttonConnection;
     Button submitNouveauCompte;
     
-    TextField utilisateurTextField;
+    TextField emailTextField;
     PasswordField motDePasseTextField;
     
     private Stage primaryStage;
@@ -107,7 +107,7 @@ public class View{
         Label motDePasse = new Label("Mot de Passe");
 
         //Text Fields
-        utilisateurTextField = new TextField();
+        emailTextField = new TextField();
         motDePasseTextField  = new PasswordField();
 
         VBox secondaryLayout = new VBox(10);
@@ -118,7 +118,7 @@ public class View{
 
         secondaryLayout.getChildren().add(secondLabel);
         secondaryLayout.getChildren().add(utilisateur);
-        secondaryLayout.getChildren().add(utilisateurTextField);
+        secondaryLayout.getChildren().add(emailTextField);
         secondaryLayout.getChildren().add(motDePasse);
         secondaryLayout.getChildren().add(motDePasseTextField);
         secondaryLayout.getChildren().add(submitNouveauCompte);
@@ -146,11 +146,9 @@ public class View{
     }
     
     
-    public String getIdentifiantUtilisateur()
+    public String getEmail()
     {
-        
-        System.out.println("View : "+ utilisateurTextField.getText());
-        return utilisateurTextField.getText();
+        return emailTextField.getText();
     }
 
     public PasswordField getMotDePasse()
@@ -160,10 +158,6 @@ public class View{
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
     }
 
     public Scene getConnectionScene() {
