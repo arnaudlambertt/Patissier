@@ -29,6 +29,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -50,7 +51,8 @@ public class View{
     
     private Stage primaryStage;
     private Scene connectionScene;
-    private Scene init;
+    private SceneConnexion init;
+    
     
     public View(Stage primaryStage)
     {
@@ -81,20 +83,22 @@ public class View{
         root.getChildren().add(buttonClose);
         root.getChildren().add(buttonConnection);
         root.setAlignment(Pos.CENTER);
-        this.init = new Scene(root);
+        //this.init = new Scene(root);
+        
+        
+        /////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////
+        
+        init = new SceneConnexion(new Region());
+        init.init();
+        
         primaryStage.setHeight(500);
         primaryStage.setWidth(500);
         primaryStage.setScene(init);
         primaryStage.show();
         primaryStage.centerOnScreen();
-        
-        /////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////
-        
-        
-        
         
         submitNouveauCompte = new Button("Cree Compte");
         
