@@ -19,8 +19,7 @@ import javafx.util.Pair;
 public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
 {
 
-    //////////////NORMALEMENT PROTECTED///////////////////
-    public ProduitCommandeDAO()
+    protected ProduitCommandeDAO()
     {
         this.className = "ProduitCommandeDAO";
     }

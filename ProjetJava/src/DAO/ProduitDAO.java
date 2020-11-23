@@ -186,7 +186,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             prepare = this.connect
                     .prepareStatement(
                             "UPDATE produit "
-                            + "SET nom = ? ,"
+                            + "SET nom = ? , "
                             + "categorie = ? , "
                             + "nom_fournisseur = ? , "
                             + "prix_unitaire = ? , "
@@ -265,7 +265,6 @@ public class ProduitDAO extends DAO<Produit, Object>
 
         try
         {
-
             this.open();
 
             result = this.connect
@@ -278,23 +277,8 @@ public class ProduitDAO extends DAO<Produit, Object>
             ArrayList<Produit> produits = new ArrayList<>();
 
             while (result.next())
-            {
-                Produit obj = new Produit(
-                        result.getInt("id"),
-                        result.getString("nom"),
-                        result.getString("categorie"),
-                        result.getString("nom_fournisseur"),
-                        result.getDouble("prix_unitaire"),
-                        result.getInt("stock"),
-                        result.getInt("quantite_un_lot"),
-                        result.getDouble("prix_un_lot"),
-                        result.getDouble("promotion"),
-                        result.getBoolean("promotion_active"),
-                        result.getString("lien_image")
-                );
-                produits.add(obj);
-            }
-
+                produits.add(this.find(result.getInt("id")));
+            
             return produits;
 
         } catch (NullPointerException | SQLException e)
@@ -334,22 +318,7 @@ public class ProduitDAO extends DAO<Produit, Object>
             ArrayList<Produit> produits = new ArrayList<>();
 
             while (result.next())
-            {
-                Produit obj = new Produit(
-                        result.getInt("id"),
-                        result.getString("nom"),
-                        categorie,
-                        result.getString("nom_fournisseur"),
-                        result.getDouble("prix_unitaire"),
-                        result.getInt("stock"),
-                        result.getInt("quantite_un_lot"),
-                        result.getDouble("prix_un_lot"),
-                        result.getDouble("promotion"),
-                        result.getBoolean("promotion_active"),
-                        result.getString("lien_image")
-                );
-                produits.add(obj);
-            }
+                produits.add(this.find(result.getInt("id")));
 
             return produits;
 

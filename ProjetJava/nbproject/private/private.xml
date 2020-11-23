@@ -3,14 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ConnectionMySQL.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/UtilisateurDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/projetjava/ProjetJava.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Commande.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitCommandeDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/CommandeDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Produit.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/DAO.java</file>
         </group>
     </open-files>
 </project-private>

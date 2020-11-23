@@ -33,14 +33,14 @@ public class Commande
         this.produitsCommande = new HashMap<>();
     }
 
-    public Commande(int id, Timestamp horodateur, String adresse, double prix, boolean isLivre)
+    public Commande(int id, Timestamp horodateur, String adresse, double prix, boolean isLivre, HashMap<Produit, Integer> produitsCommande)
     {
         this.id = id;
         this.horodateur = horodateur;
         this.adresse = adresse;
         this.prix = prix;
         this.isLivre = isLivre;
-        this.produitsCommande = new HashMap<>();
+        this.produitsCommande = produitsCommande;
     }
 
     public Commande(String adresse)
@@ -88,12 +88,12 @@ public class Commande
         return prix;
     }
 
-    public void setIsLivre(boolean isLivre)
+    public void setLivre(boolean isLivre)
     {
         this.isLivre = isLivre;
     }
 
-    public boolean getIsLivre()
+    public boolean isLivre()
     {
         return isLivre;
     }
@@ -109,11 +109,17 @@ public class Commande
         calculerPrix();
     }
 
-    public void addProduitsCommande(Pair<Produit,Integer> produitCommande)
+    public void addProduitCommande(Pair<Produit,Integer> produitCommande)
     {
         this.produitsCommande.put(produitCommande.getKey(),produitCommande.getValue());
         calculerPrix();
     }
+    
+    public void removeProduitCommande(Produit p)
+    {
+        produitsCommande.remove(p);
+        calculerPrix();
+    }        
 
     public void calculerPrix()
     {
@@ -137,15 +143,18 @@ public class Commande
             this.prix += temp;
         });
 
-        //Math.round( this.getPrix() * 100.0 ) / 100.0 pour arrondir à 2 décimales
+        this.prix = Math.round( this.prix * 100.0 ) / 100.0;
     }
 
     @Override
     public String toString()
     {
         String str = "ID : " + this.getId() + "\n";
-        str = produitsCommande.entrySet().stream().map((entry) -> entry.getKey().getNom() + " " + entry.getValue() + "\n").reduce(str, String::concat);
+        str += getHorodateur() + "\n";
+        str += "ADRESSE : " + this.getAdresse() + "\n";
         str += "PRIX : " + this.getPrix() + "\n";
+        str += "LIVRE : " + isLivre() + "\n";
+        str = produitsCommande.entrySet().stream().map((entry) -> entry.getKey().getNom() + " " + entry.getValue() + "\n").reduce(str, String::concat);
         str += "\n.....................................\n";
 
         return str;
