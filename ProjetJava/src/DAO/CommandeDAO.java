@@ -15,6 +15,7 @@ import javafx.util.Pair;
 import MODEL.Commande;
 import MODEL.Produit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -175,7 +176,8 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             prepare.executeUpdate();
 
             ProduitCommandeDAO dao = new ProduitCommandeDAO();
-            for(Map.Entry<Produit, Integer> entry : dao.getProduitsCommande(obj.getId()).entrySet())
+            HashMap<Produit,Integer> bbdProduitsCommande = dao.getProduitsCommande(obj.getId());
+            for(Map.Entry<Produit, Integer> entry : bbdProduitsCommande.entrySet())
             {
                 if(obj.getProduitsCommande().containsKey(entry.getKey()))
                 {
@@ -185,7 +187,7 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
                 else if(!dao.delete(new Pair<>(entry.getKey(),obj.getId())))
                     throw new SQLException("ERREUR: Echec suppression produit_commande"); 
             }
-            obj.getProduitsCommande().entrySet().stream().filter((entry) -> (!dao.getProduitsCommande(obj.getId()).containsKey(entry.getKey()))).forEachOrdered((entry) ->
+            obj.getProduitsCommande().entrySet().stream().filter((entry) -> (!bbdProduitsCommande.containsKey(entry.getKey()))).forEachOrdered((entry) ->
             {
                 dao.create(new Pair<>(entry.getKey(),entry.getValue()),obj.getId());
             });

@@ -48,14 +48,15 @@ public class View{
     Button buttonClose2;
     Button buttonConnection;
     Button submitNouveauCompte;
-    
+
     TextField emailTextField;
     PasswordField motDePasseTextField;
-    
+
     private Stage primaryStage;
     private Scene connectionScene;
-    private Scene init;
-    
+    private SceneConnexion init;
+
+
     public View(Stage primaryStage)
     {
         this.buttonClose = new Button();
@@ -63,25 +64,26 @@ public class View{
         this.buttonConnection = new Button();
         this.primaryStage = primaryStage;
     }
-    
+
     public void init()
     {
         buttonClose.setText("Close");
         buttonClose.setOnAction((ActionEvent) -> Platform.exit());
         buttonClose2.setText("Close");
         buttonClose2.setOnAction((ActionEvent) -> Platform.exit());
-        
+
         buttonConnection.setText("Cree compte");
         buttonConnection.setOnAction(new ActionCreationCompte(this));
-        
+
         primaryStage.setTitle("Patissier");
-        
-       
+
+
         SceneAccueil init = new SceneAccueil(new Region());
         init.init();
-        
+
+
         //root.setBackground(new Background(myBI));
-        
+
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         //primaryStage.setHeight((int)dimension.getHeight());
         //primaryStage.setWidth((int)dimension.getWidth());
@@ -89,17 +91,30 @@ public class View{
         primaryStage.setMaximized(true);
         primaryStage.show();
         primaryStage.centerOnScreen();
-        
+
+        VBox root = new VBox();
+        root.setBackground(new Background(myBI));
+        root.getChildren().add(buttonClose);
+        root.getChildren().add(buttonConnection);
+        root.setAlignment(Pos.CENTER);
+        //this.init = new Scene(root);
+
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
-        
-        
-        
-        
+
+        init = new SceneConnexion(new Region());
+        init.init();
+
+        primaryStage.setHeight(500);
+        primaryStage.setWidth(500);
+        primaryStage.setScene(init);
+        primaryStage.show();
+        primaryStage.centerOnScreen();
+
         submitNouveauCompte = new Button("Cree Compte");
-        
+
 
         //Labels
         Label secondLabel = new Label("Page de creation de compte");
@@ -128,7 +143,7 @@ public class View{
 
 
         this.connectionScene = new Scene(secondaryLayout, 250, 300);
-        
+
         this.connectionScene = new SceneAccueil(new Pane());
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
@@ -136,16 +151,16 @@ public class View{
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
-        
+
         /*Stage other = new Stage();
         other.setTitle("TEST");
         other.show();
         */
-        
+
         //this.controller.setActionButon();
     }
-    
-    
+
+
     public String getEmail()
     {
         return emailTextField.getText();
@@ -171,9 +186,9 @@ public class View{
     public Button getSubmitNouveauCompte() {
         return submitNouveauCompte;
     }
-    
-    
-    
-    
-    
+
+
+
+
+
 }
