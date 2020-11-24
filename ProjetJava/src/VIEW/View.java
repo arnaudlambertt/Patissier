@@ -67,19 +67,15 @@ public class View{
 
     public void init()
     {
-        buttonClose.setText("Close");
-        buttonClose.setOnAction((ActionEvent) -> Platform.exit());
-        buttonClose2.setText("Close");
-        buttonClose2.setOnAction((ActionEvent) -> Platform.exit());
-
-        buttonConnection.setText("Cree compte");
-        buttonConnection.setOnAction(new ActionCreationCompte(this));
-
-        primaryStage.setTitle("Patissier");
-
-
-        SceneAccueil init = new SceneAccueil(new Region());
-        init.init();
+//        buttonClose.setText("Close");
+//        buttonClose.setOnAction((ActionEvent) -> Platform.exit());
+//        buttonClose2.setText("Close");
+//        buttonClose2.setOnAction((ActionEvent) -> Platform.exit());
+//
+//        buttonConnection.setText("Cree compte");
+//        buttonConnection.setOnAction(new ActionCreationCompte(this));
+//
+//        primaryStage.setTitle("Patissier");
 
 
         //root.setBackground(new Background(myBI));
@@ -87,16 +83,16 @@ public class View{
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         //primaryStage.setHeight((int)dimension.getHeight());
         //primaryStage.setWidth((int)dimension.getWidth());
-        primaryStage.setScene(init);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-        primaryStage.centerOnScreen();
+        //primaryStage.setScene(init);
+        
+//        primaryStage.show();
+//        primaryStage.centerOnScreen();
 
         VBox root = new VBox();
-        root.setBackground(new Background(myBI));
-        root.getChildren().add(buttonClose);
-        root.getChildren().add(buttonConnection);
-        root.setAlignment(Pos.CENTER);
+        //root.setBackground(new Background(myBI));
+//        root.getChildren().add(buttonClose);
+//        root.getChildren().add(buttonConnection);
+//        root.setAlignment(Pos.CENTER);
         //this.init = new Scene(root);
 
         /////////////////////////////////////////////////////////
@@ -107,8 +103,7 @@ public class View{
         init = new SceneConnexion(new Region());
         init.init();
 
-        primaryStage.setHeight(500);
-        primaryStage.setWidth(500);
+        primaryStage.setMaximized(true);
         primaryStage.setScene(init);
         primaryStage.show();
         primaryStage.centerOnScreen();
@@ -116,35 +111,35 @@ public class View{
         submitNouveauCompte = new Button("Cree Compte");
 
 
-        //Labels
-        Label secondLabel = new Label("Page de creation de compte");
-        Label utilisateur = new Label("Identifiant");
-        Label motDePasse = new Label("Mot de Passe");
-
-        //Text Fields
-        emailTextField = new TextField();
-        motDePasseTextField  = new PasswordField();
-
-        VBox secondaryLayout = new VBox(10);
-        //GridPane grid = new GridPane();
-
-        //JPanel panel3 = new JPanel();
-        //panel3.setLayout(new FlowLayout());
-
-        secondaryLayout.getChildren().add(secondLabel);
-        secondaryLayout.getChildren().add(utilisateur);
-        secondaryLayout.getChildren().add(emailTextField);
-        secondaryLayout.getChildren().add(motDePasse);
-        secondaryLayout.getChildren().add(motDePasseTextField);
-        secondaryLayout.getChildren().add(submitNouveauCompte);
-        secondaryLayout.getChildren().add(buttonClose2);
-
-        //secondaryLayout.getChildren().add(grid);
-
-
-        this.connectionScene = new Scene(secondaryLayout, 250, 300);
-
-        this.connectionScene = new SceneAccueil(new Pane());
+//        //Labels
+//        Label secondLabel = new Label("Page de creation de compte");
+//        Label utilisateur = new Label("Identifiant");
+//        Label motDePasse = new Label("Mot de Passe");
+//
+//        //Text Fields
+//        emailTextField = new TextField();
+//        motDePasseTextField  = new PasswordField();
+//
+//        VBox secondaryLayout = new VBox(10);
+//        //GridPane grid = new GridPane();
+//
+//        //JPanel panel3 = new JPanel();
+//        //panel3.setLayout(new FlowLayout());
+//
+//        secondaryLayout.getChildren().add(secondLabel);
+//        secondaryLayout.getChildren().add(utilisateur);
+//        secondaryLayout.getChildren().add(emailTextField);
+//        secondaryLayout.getChildren().add(motDePasse);
+//        secondaryLayout.getChildren().add(motDePasseTextField);
+//        secondaryLayout.getChildren().add(submitNouveauCompte);
+//        secondaryLayout.getChildren().add(buttonClose2);
+//
+//        //secondaryLayout.getChildren().add(grid);
+//
+//
+//        this.connectionScene = new Scene(secondaryLayout, 250, 300);
+//
+//        this.connectionScene = new SceneAccueil(new Pane());
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
         ///////////////////////////////////////////////////////////////////////
