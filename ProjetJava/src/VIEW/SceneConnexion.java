@@ -44,6 +44,7 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         super(root);
     }
     
+    @Override
     public void init()
     {
         bConnection = new Button("ME CONNECTER");
@@ -53,8 +54,8 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         
         BorderPane panneau = new BorderPane();
         GridPane grid = new GridPane();
-        VBox flowPaneEst = new VBox();
-        VBox flowPaneWest = new VBox();
+        VBox vBoxEst = new VBox();
+        VBox vBoxWest = new VBox();
         
         lEmail = new Label("Email");
         lMotDePasse = new Label("Mot de passe");
@@ -67,25 +68,25 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         pMotDePasse.setMaxWidth(300);
         
         // FLOW PANE EST
-        flowPaneEst.getChildren().add(lNouveauClient);
-        flowPaneEst.getChildren().add(bCreerCompte);
-        flowPaneEst.setAlignment(Pos.CENTER);
+        vBoxEst.getChildren().add(lNouveauClient);
+        vBoxEst.getChildren().add(bCreerCompte);
+        vBoxEst.setAlignment(Pos.CENTER);
         
         // FLOW PANE WEST
-        flowPaneWest.getChildren().add(lDejaClient);
-        flowPaneWest.getChildren().add(lEmail);
-        flowPaneWest.getChildren().add(tEmail);
-        flowPaneWest.getChildren().add(lMotDePasse);
-        flowPaneWest.getChildren().add(pMotDePasse);
-        flowPaneWest.getChildren().add(bConnection);
-        flowPaneWest.setAlignment(Pos.CENTER);
+        vBoxWest.getChildren().add(lDejaClient);
+        vBoxWest.getChildren().add(lEmail);
+        vBoxWest.getChildren().add(tEmail);
+        vBoxWest.getChildren().add(lMotDePasse);
+        vBoxWest.getChildren().add(pMotDePasse);
+        vBoxWest.getChildren().add(bConnection);
+        vBoxWest.setAlignment(Pos.CENTER);
         
         Separator separator2 = new Separator();
         separator2.setOrientation(Orientation.VERTICAL);
         
-        grid.add(flowPaneWest, 1, 1);
-        grid.add(separator2, 2, 1);
-        grid.add(flowPaneEst, 3, 1);
+        grid.add(vBoxWest, 0, 0);
+        grid.add(separator2, 1, 0);
+        grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(100);
         

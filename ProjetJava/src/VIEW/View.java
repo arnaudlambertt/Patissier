@@ -54,7 +54,7 @@ public class View{
 
     private Stage primaryStage;
     private Scene connectionScene;
-    private SceneConnexion init;
+    private ScenePanier init;
 
 
     public View(Stage primaryStage)
@@ -100,7 +100,7 @@ public class View{
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
 
-        init = new SceneConnexion(new Region());
+        init = new ScenePanier(new Region());
         init.init();
 
         primaryStage.setMaximized(true);

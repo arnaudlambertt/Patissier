@@ -11,5 +11,6 @@ package VIEW;
  */
 public interface Scene
 {
+    public void init();
     public void update();
 }
