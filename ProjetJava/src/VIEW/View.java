@@ -5,7 +5,6 @@
  */
 package VIEW;
 
-import CONTROLLER.ActionCreationCompte;
 import CONTROLLER.ActionSubmit;
 import CONTROLLER.Controller;
 import MODEL.Utilisateur;
@@ -53,9 +52,8 @@ public class View{
     PasswordField motDePasseTextField;
 
     private Stage primaryStage;
-    private Scene connectionScene;
     private SceneConnexion sConnexion;
-
+    private SceneCreationCompte sCreationCompte;
 
     public View(Stage primaryStage)
     {
@@ -102,9 +100,12 @@ public class View{
 
         sConnexion = new SceneConnexion(new Region());
         sConnexion.init();
+        
+        sCreationCompte = new SceneCreationCompte(new Region());
+        sCreationCompte.init();
 
         primaryStage.setMaximized(true);
-        primaryStage.setScene(sConnexion);
+        primaryStage.setScene(sCreationCompte);
         primaryStage.show();
         primaryStage.centerOnScreen();
 
@@ -170,10 +171,6 @@ public class View{
         return primaryStage;
     }
 
-    public Scene getConnectionScene() {
-        return connectionScene;
-    }
-
     public Button getSubmitNouveauCompte() {
         return submitNouveauCompte;
     }
@@ -181,5 +178,10 @@ public class View{
     public SceneConnexion getSConnexion()
     {
         return sConnexion;
+    }
+    
+    public SceneCreationCompte getCreationCompte()
+    {
+        return sCreationCompte;
     }
 }

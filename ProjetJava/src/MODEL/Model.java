@@ -36,6 +36,16 @@ public class Model
         utilisateur.setEmail(email);
     }
     
+    public void setNom(String nom)
+    {
+        utilisateur.setNom(nom);
+    }
+    
+    public void setPrenom(String prenom)
+    {
+        utilisateur.setPrenom(prenom);
+    }
+    
     // A REFAIRE QUAND ON AURA LA PAGE DE CREATION DE COMPTE
     
     public boolean creerUtilisateur(String motDePasse)
@@ -51,8 +61,6 @@ public class Model
             System.out.println("ERROR : "+e.getMessage());
             return false;
         }
-        this.utilisateur.setNom("SERICOLA");
-        this.utilisateur.setPrenom("Mathias");
         this.utilisateur=this.utilisateurDAO.create(utilisateur, motDePasse);
         return true;
     }
