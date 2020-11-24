@@ -105,7 +105,7 @@ public class View{
         sCreationCompte.init();
 
         primaryStage.setMaximized(true);
-        primaryStage.setScene(sCreationCompte);
+        primaryStage.setScene(sConnexion);
         primaryStage.show();
         primaryStage.centerOnScreen();
 

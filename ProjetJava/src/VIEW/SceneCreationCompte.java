@@ -133,6 +133,13 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         return bCreeMonCompte;
     }
     
+    public void clearTextField()
+    {
+        this.tEmail.clear();
+        this.tNom.clear();
+        this.tNom.clear();
+        this.pMotDePasse.clear();
+    }
     
     
 }

@@ -58,4 +58,13 @@ public class ActionBouton
         System.out.println(controller.getUtilisateur().toString());
         System.out.println("SUCCES : On a réussi a créer un utilisateur");       
     }
+    
+    public void btnRedirectionCreerCompte(ActionEvent event)
+    {
+        System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
+        controller.getView().getCreationCompte().clearTextField();
+        controller.changeScene(controller.getView().getCreationCompte());
+        
+        System.out.println("SUCCES : On a réussi la redirection");       
+    }
 }
