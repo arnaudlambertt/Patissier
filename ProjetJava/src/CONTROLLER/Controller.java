@@ -18,17 +18,20 @@ public class Controller
 {
     private final Model model;
     private final View view;
+    private final ActionBouton actionBouton;
 
     public Controller(Stage primaryStage)
     {
         this.model = new Model();
         this.view = new View(primaryStage);
+        this.actionBouton = new ActionBouton(this);
     }
 
     public void init()
     {
         view.init();
-        setActionButon();
+        view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
+        view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnCreerCompte);
     }
 
     public void setActionButon()
@@ -60,5 +63,15 @@ public class Controller
     public String toString()
     {
         return "Je suis le controller";
+    }
+
+    public Model getModel()
+    {
+        return model;
+    }
+
+    public View getView()
+    {
+        return view;
     }
 }

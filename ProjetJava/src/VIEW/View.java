@@ -54,7 +54,7 @@ public class View{
 
     private Stage primaryStage;
     private Scene connectionScene;
-    private ScenePanier init;
+    private SceneConnexion sConnexion;
 
 
     public View(Stage primaryStage)
@@ -83,7 +83,7 @@ public class View{
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         //primaryStage.setHeight((int)dimension.getHeight());
         //primaryStage.setWidth((int)dimension.getWidth());
-        //primaryStage.setScene(init);
+        //primaryStage.setScene(sConnexion);
         
 //        primaryStage.show();
 //        primaryStage.centerOnScreen();
@@ -93,18 +93,18 @@ public class View{
 //        root.getChildren().add(buttonClose);
 //        root.getChildren().add(buttonConnection);
 //        root.setAlignment(Pos.CENTER);
-        //this.init = new Scene(root);
+        //this.sConnexion = new Scene(root);
 
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
         /////////////////////////////////////////////////////////
 
-        init = new ScenePanier(new Region());
-        init.init();
+        sConnexion = new SceneConnexion(new Region());
+        sConnexion.init();
 
         primaryStage.setMaximized(true);
-        primaryStage.setScene(init);
+        primaryStage.setScene(sConnexion);
         primaryStage.show();
         primaryStage.centerOnScreen();
 
@@ -174,16 +174,12 @@ public class View{
         return connectionScene;
     }
 
-    public Scene getInitStage(){
-        return init;
-    }
-
     public Button getSubmitNouveauCompte() {
         return submitNouveauCompte;
     }
 
-
-
-
-
+    public SceneConnexion getSConnexion()
+    {
+        return sConnexion;
+    }
 }

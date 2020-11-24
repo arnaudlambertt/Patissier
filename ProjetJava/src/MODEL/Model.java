@@ -5,6 +5,7 @@
  */
 package MODEL;
 import DAO.*;
+import java.io.IOException;
 
 /**
  *
@@ -34,5 +35,44 @@ public class Model
     {
         utilisateur.setEmail(email);
     }
-   
+    
+    // A REFAIRE QUAND ON AURA LA PAGE DE CREATION DE COMPTE
+    
+    public boolean creerUtilisateur(String motDePasse)
+    {
+        try
+        {
+            if(this.utilisateurDAO.emailExistant(utilisateur.getEmail()))
+            {
+                throw new IOException("Email déjà existant");
+            }
+        } catch (IOException e)
+        {
+            System.out.println("ERROR : "+e.getMessage());
+            return false;
+        }
+        this.utilisateur.setNom("SERICOLA");
+        this.utilisateur.setPrenom("Mathias");
+        this.utilisateur=this.utilisateurDAO.create(utilisateur, motDePasse);
+        return true;
+    }
+    
+    public boolean connexionUtilisateur(String email, String motDePasse)
+    {
+        this.utilisateur=this.utilisateurDAO.connexion(email, motDePasse);
+        System.out.println(utilisateur.toString());
+        
+        try
+        {
+            if(utilisateur.getEmail().equals(""))
+            {
+                throw new Exception("Email ou mot de passe incorrect");
+            }
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        return true;
+    }
 }

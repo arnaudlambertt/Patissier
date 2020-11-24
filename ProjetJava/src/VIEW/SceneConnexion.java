@@ -104,5 +104,24 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
+    public Button getbConnection()
+    {
+        return bConnection;
+    }
+
+    public Button getbCreerCompte()
+    {
+        return bCreerCompte;
+    }
+
+    public TextField gettEmail()
+    {
+        return tEmail;
+    }
+
+    public PasswordField getpMotDePasse()
+    {
+        return pMotDePasse;
+    }
 }
