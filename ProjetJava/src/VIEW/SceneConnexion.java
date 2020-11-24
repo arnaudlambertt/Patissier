@@ -49,11 +49,10 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         bConnection = new Button("ME CONNECTER");
         bCreerCompte = new Button("CRÉER MON COMPTE");
         
-//        bConnection.setMaxWidth(Double.MAX_VALUE);
-//        bConnection.setMaxWidth(Double.MAX_VALUE);
         
         
         BorderPane panneau = new BorderPane();
+        GridPane grid = new GridPane();
         VBox flowPaneEst = new VBox();
         VBox flowPaneWest = new VBox();
         
@@ -84,12 +83,16 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         Separator separator2 = new Separator();
         separator2.setOrientation(Orientation.VERTICAL);
         
+        grid.add(flowPaneWest, 1, 1);
+        grid.add(separator2, 2, 1);
+        grid.add(flowPaneEst, 3, 1);
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(100);
+        
         
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
-        panneau.setRight(flowPaneEst);
-        panneau.setCenter(separator2);
-        panneau.setLeft(flowPaneWest);
+        panneau.setCenter(grid);
         
         setRoot(panneau);
         

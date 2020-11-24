@@ -1,3 +1,7 @@
+pour voir les grilles gridpane
+//grid.setGridLinesVisible (true);
+
+
 public static void main(String[] args) {
         //DBBConnexion();
 
