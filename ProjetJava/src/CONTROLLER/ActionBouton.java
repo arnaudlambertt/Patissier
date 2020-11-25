@@ -5,7 +5,9 @@
  */
 package CONTROLLER;
 
+import CONSTANT.Couleurs;
 import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
 
 /**
  *
@@ -19,10 +21,10 @@ public class ActionBouton
     {
         controller=c;
     }
-    
+
     public void btnConnexion(ActionEvent event)
     {
-        System.out.println("Vous avez appuyé sur le bouton de connexion");    
+        System.out.println("Vous avez appuyé sur le bouton de connexion");
         try
         {
             if(!controller.getModel().connexionUtilisateur(controller.getView().getSConnexion().gettEmail().getText(),controller.getView().getSConnexion().getpMotDePasse().getText()))
@@ -35,16 +37,16 @@ public class ActionBouton
             return;
         }
         System.out.println("SUCCES : On a réussi à connecter l'utilisateur");
-        
+
     }
-    
+
     public void btnCreerCompte(ActionEvent event)
     {
         System.out.println("Vous avez appuyé sur le bouton de Création de compte");
         controller.getModel().setNom(controller.getView().getCreationCompte().gettNom().getText());
         controller.getModel().setPrenom(controller.getView().getCreationCompte().gettPrenom().getText());
         controller.getModel().setEmail(controller.getView().getCreationCompte().gettEmail().getText());
-        
+
         try
         {
             if(!controller.getModel().creerUtilisateur(controller.getView().getCreationCompte().getpMotDePasse().getText()))
@@ -54,17 +56,18 @@ public class ActionBouton
         } catch (Exception e)
         {
             System.out.println("ERROR : "+e.getMessage());
+            return;
         }
         System.out.println(controller.getUtilisateur().toString());
-        System.out.println("SUCCES : On a réussi a créer un utilisateur");       
+        System.out.println("SUCCES : On a réussi a créer un utilisateur");
     }
-    
+
     public void btnRedirectionCreerCompte(ActionEvent event)
     {
         System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
         controller.getView().getCreationCompte().clearTextField();
         controller.changeScene(controller.getView().getCreationCompte());
-        
-        System.out.println("SUCCES : On a réussi la redirection");       
+
+        System.out.println("SUCCES : On a réussi la redirection");
     }
 }
