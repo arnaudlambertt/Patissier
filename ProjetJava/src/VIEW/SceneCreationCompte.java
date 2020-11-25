@@ -5,15 +5,19 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -28,12 +32,12 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
     private Label lEmail;
     private Label lMotDePasse;
     private Label lChampsObligatoire;
-    
+
     private TextField tNom;
     private TextField tPrenom;
     private TextField tEmail;
     private PasswordField pMotDePasse;
-    
+
     private Button bCreeMonCompte;
 
     public SceneCreationCompte(Parent root)
@@ -50,12 +54,20 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         FlowPane FlowPanePrenom = new FlowPane();
         FlowPane FlowPaneEmail = new FlowPane();
         FlowPane FlowPaneMotDePasse = new FlowPane();
-        
+
         lMesInformationsDeContact = new Label("Mes informations de contact : ");
-        lNom = new Label("Nom : ");
-        lPrenom = new Label("Prenom : ");
+        lNom = new Label("Nom* : ");
+        lNom.setMinWidth(90);
+        lNom.setAlignment(Pos.CENTER_RIGHT);
+        lPrenom = new Label("Prenom* : ");
+        lPrenom.setMinWidth(90);
+        lPrenom.setAlignment(Pos.CENTER_RIGHT);
         lEmail = new Label("Email* : ");
+        lEmail.setMinWidth(90);
+        lEmail.setAlignment(Pos.CENTER_RIGHT);
         lMotDePasse = new Label("Mot de passe* : ");
+        lMotDePasse.setMinWidth(90);
+        lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
 
         tNom = new TextField();
@@ -66,25 +78,26 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         tEmail.setMaxWidth(300);
         pMotDePasse = new PasswordField();
         pMotDePasse.setMaxWidth(300);
-        
+
         bCreeMonCompte = new Button("Cree Mon Compte");
-        
+        bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
         FlowPaneNom.setAlignment(Pos.CENTER);
-        
+
         //FlowPanePaenom
         FlowPanePrenom.getChildren().addAll(lPrenom, tPrenom);
         FlowPanePrenom.setAlignment(Pos.CENTER);
-        
+
         //FlowPaneEmail
         FlowPaneEmail.getChildren().addAll(lEmail, tEmail);
         FlowPaneEmail.setAlignment(Pos.CENTER);
-        
+
         //FlowPaneMotDePasse
         FlowPaneMotDePasse.getChildren().addAll(lMotDePasse, pMotDePasse);
         FlowPaneMotDePasse.setAlignment(Pos.CENTER);
-        
+
         //Box
         box.getChildren().add(lMesInformationsDeContact);
         box.getChildren().add(FlowPaneNom);
@@ -94,11 +107,11 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         box.getChildren().add(bCreeMonCompte);
         box.getChildren().add(lChampsObligatoire);
         box.setAlignment(Pos.CENTER);
-        
-        
+
+
         panneau.setCenter(box);
-        
-        
+
+
         setRoot(panneau);
     }
 
@@ -132,7 +145,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
     {
         return bCreeMonCompte;
     }
-    
+
     public void clearTextField()
     {
         this.tEmail.clear();
@@ -140,7 +153,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         this.tNom.clear();
         this.pMotDePasse.clear();
     }
-    
-    
+
+
 }
 //nom/prenom/email/mdp
