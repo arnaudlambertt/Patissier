@@ -41,11 +41,13 @@ public class ActionBouton
     public void btnCreerCompte(ActionEvent event)
     {
         System.out.println("Vous avez appuyé sur le bouton de Création de compte");
-        controller.getModel().setEmail(controller.getView().getSConnexion().gettEmail().getText());
+        controller.getModel().setNom(controller.getView().getCreationCompte().gettNom().getText());
+        controller.getModel().setPrenom(controller.getView().getCreationCompte().gettPrenom().getText());
+        controller.getModel().setEmail(controller.getView().getCreationCompte().gettEmail().getText());
         
         try
         {
-            if(!controller.getModel().creerUtilisateur(controller.getView().getSConnexion().getpMotDePasse().getText()))
+            if(!controller.getModel().creerUtilisateur(controller.getView().getCreationCompte().getpMotDePasse().getText()))
             {
                 throw new Exception("Nous n'avons pas réussi à créer un utilisateur");
             }
@@ -53,6 +55,16 @@ public class ActionBouton
         {
             System.out.println("ERROR : "+e.getMessage());
         }
+        System.out.println(controller.getUtilisateur().toString());
         System.out.println("SUCCES : On a réussi a créer un utilisateur");       
+    }
+    
+    public void btnRedirectionCreerCompte(ActionEvent event)
+    {
+        System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
+        controller.getView().getCreationCompte().clearTextField();
+        controller.changeScene(controller.getView().getCreationCompte());
+        
+        System.out.println("SUCCES : On a réussi la redirection");       
     }
 }

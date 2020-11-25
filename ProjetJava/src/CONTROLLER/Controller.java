@@ -31,7 +31,8 @@ public class Controller
     {
         view.init();
         view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
-        view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnCreerCompte);
+        view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnRedirectionCreerCompte);
+        view.getCreationCompte().getbCreeMonCompte().setOnAction(actionBouton::btnCreerCompte);
     }
 
     public void setActionButon()
