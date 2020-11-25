@@ -30,15 +30,23 @@ public class Controller
     public void init()
     {
         view.init();
+        
+        //Actions boutons connexion utilisateur
         view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
+        view.getSConnexion().getbConnection().setOnMouseEntered(actionBouton::btnPasserSurBoutonsConnexion);
+        view.getSConnexion().getbConnection().setOnMouseExited(actionBouton::btnQuiterBoutonsConnexion);
+        
+        //Actions boutons redirection vers cree compte
         view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnRedirectionCreerCompte);
+        view.getSConnexion().getbCreerCompte().setOnMouseEntered(actionBouton::btnPasserSurBoutonsRedirectionCreeCompte);
+        view.getSConnexion().getbCreerCompte().setOnMouseExited(actionBouton::btnQuiterBoutonsRedirectionCreeCompte);        
+        
+        //Actions boutons cree compte utilisateur
         view.getCreationCompte().getbCreeMonCompte().setOnAction(actionBouton::btnCreerCompte);
+        view.getCreationCompte().getbCreeMonCompte().setOnMouseEntered(actionBouton::btnPasserSurBoutonsCreeCompte);
+        view.getCreationCompte().getbCreeMonCompte().setOnMouseExited(actionBouton::btnQuiterBoutonsCreeCompte);
     }
-
-    public void setActionButon()
-    {
-        this.view.getSubmitNouveauCompte().setOnAction(new ActionSubmit(this));
-    }
+    
 
     public Utilisateur getUtilisateur()
     {
@@ -58,6 +66,7 @@ public class Controller
     public void changeScene(Scene scene)
     {
         this.view.getPrimaryStage().setScene(scene);
+        this.setMaximized();
     }
 
     @Override
@@ -74,5 +83,11 @@ public class Controller
     public View getView()
     {
         return view;
+    }
+    
+    public void setMaximized()
+    {
+        this.view.getPrimaryStage().setMaximized(false);
+        this.view.getPrimaryStage().setMaximized(true);
     }
 }

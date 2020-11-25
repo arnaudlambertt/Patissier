@@ -5,15 +5,19 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -52,10 +56,18 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         FlowPane FlowPaneMotDePasse = new FlowPane();
         
         lMesInformationsDeContact = new Label("Mes informations de contact : ");
-        lNom = new Label("Nom : ");
-        lPrenom = new Label("Prenom : ");
+        lNom = new Label("Nom* : ");
+        lNom.setMinWidth(90);
+        lNom.setAlignment(Pos.CENTER_RIGHT);
+        lPrenom = new Label("Prenom* : ");
+        lPrenom.setMinWidth(90);
+        lPrenom.setAlignment(Pos.CENTER_RIGHT);
         lEmail = new Label("Email* : ");
+        lEmail.setMinWidth(90);
+        lEmail.setAlignment(Pos.CENTER_RIGHT);
         lMotDePasse = new Label("Mot de passe* : ");
+        lMotDePasse.setMinWidth(90);
+        lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
 
         tNom = new TextField();
@@ -68,6 +80,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         pMotDePasse.setMaxWidth(300);
         
         bCreeMonCompte = new Button("Cree Mon Compte");
+        bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
         
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
