@@ -36,6 +36,7 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     private Label lMotDePasse;
     private Label lNouveauClient;
     private Label lDejaClient;
+    private Label lEmailOuMdpIncorrect;
     
     private TextField tEmail;
     private PasswordField pMotDePasse;
@@ -64,6 +65,10 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         lMotDePasse = new Label("Mot de passe");
         lNouveauClient = new Label("Nouveau client ?");
         lDejaClient = new Label("Déjà client ?");
+        
+        lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
+        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
+        lEmailOuMdpIncorrect.setVisible(false);
     
         tEmail = new TextField();
         tEmail.setMaxWidth(300);
@@ -82,6 +87,7 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
         vBoxWest.getChildren().add(lMotDePasse);
         vBoxWest.getChildren().add(pMotDePasse);
         vBoxWest.getChildren().add(bConnection);
+        vBoxWest.getChildren().add(lEmailOuMdpIncorrect);
         vBoxWest.setAlignment(Pos.CENTER);
         
         Separator separator2 = new Separator();
@@ -107,6 +113,11 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public Label getlEmailOuMdpIncorrect()
+    {
+        return lEmailOuMdpIncorrect;
+    }   
 
     public Button getbConnection()
     {

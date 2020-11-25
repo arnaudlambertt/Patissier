@@ -32,6 +32,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
     private Label lEmail;
     private Label lMotDePasse;
     private Label lChampsObligatoire;
+    private Label lEmailOuMdpIncorrect;
 
     private TextField tNom;
     private TextField tPrenom;
@@ -69,6 +70,10 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         lMotDePasse.setMinWidth(90);
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
+        
+        lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
+        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
+        lEmailOuMdpIncorrect.setVisible(false);
 
         tNom = new TextField();
         tNom.setMaxWidth(300);
@@ -106,6 +111,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         box.getChildren().add(FlowPaneMotDePasse);
         box.getChildren().add(bCreeMonCompte);
         box.getChildren().add(lChampsObligatoire);
+        box.getChildren().add(lEmailOuMdpIncorrect);
         box.setAlignment(Pos.CENTER);
 
 
@@ -120,6 +126,11 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public Label getlEmailOuMdpIncorrect()
+    {
+        return lEmailOuMdpIncorrect;
+    }   
 
     public TextField gettNom()
     {

@@ -6,6 +6,7 @@
 package MODEL;
 import DAO.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -46,7 +47,6 @@ public class Model
         utilisateur.setPrenom(prenom);
     }
     
-    // A REFAIRE QUAND ON AURA LA PAGE DE CREATION DE COMPTE
     
     public boolean creerUtilisateur(String motDePasse)
     {

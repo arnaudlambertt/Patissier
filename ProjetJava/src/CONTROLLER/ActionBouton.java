@@ -33,9 +33,11 @@ public class ActionBouton
             }
         } catch (Exception e)
         {
+            controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(true);
             System.out.println("ERROR : "+e.getMessage());
             return;
         }
+        controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
         System.out.println("SUCCES : On a réussi à connecter l'utilisateur");
 
     }
@@ -55,9 +57,11 @@ public class ActionBouton
             }
         } catch (Exception e)
         {
+            controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(true);
             System.out.println("ERROR : "+e.getMessage());
             return;
         }
+        controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
         System.out.println(controller.getUtilisateur().toString());
         System.out.println("SUCCES : On a réussi a créer un utilisateur");
     }
