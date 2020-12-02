@@ -5,7 +5,7 @@
  */
 package VIEW;
 
-import CONSTANT.Couleurs;
+import CONSTANT.COULEUR;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -49,9 +49,9 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     public void init()
     {
         bConnection = new Button("ME CONNECTER");
-        bConnection.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bConnection.setStyle("-fx-background-color : " + COULEUR.orangeBoulanger + "; -fx-text-fill: " + COULEUR.BLANC);
         bCreerCompte = new Button("CRÉER MON COMPTE");
-        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bCreerCompte.setStyle("-fx-background-color : " + COULEUR.orangeBoulanger + "; -fx-text-fill: " + COULEUR.BLANC);
         
         
         

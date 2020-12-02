@@ -5,7 +5,7 @@
  */
 package VIEW;
 
-import CONSTANT.Couleurs;
+import CONSTANT.COULEUR;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -80,7 +80,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         pMotDePasse.setMaxWidth(300);
         
         bCreeMonCompte = new Button("Cree Mon Compte");
-        bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bCreeMonCompte.setStyle("-fx-background-color : "+COULEUR.orangeBoulanger+"; -fx-text-fill: "+COULEUR.BLANC);
         
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);

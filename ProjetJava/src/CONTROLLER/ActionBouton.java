@@ -5,7 +5,7 @@
  */
 package CONTROLLER;
 
-import CONSTANT.Couleurs;
+import CONSTANT.COULEUR;
 import javafx.event.ActionEvent;
 import javafx.scene.input.MouseEvent;
 
@@ -74,33 +74,33 @@ public class ActionBouton
     //Boutons création compte
     public void btnPasserSurBoutonsCreeCompte(MouseEvent event)
     {
-        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+Couleurs.orangeBoulangeClair+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+COULEUR.orangeBoulangeClair+"; -fx-text-fill: "+COULEUR.BLANC);
     }
     
     public void btnQuiterBoutonsCreeCompte(MouseEvent event)
     {
-        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+COULEUR.orangeBoulanger+"; -fx-text-fill: "+COULEUR.BLANC);
     }
     
     //Boutons redirection creation compte
     public void btnPasserSurBoutonsRedirectionCreeCompte(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+Couleurs.orangeBoulangeClair+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+COULEUR.orangeBoulangeClair+"; -fx-text-fill: "+COULEUR.BLANC);
     }
     
     public void btnQuiterBoutonsRedirectionCreeCompte(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+COULEUR.orangeBoulanger+"; -fx-text-fill: "+COULEUR.BLANC);
     }
     
     //Boutons connexions
     public void btnPasserSurBoutonsConnexion(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+Couleurs.orangeBoulangeClair+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+COULEUR.orangeBoulangeClair+"; -fx-text-fill: "+COULEUR.BLANC);
     }
     
     public void btnQuiterBoutonsConnexion(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+COULEUR.orangeBoulanger+"; -fx-text-fill: "+COULEUR.BLANC);
     }
 }
