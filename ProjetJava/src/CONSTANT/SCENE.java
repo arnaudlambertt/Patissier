@@ -11,5 +11,5 @@ package CONSTANT;
  */
 public class SCENE
 {
-    public static final int SCENE_ACCUEIL = 1;
+    public static final int SCENE_PRODUITS = 0;
 }

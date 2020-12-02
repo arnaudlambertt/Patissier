@@ -22,16 +22,20 @@ import javafx.scene.layout.VBox;
  *
  * @author Benjamin
  */
-public class SceneAccueil extends javafx.scene.Scene implements Scene
+public class SceneProduits extends SceneCustom
 {
+    ///////////////////////////
     private FlowPane PaneConnection;
     private Button buttonClose;
+    //////////////////////////
     
+    //menu trie
+    //bouton revenir en haut
     
-    public SceneAccueil(Parent p)
+    public SceneProduits(Parent p)
     {
         super(p);
-        
+        // menu trie = new menu
         
         
         
@@ -45,6 +49,7 @@ public class SceneAccueil extends javafx.scene.Scene implements Scene
          
     }
     
+    @Override
     public void init()
     {
         VBox pane = new VBox();
@@ -61,17 +66,19 @@ public class SceneAccueil extends javafx.scene.Scene implements Scene
         pane.setAlignment(Pos.CENTER);
         
         setRoot(pane);
+        
+        
+        //scrollPane (pour accueilir les pane de produits)
     }
     
     
     public void add(Node n)
     {
         ((Pane) getRoot()).getChildren().add(n);
-        
     }
 
     @Override
-    public void update()
+    public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -9,9 +9,9 @@ package CONSTANT;
  *
  * @author Benjamin
  */
-public class Couleurs
+public class COULEUR
 {
-    public final static String orangeBoulanger="#fd5300";
-    public final static String orangeBoulangeClair="#ff7d33";
-    public final static String blanc="#ffffff";
+    public static final String ORANGE_BOULANGER = "#fd5300";
+    public static final String ORANGE_BOULANGER_CLAIR = "#ff7d33";
+    public static final String BLANC = "#ffffff";
 }

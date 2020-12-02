@@ -6,8 +6,8 @@
 package CONTROLLER;
 
 import MODEL.*;
+import VIEW.SceneCustom;
 import VIEW.View;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -58,15 +58,10 @@ public class Controller
         model.setEmail(email);
     }
 
-//    public void creationUtilisateur()
-//    {
-//        model.creationUtilisateur(view.getEmail(),view.getMotDePasse());
-//    }
-
-    public void changeScene(Scene scene)
+    public void changeScene(SceneCustom scene)
     {
-        this.view.getPrimaryStage().setScene(scene);
-        this.setMaximized();
+        scene.update(view);
+        view.getPrimaryStage().setScene(scene);
     }
 
     @Override
@@ -85,9 +80,11 @@ public class Controller
         return view;
     }
 
+    ///////////////TEMPORAIRE/////////////////////////////
     public void setMaximized()
     {
         this.view.getPrimaryStage().setMaximized(false);
         this.view.getPrimaryStage().setMaximized(true);
     }
+    //////////////////////////////////////////////////////
 }

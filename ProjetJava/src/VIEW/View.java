@@ -66,8 +66,6 @@ public class View{
     {
         Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
-
-
         sConnexion = new SceneConnexion(new Region());
         sConnexion.init();
 

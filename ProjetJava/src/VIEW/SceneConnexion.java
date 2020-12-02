@@ -5,7 +5,7 @@
  */
 package VIEW;
 
-import CONSTANT.Couleurs;
+import CONSTANT.COULEUR;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  *
  * @author mathi
  */
-public class SceneConnexion extends javafx.scene.Scene implements Scene
+public class SceneConnexion extends SceneCustom
 {
     private Button bConnection;
     private Button bCreerCompte;
@@ -50,9 +50,9 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     public void init()
     {
         bConnection = new Button("ME CONNECTER");
-        bConnection.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bConnection.setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
         bCreerCompte = new Button("CRÉER MON COMPTE");
-        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bCreerCompte.setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
         
         
         
@@ -109,7 +109,7 @@ public class SceneConnexion extends javafx.scene.Scene implements Scene
     }
     
     @Override
-    public void update()
+    public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

@@ -18,6 +18,8 @@ public class Model
     private final ProduitDAO produitDAO;
     private final CommandeDAO commandeDAO;
     private Utilisateur utilisateur;
+    private ArrayList<Produit> tousLesProduits;
+    private ArrayList<Produit> produitsFiltre;
         
     public Model()
     {
@@ -25,6 +27,8 @@ public class Model
         this.produitDAO = new ProduitDAO();
         this.commandeDAO = new CommandeDAO();
         this.utilisateur = new Utilisateur();
+        this.tousLesProduits = new ArrayList<>();
+        this.produitsFiltre = new ArrayList<>();
     }
 
     public Utilisateur getUtilisateur()
@@ -47,6 +51,42 @@ public class Model
         utilisateur.setPrenom(prenom);
     }
     
+    public void init()
+    {
+        update();
+    }
+    
+    public void update()
+    {
+        tousLesProduits = produitDAO.getProduits();
+        produitsFiltre.addAll(tousLesProduits);
+        produitDAO.close();
+    }
+  
+    public void filtreCategorie(String categorie)
+    {
+        produitsFiltre.clear();
+        tousLesProduits.stream().filter((p) -> (p.getCategorie().equals(categorie))).forEachOrdered((p) ->
+        {
+            produitsFiltre.add(p);
+        });
+    }
+    
+    public void filtreRecherche(String recherche)
+    {
+        produitsFiltre.clear();
+        tousLesProduits.stream().filter((p) -> (p.getNom().contains(recherche)
+                || p.getCategorie().contains(recherche)
+                || p.getNomFournisseur().contains(recherche))).forEachOrdered((p) ->
+        {
+            produitsFiltre.add(p);
+        });
+    }
+    
+    public ArrayList<Produit> getProduitsFiltre()
+    {
+        return produitsFiltre;
+    }
     
     public boolean creerUtilisateur(String motDePasse)
     {
@@ -60,6 +100,10 @@ public class Model
         {
             System.out.println("ERROR : "+e.getMessage());
             return false;
+        }
+        finally
+        {
+            utilisateurDAO.close();
         }
         this.utilisateur=this.utilisateurDAO.create(utilisateur, motDePasse);
         return true;
@@ -80,6 +124,10 @@ public class Model
         {
             System.out.println(e.getMessage());
             return false;
+        }
+        finally
+        {
+            utilisateurDAO.close();
         }
         return true;
     }

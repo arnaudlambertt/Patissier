@@ -5,7 +5,7 @@
  */
 package VIEW;
 
-import CONSTANT.Couleurs;
+import CONSTANT.COULEUR;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
  *
  * @author Benjamin
  */
-public class SceneCreationCompte extends javafx.scene.Scene implements Scene
+public class SceneCreationCompte extends SceneCustom
 {
     private Label lMesInformationsDeContact;
     private Label lNom;
@@ -46,7 +46,6 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         super(root);
     }
 
-    @Override
     public void init()
     {
         BorderPane panneau = new BorderPane();
@@ -85,7 +84,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
         pMotDePasse.setMaxWidth(300);
 
         bCreeMonCompte = new Button("Cree Mon Compte");
-        bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.orangeBoulanger+"; -fx-text-fill: "+Couleurs.blanc);
+        bCreeMonCompte.setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
 
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
@@ -122,7 +121,7 @@ public class SceneCreationCompte extends javafx.scene.Scene implements Scene
     }
 
     @Override
-    public void update()
+    public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
