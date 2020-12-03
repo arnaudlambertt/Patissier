@@ -42,7 +42,6 @@ public class SceneProduits extends SceneCustom
     //////////////////////////
    
     private ArrayList<VBox> productVboxCollection = new ArrayList<>();
-    private ArrayList<Separator> separatorCollection = new ArrayList<>();
     
     private GridPane collectionGridPane = new GridPane();
     private ScrollPane collectionScrollPane = new ScrollPane();
@@ -89,17 +88,14 @@ public class SceneProduits extends SceneCustom
         
         //GridPane 
         // Création des separators
-        for (VBox productVboxCollection1 : productVboxCollection)
-        {
-            Separator newseparator = new Separator();
-            newseparator.setMinWidth(300);
-            separatorCollection.add(newseparator);
-        }
+
         
         for (int i = 0; i < productVboxCollection.size()*2; i+=2)
         {
+            Separator newSeparator = new Separator();
+            newSeparator.setMinWidth(300);
             collectionGridPane.add(productVboxCollection.get(i/2), 0, i);
-            collectionGridPane.add(separatorCollection.get(i/2), 0, i+1);
+            collectionGridPane.add(newSeparator, 0, i+1);
         }
 
         
