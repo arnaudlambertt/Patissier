@@ -7,6 +7,8 @@ package CONTROLLER;
 
 import CONSTANT.COULEUR;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -76,35 +78,50 @@ public class ActionBouton
     }
 
     //Boutons création compte
-    public void btnPasserSurBoutonsCreeCompte(MouseEvent event)
-    {
-        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
-    }
-
     public void btnQuiterBoutonsCreeCompte(MouseEvent event)
     {
         controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
     }
 
     //Boutons redirection creation compte
-    public void btnPasserSurBoutonsRedirectionCreeCompte(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
-    }
-
     public void btnQuiterBoutonsRedirectionCreeCompte(MouseEvent event)
     {
         controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
     }
 
     //Boutons connexions
-    public void btnPasserSurBoutonsConnexion(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
-    }
-
     public void btnQuiterBoutonsConnexion(MouseEvent event)
     {
         controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
+    }
+    
+    public void setHoverButtonOrange(Button ceButton)
+    {
+        ceButton.setOnMouseEntered((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+        });
+        
+        ceButton.setOnMouseExited((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+        });
+    }
+    
+    public void setHoverButtonOrangeClair(Button ceButton)
+    {
+        ceButton.setOnMouseEntered((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
+        });
+        
+        ceButton.setOnMouseExited((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
+        });
     }
 }
