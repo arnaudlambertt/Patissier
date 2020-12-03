@@ -5,18 +5,30 @@
  */
 package VIEW;
 
+import java.util.ArrayList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 
 /**
  *
@@ -28,6 +40,12 @@ public class SceneProduits extends SceneCustom
     private FlowPane PaneConnection;
     private Button buttonClose;
     //////////////////////////
+   
+    private ArrayList<VBox> productVboxCollection = new ArrayList<>();
+    private ArrayList<Separator> separatorCollection = new ArrayList<>();
+    
+    private GridPane collectionGridPane = new GridPane();
+    private ScrollPane collectionScrollPane = new ScrollPane();
     
     //menu trie
     //bouton revenir en haut
@@ -52,7 +70,8 @@ public class SceneProduits extends SceneCustom
     @Override
     public void init()
     {
-        VBox pane = new VBox();
+        ////////////////////////////////////////
+        /*VBox pane = new VBox();
         
         BackgroundImage myBI= new BackgroundImage(new javafx.scene.image.Image("http://93.3.238.99/index.jpg"),
             BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
@@ -65,8 +84,31 @@ public class SceneProduits extends SceneCustom
         //pane.getChildren().add(PaneConnection);
         pane.setAlignment(Pos.CENTER);
         
-        setRoot(pane);
+        setRoot(pane);*/
+        /////////////////////////////////////////:
         
+        //GridPane 
+        // Création des separators
+        for (VBox productVboxCollection1 : productVboxCollection)
+        {
+            Separator newseparator = new Separator();
+            newseparator.setMinWidth(300);
+            separatorCollection.add(newseparator);
+        }
+        
+        for (int i = 0; i < productVboxCollection.size()*2; i+=2)
+        {
+            collectionGridPane.add(productVboxCollection.get(i/2), 0, i);
+            collectionGridPane.add(separatorCollection.get(i/2), 0, i+1);
+        }
+
+        
+        collectionScrollPane.setContent(collectionGridPane);
+        collectionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        collectionScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        
+        
+        setRoot(collectionScrollPane);
         
         //scrollPane (pour accueilir les pane de produits)
     }
