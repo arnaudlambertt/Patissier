@@ -66,6 +66,9 @@ public class Model
     public void filtreCategorie(String categorie)
     {
         produitsFiltre.clear();
+        produitsFiltre.addAll(produitDAO.getProduits(categorie));
+        produitDAO.close();
+
         tousLesProduits.stream().filter((p) -> (p.getCategorie().equals(categorie))).forEachOrdered((p) ->
         {
             produitsFiltre.add(p);
@@ -74,6 +77,7 @@ public class Model
     
     public void filtreRecherche(String recherche)
     {
+        update();
         produitsFiltre.clear();
         tousLesProduits.stream().filter((p) -> (p.getNom().contains(recherche)
                 || p.getCategorie().contains(recherche)

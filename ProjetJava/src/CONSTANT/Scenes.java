@@ -7,11 +7,9 @@ package CONSTANT;
 
 /**
  *
- * @author Benjamin
+ * @author Arnaud
  */
-public class COULEUR
+public class Scenes
 {
-    public static final String ORANGE_BOULANGER = "#fd5300";
-    public static final String ORANGE_BOULANGER_CLAIR = "#ff7d33";
-    public static final String BLANC = "#ffffff";
+    public static final int SCENE_PRODUITS = 0;
 }
