@@ -20,7 +20,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Benjamin
  */
-public class ScenePanier extends javafx.scene.Scene implements Scene
+public class ScenePanier extends SceneCustom
 {
 
     private Label lMonPanier;
@@ -89,7 +89,7 @@ public class ScenePanier extends javafx.scene.Scene implements Scene
     }
 
     @Override
-    public void update()
+    public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
