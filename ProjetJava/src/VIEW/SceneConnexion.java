@@ -29,22 +29,22 @@ public class SceneConnexion extends SceneCustom
 {
     private Button bConnection;
     private Button bCreerCompte;
-    
+
     private Image iLogo; // à AJOUTER
-    
+
     private Label lEmail;
     private Label lMotDePasse;
     private Label lNouveauClient;
     private Label lDejaClient;
     private Label lEmailOuMdpIncorrect;
-    
+
     private TextField tEmail;
     private PasswordField pMotDePasse;
 
     public SceneConnexion()
     {
     }
-    
+
     @Override
     public void init()
     {
@@ -52,33 +52,33 @@ public class SceneConnexion extends SceneCustom
         bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
-        
-        
-        
+
+
+
         BorderPane panneau = new BorderPane();
         GridPane grid = new GridPane();
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
-        
+
         lEmail = new Label("Email");
         lMotDePasse = new Label("Mot de passe");
         lNouveauClient = new Label("Nouveau client ?");
         lDejaClient = new Label("Déjà client ?");
-        
+
         lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
         lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
         lEmailOuMdpIncorrect.setVisible(false);
-    
+
         tEmail = new TextField();
         tEmail.setMaxWidth(300);
         pMotDePasse = new PasswordField();
         pMotDePasse.setMaxWidth(300);
-        
+
         // FLOW PANE EST
         vBoxEst.getChildren().add(lNouveauClient);
         vBoxEst.getChildren().add(bCreerCompte);
         vBoxEst.setAlignment(Pos.CENTER);
-        
+
         // FLOW PANE WEST
         vBoxWest.getChildren().add(lDejaClient);
         vBoxWest.getChildren().add(lEmail);
@@ -88,35 +88,35 @@ public class SceneConnexion extends SceneCustom
         vBoxWest.getChildren().add(bConnection);
         vBoxWest.getChildren().add(lEmailOuMdpIncorrect);
         vBoxWest.setAlignment(Pos.CENTER);
-        
+
         Separator separator2 = new Separator();
         separator2.setOrientation(Orientation.VERTICAL);
-        
+
         grid.add(vBoxWest, 0, 0);
         grid.add(separator2, 1, 0);
         grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(100);
-        
-        
+
+
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
         panneau.setCenter(grid);
-        
+
         setRoot(panneau);
-        
+
     }
-    
+
     @Override
     public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     public Label getlEmailOuMdpIncorrect()
     {
         return lEmailOuMdpIncorrect;
-    }   
+    }
 
     public Button getbConnection()
     {

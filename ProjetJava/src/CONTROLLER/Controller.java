@@ -38,18 +38,16 @@ public class Controller
 
         //Actions boutons connexion utilisateur
         view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
-        view.getSConnexion().getbConnection().setOnMouseEntered(actionBouton::btnPasserSurBoutonsConnexion);
-        view.getSConnexion().getbConnection().setOnMouseExited(actionBouton::btnQuiterBoutonsConnexion);
+        actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbConnection());
 
         //Actions boutons redirection vers cree compte
         view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnRedirectionCreerCompte);
-        view.getSConnexion().getbCreerCompte().setOnMouseEntered(actionBouton::btnPasserSurBoutonsRedirectionCreeCompte);
-        view.getSConnexion().getbCreerCompte().setOnMouseExited(actionBouton::btnQuiterBoutonsRedirectionCreeCompte);
+        actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
+        
 
         //Actions boutons cree compte utilisateur
         view.getCreationCompte().getbCreeMonCompte().setOnAction(actionBouton::btnCreerCompte);
-        view.getCreationCompte().getbCreeMonCompte().setOnMouseEntered(actionBouton::btnPasserSurBoutonsCreeCompte);
-        view.getCreationCompte().getbCreeMonCompte().setOnMouseExited(actionBouton::btnQuiterBoutonsCreeCompte);
+        actionBouton.setHoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
     }
 
 

@@ -7,6 +7,8 @@ package CONTROLLER;
 
 import CONSTANT.Couleurs;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -106,5 +108,35 @@ public class ActionBouton
     public void btnQuiterBoutonsConnexion(MouseEvent event)
     {
         controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
+    }
+
+    public void setHoverButtonOrange(Button ceButton)
+    {
+        ceButton.setOnMouseEntered((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+        });
+
+        ceButton.setOnMouseExited((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+        });
+    }
+
+    public void setHoverButtonOrangeClair(Button ceButton)
+    {
+        ceButton.setOnMouseEntered((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
+        });
+
+        ceButton.setOnMouseExited((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
+            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
+        });
     }
 }

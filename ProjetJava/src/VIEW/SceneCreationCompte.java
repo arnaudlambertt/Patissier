@@ -70,7 +70,7 @@ public class SceneCreationCompte extends SceneCustom
         lMotDePasse.setMinWidth(90);
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
-        
+
         lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
         lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
         lEmailOuMdpIncorrect.setVisible(false);
@@ -130,7 +130,7 @@ public class SceneCreationCompte extends SceneCustom
     public Label getlEmailOuMdpIncorrect()
     {
         return lEmailOuMdpIncorrect;
-    }   
+    }
 
     public TextField gettNom()
     {
