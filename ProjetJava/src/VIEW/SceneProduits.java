@@ -25,6 +25,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -36,39 +37,39 @@ import javafx.scene.text.Text;
  */
 public class SceneProduits extends SceneCustom
 {
+
     ///////////////////////////
     private FlowPane PaneConnection;
     private Button buttonClose;
     //////////////////////////
-   
-    private ArrayList<VBox> productVboxCollection = new ArrayList<>();
-    
+
+    private ArrayList<PaneProduit> paneProduits = new ArrayList<>();
+    private StackPane collectionPane = new StackPane();
     private GridPane collectionGridPane = new GridPane();
-    private ScrollPane collectionScrollPane = new ScrollPane();
-    
+
     //menu trie
     //bouton revenir en haut
-    
-    public SceneProduits(Parent p)
+    public SceneProduits()
     {
-        super(p);
+
         // menu trie = new menu
-        
-        
-        
         //root = new VBox();
         //root.setBackground(new Background(myBI));
         //root.getChildren().add(buttonClose);
         //root.getChildren().add(PaneConnection);
         //root.setAlignment(Pos.CENTER);
-        
-        
-         
     }
-    
+
     @Override
     public void init()
     {
+        ScrollPane pageScrollPane = new ScrollPane();
+        pageScrollPane.setContent(collectionPane);
+        pageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        pageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        pageScrollPane.setFitToWidth(true);
+        setRoot(pageScrollPane);
+
         ////////////////////////////////////////
         /*VBox pane = new VBox();
         
@@ -85,17 +86,14 @@ public class SceneProduits extends SceneCustom
         
         setRoot(pane);*/
         /////////////////////////////////////////:
-        
+
         //GridPane 
         // Création des separators
-
-        
-
-        
         //scrollPane (pour accueilir les pane de produits)
+
+
     }
-    
-    
+
     public void add(Node n)
     {
         ((Pane) getRoot()).getChildren().add(n);
@@ -104,21 +102,20 @@ public class SceneProduits extends SceneCustom
     @Override
     public void update(View v)
     {
-        for (int i = 0; i < productVboxCollection.size()*2; i+=2)
+        collectionGridPane = new GridPane();
+        collectionPane.getChildren().add(collectionGridPane);
+        for (int i = 0; i < paneProduits.size() * 2; i += 2)
         {
             Separator newSeparator = new Separator();
             newSeparator.setMinWidth(300);
-            collectionGridPane.add(productVboxCollection.get(i/2), 0, i);
-            collectionGridPane.add(newSeparator, 0, i+1);
+            collectionGridPane.add(paneProduits.get(i / 2), 0, i);
+            collectionGridPane.add(newSeparator, 0, i + 1);
         }
 
-        
-        collectionScrollPane.setContent(collectionGridPane);
-        collectionScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        collectionScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
-        
-        
-        setRoot(collectionScrollPane);
     }
-    
+
+    public ArrayList<PaneProduit> getPaneProduits()
+    {
+        return paneProduits;
+    }
 }

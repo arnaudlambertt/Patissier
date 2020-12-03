@@ -5,9 +5,12 @@
  */
 package CONTROLLER;
 
+import CONSTANT.Scenes;
 import MODEL.*;
+import VIEW.PaneProduit;
 import VIEW.SceneCustom;
 import VIEW.View;
+import java.util.ArrayList;
 import javafx.stage.Stage;
 
 /**
@@ -29,7 +32,9 @@ public class Controller
 
     public void init()
     {
+        model.init();
         view.init();
+        changeScene(Scenes.SCENE_PRODUITS);
 
         //Actions boutons connexion utilisateur
         view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
@@ -57,13 +62,14 @@ public class Controller
     {
         model.setEmail(email);
     }
-
-    public void changeScene(SceneCustom scene)
+    
+    //////////////////////////////////////A mettre dans view
+    public void changeScene(SceneCustom scene) ///constante de scene
     {
         scene.update(view);
         view.getPrimaryStage().setScene(scene);
     }
-
+    ////////////////////////////
     @Override
     public String toString()
     {
@@ -87,4 +93,28 @@ public class Controller
         this.view.getPrimaryStage().setMaximized(true);
     }
     //////////////////////////////////////////////////////
+    public void changeScene(int SceneConstant)
+    {
+        switch(SceneConstant)
+        {
+            case Scenes.SCENE_PRODUITS:
+            changementSceneProduits();    
+            break;
+            default:;
+        }
+    }
+    
+    public void changementSceneProduits()
+    {
+        ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
+        ArrayList<PaneProduit> paneProduits = view.getPaneProduits();
+        paneProduits.clear();
+        for(int i = 0; i < produitsFiltre.size(); ++i)
+        {
+            PaneProduit pp = new PaneProduit(i, produitsFiltre.get(i));
+            paneProduits.add(pp);
+        }
+        /////////////////////
+        changeScene(view.getsProduits());
+    }
 }

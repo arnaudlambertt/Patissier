@@ -34,9 +34,9 @@ public class ScenePanier extends SceneCustom
     
     private Pane pArticles;
     
-    public ScenePanier(Parent root)
+    public ScenePanier()
     {
-        super(root);
+    
     }
     
     @Override

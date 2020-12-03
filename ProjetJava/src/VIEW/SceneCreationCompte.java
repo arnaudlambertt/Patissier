@@ -41,11 +41,12 @@ public class SceneCreationCompte extends SceneCustom
 
     private Button bCreeMonCompte;
 
-    public SceneCreationCompte(Parent root)
+    public SceneCreationCompte()
     {
-        super(root);
     }
+    
 
+    @Override
     public void init()
     {
         BorderPane panneau = new BorderPane();

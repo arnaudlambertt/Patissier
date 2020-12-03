@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package VIEW;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 /**
  *
  * @author Benjamin
@@ -13,9 +13,9 @@ import javafx.scene.Scene;
 public abstract class SceneCustom extends Scene
 {
 
-    public SceneCustom(Parent root)
+    public SceneCustom()
     {
-        super(root);
+        super(new Region());
     }
     public abstract void init();
     public abstract void update(View v);

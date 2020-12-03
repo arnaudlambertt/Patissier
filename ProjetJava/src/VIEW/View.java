@@ -11,6 +11,7 @@ import DAO.UtilisateurDAO;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -53,6 +54,7 @@ public class View{
     private Stage primaryStage;
     private SceneConnexion sConnexion;
     private SceneCreationCompte sCreationCompte;
+    private SceneProduits sProduits;
 
     public View(Stage primaryStage)
     {
@@ -60,27 +62,26 @@ public class View{
         this.buttonClose2 = new Button();
         this.buttonConnection = new Button();
         this.primaryStage = primaryStage;
+        this.sProduits = new SceneProduits();
     }
 
     public void init()
     {
-        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        sProduits.init();
 
-        sConnexion = new SceneConnexion(new Region());
+        sConnexion = new SceneConnexion();
         sConnexion.init();
 
-        sCreationCompte = new SceneCreationCompte(new Region());
+        sCreationCompte = new SceneCreationCompte();
         sCreationCompte.init();
 
         primaryStage.setMaximized(true);
-        primaryStage.setScene(sConnexion);
+        primaryStage.setScene(sProduits);
         primaryStage.show();
         primaryStage.centerOnScreen();
 
-        submitNouveauCompte = new Button("Cree Compte");
-
+        //submitNouveauCompte = new Button("Cree Compte");
     }
-
 
     public String getEmail()
     {
@@ -109,4 +110,16 @@ public class View{
     {
         return sCreationCompte;
     }
+    
+    public ArrayList<PaneProduit> getPaneProduits()
+    {
+        return sProduits.getPaneProduits();
+    }
+
+    public SceneProduits getsProduits()
+    {
+        return sProduits;
+    }
+    
+    
 }

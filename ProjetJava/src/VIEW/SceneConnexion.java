@@ -41,9 +41,8 @@ public class SceneConnexion extends SceneCustom
     private TextField tEmail;
     private PasswordField pMotDePasse;
 
-    public SceneConnexion(Parent root)
+    public SceneConnexion()
     {
-        super(root);
     }
     
     @Override
