@@ -90,6 +90,20 @@ public class SceneProduits extends SceneCustom
         // Création des separators
 
         
+
+        
+        //scrollPane (pour accueilir les pane de produits)
+    }
+    
+    
+    public void add(Node n)
+    {
+        ((Pane) getRoot()).getChildren().add(n);
+    }
+
+    @Override
+    public void update(View v)
+    {
         for (int i = 0; i < productVboxCollection.size()*2; i+=2)
         {
             Separator newSeparator = new Separator();
@@ -105,20 +119,6 @@ public class SceneProduits extends SceneCustom
         
         
         setRoot(collectionScrollPane);
-        
-        //scrollPane (pour accueilir les pane de produits)
-    }
-    
-    
-    public void add(Node n)
-    {
-        ((Pane) getRoot()).getChildren().add(n);
-    }
-
-    @Override
-    public void update(View v)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
