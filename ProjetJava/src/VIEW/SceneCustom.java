@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 
 /**
  *
@@ -22,7 +23,7 @@ public abstract class SceneCustom extends Scene
 
     public SceneCustom()
     {
-        super(new VBox());
+        super(new VBox(),Screen.getPrimary().getVisualBounds().getWidth(),Screen.getPrimary().getVisualBounds().getHeight());
         this.conteneurPrincipal = new VBox(15);
         this.rootPane = new ScrollPane();
         this.rootPane.setFitToWidth(true);
@@ -55,5 +56,7 @@ public abstract class SceneCustom extends Scene
         pageBox.getChildren().clear();
         //add URL
         pageBox.getChildren().add(rootPane);
+        conteneurPrincipal.getChildren().clear();
+        conteneurPrincipal.getChildren().add(v.getpEntete());
     }
 }

@@ -76,13 +76,6 @@ public class View
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
-        
-        primaryStage.setScene(sProduits);
-        primaryStage.setMaximized(true);
-        primaryStage.show();
-        primaryStage.centerOnScreen();
-
-        //submitNouveauCompte = new Button("Cree Compte");
     }
 
     public void changementScene(int SceneConstant)
@@ -94,6 +87,9 @@ public class View
                 break;
             case Scenes.SCENE_CONNEXION:
                 changementScene(sConnexion);
+                break;
+            case Scenes.SCENE_CREATION_COMPTE:
+                changementScene(sCreationCompte);
                 break;
             default:
                 Alert alert = new Alert(AlertType.WARNING);
@@ -110,6 +106,8 @@ public class View
     {
         scene.update(this);
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
+        primaryStage.setMaximized(true);
     }
 
     public TextField gettEmail()

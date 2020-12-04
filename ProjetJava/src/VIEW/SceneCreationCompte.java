@@ -6,18 +6,14 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -40,16 +36,17 @@ public class SceneCreationCompte extends SceneCustom
     private PasswordField pMotDePasse;
 
     private Button bCreeMonCompte;
+    private final BorderPane panneau;
 
     public SceneCreationCompte()
     {
+        this.panneau = new BorderPane();
     }
     
 
     @Override
     public void init()
     {
-        BorderPane panneau = new BorderPane();
         VBox box = new VBox();
         FlowPane FlowPaneNom = new FlowPane();
         FlowPane FlowPanePrenom = new FlowPane();
@@ -114,17 +111,14 @@ public class SceneCreationCompte extends SceneCustom
         box.getChildren().add(lEmailOuMdpIncorrect);
         box.setAlignment(Pos.CENTER);
 
-
         panneau.setCenter(box);
-
-
-        setRoot(panneau);
     }
 
     @Override
     public void update(View v)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(v);
+        conteneurPrincipal.getChildren().add(panneau);
     }
 
     public Label getlEmailOuMdpIncorrect()

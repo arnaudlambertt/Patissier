@@ -34,13 +34,13 @@ public class PaneEntete extends VBox
     private final int NOMBRE_CATEGORIES = 9;
     
     
-    private TextField tBarreRecherche;
-    private Button bRecherche;
-    private Button bPanier;
-    private Button bBonjour;
-    private Button bLogo;
+    private final TextField tBarreRecherche;
+    private final Button bRecherche;
+    private final Button bPanier;
+    private final Button bBonjour;
+    private final Button bLogo;
     
-    private Button[] bCategories;
+    private final Button[] bCategories;
     
     
     public PaneEntete()

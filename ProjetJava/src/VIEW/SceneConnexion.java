@@ -6,10 +6,8 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,7 +15,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -40,9 +37,11 @@ public class SceneConnexion extends SceneCustom
 
     private TextField tEmail;
     private PasswordField pMotDePasse;
+    private BorderPane panneau;
 
     public SceneConnexion()
     {
+        this.panneau = new BorderPane();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class SceneConnexion extends SceneCustom
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
 
-        BorderPane panneau = new BorderPane();
+        
         GridPane grid = new GridPane();
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
@@ -96,13 +95,9 @@ public class SceneConnexion extends SceneCustom
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(100);
 
-
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
         panneau.setCenter(grid);
-        //panneau.set
-        conteneurPrincipal.getChildren().add(new VBox(panneau));
-
     }
 
     @Override
@@ -110,6 +105,7 @@ public class SceneConnexion extends SceneCustom
     {
         super.update(v);
         lEmailOuMdpIncorrect.setVisible(false);
+        conteneurPrincipal.getChildren().add(panneau);
     }
 
     public Label getlEmailOuMdpIncorrect()

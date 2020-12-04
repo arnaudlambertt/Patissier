@@ -60,9 +60,9 @@ public class Controller
 
         view.getpEntete().getbLogo().setOnAction(actionBouton::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(actionBouton::btnBonjour);
-
-        //page d'accueil
+        
         changementScene(Scenes.SCENE_PRODUITS);
+        view.getPrimaryStage().show();
     }
 
     public void changementScene(int SceneConstant)
