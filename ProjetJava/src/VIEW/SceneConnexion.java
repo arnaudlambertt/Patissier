@@ -53,8 +53,6 @@ public class SceneConnexion extends SceneCustom
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
 
-
-
         BorderPane panneau = new BorderPane();
         GridPane grid = new GridPane();
         VBox vBoxEst = new VBox();
@@ -102,15 +100,16 @@ public class SceneConnexion extends SceneCustom
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
         panneau.setCenter(grid);
-
-        setRoot(panneau);
+        //panneau.set
+        conteneurPrincipal.getChildren().add(new VBox(panneau));
 
     }
 
     @Override
     public void update(View v)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(v);
+        lEmailOuMdpIncorrect.setVisible(false);
     }
 
     public Label getlEmailOuMdpIncorrect()
@@ -118,7 +117,7 @@ public class SceneConnexion extends SceneCustom
         return lEmailOuMdpIncorrect;
     }
 
-    public Button getbConnection()
+    public Button getbConnexion()
     {
         return bConnection;
     }

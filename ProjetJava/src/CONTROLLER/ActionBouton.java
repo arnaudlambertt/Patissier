@@ -6,6 +6,7 @@
 package CONTROLLER;
 
 import CONSTANT.Couleurs;
+import CONSTANT.Scenes;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -21,7 +22,7 @@ public class ActionBouton
 
     public ActionBouton(Controller c)
     {
-        controller=c;
+        controller = c;
     }
 
     public void btnConnexion(ActionEvent event)
@@ -72,9 +73,23 @@ public class ActionBouton
     {
         System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
         controller.getView().getCreationCompte().clearTextField();
-        controller.changeScene(controller.getView().getCreationCompte());
+        controller.changementScene(Scenes.SCENE_CREATION_COMPTE);
 
         System.out.println("SUCCES : On a réussi la redirection");
+    }
+    
+    public void afficherAccueil(ActionEvent event)
+    {
+        controller.getModel().updateTousProduits();
+        controller.changementScene(Scenes.SCENE_PRODUITS);
+    }
+    
+    public void btnBonjour(ActionEvent event)
+    {
+        if(controller.getUtilisateur().getId() == 0)
+            controller.changementScene(Scenes.SCENE_CONNEXION);
+        else
+            controller.changementScene(Scenes.SCENE_PROFIL);
     }
 
     //Boutons création compte
@@ -102,14 +117,14 @@ public class ActionBouton
     //Boutons connexions
     public void btnPasserSurBoutonsConnexion(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+Couleurs.BLANC);
+        controller.getView().getSConnexion().getbConnexion().setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+Couleurs.BLANC);
     }
 
     public void btnQuiterBoutonsConnexion(MouseEvent event)
     {
-        controller.getView().getSConnexion().getbConnection().setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
+        controller.getView().getSConnexion().getbConnexion().setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
     }
-
+    
     public void setHoverButtonOrange(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
@@ -152,4 +167,5 @@ public class ActionBouton
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
         });
     }
+ 
 }

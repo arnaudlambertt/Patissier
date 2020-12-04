@@ -5,6 +5,7 @@
  */
 package VIEW;
 
+import CONSTANT.Scenes;
 import CONTROLLER.Controller;
 import MODEL.Utilisateur;
 import DAO.UtilisateurDAO;
@@ -19,6 +20,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -42,14 +45,14 @@ import javax.swing.JPanel;
  *
  * @author Benjamin
  */
-public class View{
+public class View
+{
+
     Button buttonClose;
     Button buttonClose2;
     Button buttonConnection;
     Button submitNouveauCompte;
-
-    TextField emailTextField;
-    PasswordField motDePasseTextField;
+    
     private PaneEntete pEntete;
     private Stage primaryStage;
     private SceneConnexion sConnexion;
@@ -61,6 +64,8 @@ public class View{
         this.buttonClose = new Button();
         this.buttonClose2 = new Button();
         this.buttonConnection = new Button();
+        this.sConnexion = new SceneConnexion();
+        this.sCreationCompte = new SceneCreationCompte();
         this.primaryStage = primaryStage;
         this.sProduits = new SceneProduits();
         this.pEntete = new PaneEntete();
@@ -69,36 +74,71 @@ public class View{
     public void init()
     {
         sProduits.init();
-
-        sConnexion = new SceneConnexion();
         sConnexion.init();
-
-        sCreationCompte = new SceneCreationCompte();
         sCreationCompte.init();
-
-        primaryStage.setMaximized(true);
+        
         primaryStage.setScene(sProduits);
+        primaryStage.setMaximized(true);
         primaryStage.show();
         primaryStage.centerOnScreen();
 
         //submitNouveauCompte = new Button("Cree Compte");
     }
 
-    public String getEmail()
+    public void changementScene(int SceneConstant)
     {
-        return emailTextField.getText();
+        switch (SceneConstant) //appelle changementScene correspondant
+        {
+            case Scenes.SCENE_PRODUITS:
+                changementScene(sProduits);
+                break;
+            case Scenes.SCENE_CONNEXION:
+                changementScene(sConnexion);
+                break;
+            default:
+                Alert alert = new Alert(AlertType.WARNING);
+                alert.setTitle("ERREUR 404 TEMPORAIRE");
+                alert.setHeaderText(null);
+                alert.setContentText("Cette scene n'existe pas."
+                + "\nMATHIAS TAS PAS ENCORE FAIT LERREUR 404");
+
+                alert.showAndWait();
+        }
+    }
+
+    public void changementScene(SceneCustom scene)
+    {
+        scene.update(this);
+        primaryStage.setScene(scene);
+    }
+
+    public TextField gettEmail()
+    {
+        return sConnexion.gettEmail();
+    }
+    
+    public Button getbConnexion()
+    {
+        return sConnexion.getbConnexion();
     }
 
     public PasswordField getMotDePasse()
     {
-        return motDePasseTextField;
+        return sConnexion.getpMotDePasse();
     }
 
-    public Stage getPrimaryStage() {
+    public Button getbCreerCompte()
+    {
+        return sConnexion.getbCreerCompte();
+    }
+    
+    public Stage getPrimaryStage()
+    {
         return primaryStage;
     }
 
-    public Button getSubmitNouveauCompte() {
+    public Button getSubmitNouveauCompte()
+    {
         return submitNouveauCompte;
     }
 
@@ -111,7 +151,7 @@ public class View{
     {
         return sCreationCompte;
     }
-    
+
     public ArrayList<PaneProduit> getPaneProduits()
     {
         return sProduits.getPaneProduits();

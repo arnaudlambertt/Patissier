@@ -53,14 +53,16 @@ public class Model
     
     public void init()
     {
-        update();
+        updateTousProduits();
     }
     
-    public void update()
-    {
+    public void updateTousProduits()
+    {        
         tousLesProduits = produitDAO.getProduits();
-        produitsFiltre.addAll(tousLesProduits);
         produitDAO.close();
+
+        produitsFiltre.clear();
+        produitsFiltre.addAll(tousLesProduits);
     }
   
     public void filtreCategorie(String categorie)
@@ -77,8 +79,7 @@ public class Model
     
     public void filtreRecherche(String recherche)
     {
-        update();
-        produitsFiltre.clear();
+        updateTousProduits();
         tousLesProduits.stream().filter((p) -> (p.getNom().contains(recherche)
                 || p.getCategorie().contains(recherche)
                 || p.getNomFournisseur().contains(recherche))).forEachOrdered((p) ->
@@ -109,7 +110,7 @@ public class Model
         {
             utilisateurDAO.close();
         }
-        this.utilisateur=this.utilisateurDAO.create(utilisateur, motDePasse);
+        this.utilisateur = this.utilisateurDAO.create(utilisateur, motDePasse);
         return true;
     }
     
