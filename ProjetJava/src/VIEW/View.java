@@ -50,7 +50,7 @@ public class View{
 
     TextField emailTextField;
     PasswordField motDePasseTextField;
-
+    private PaneEntete pEntete;
     private Stage primaryStage;
     private SceneConnexion sConnexion;
     private SceneCreationCompte sCreationCompte;
@@ -63,6 +63,7 @@ public class View{
         this.buttonConnection = new Button();
         this.primaryStage = primaryStage;
         this.sProduits = new SceneProduits();
+        this.pEntete = new PaneEntete();
     }
 
     public void init()
@@ -120,6 +121,9 @@ public class View{
     {
         return sProduits;
     }
-    
-    
+
+    public PaneEntete getpEntete()
+    {
+        return pEntete;
+    }
 }

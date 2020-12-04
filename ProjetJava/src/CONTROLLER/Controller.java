@@ -34,8 +34,17 @@ public class Controller
     {
         model.init();
         view.init();
+                
+        actionBouton.setHover(view.getpEntete().getbLogo());
+        actionBouton.setHover(view.getpEntete().getbRecherche());
+        actionBouton.setHover(view.getpEntete().getbBonjour());
+        actionBouton.setHover(view.getpEntete().getbPanier());
+        
+        for(int i = 0; i < 9; ++i)
+            actionBouton.setHoverButtonOrange(view.getpEntete().getbCategories(i));
+        
         changeScene(Scenes.SCENE_PRODUITS);
-
+        
         //Actions boutons connexion utilisateur
         view.getSConnexion().getbConnection().setOnAction(actionBouton::btnConnexion);
         actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbConnection());
@@ -44,7 +53,6 @@ public class Controller
         view.getSConnexion().getbCreerCompte().setOnAction(actionBouton::btnRedirectionCreerCompte);
         actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
         
-
         //Actions boutons cree compte utilisateur
         view.getCreationCompte().getbCreeMonCompte().setOnAction(actionBouton::btnCreerCompte);
         actionBouton.setHoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
@@ -91,6 +99,7 @@ public class Controller
         this.view.getPrimaryStage().setMaximized(true);
     }
     //////////////////////////////////////////////////////
+    
     public void changeScene(int SceneConstant)
     {
         switch(SceneConstant)
@@ -111,6 +120,10 @@ public class Controller
         {
             PaneProduit pp = new PaneProduit(i, produitsFiltre.get(i));
             paneProduits.add(pp);
+            ////////
+            pp = new PaneProduit(i, produitsFiltre.get(i));
+            paneProduits.add(pp);
+            ////////
         }
         /////////////////////
         changeScene(view.getsProduits());

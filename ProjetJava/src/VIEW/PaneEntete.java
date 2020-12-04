@@ -56,9 +56,10 @@ public class PaneEntete extends VBox
         bPanier = new Button();
         bBonjour = new Button();
         bCategories = new Button[NOMBRE_CATEGORIES];
+        init();
     }
     
-    public void init()
+    public final void init()
     {
         //TEXTFIELD
         tBarreRecherche.setPrefWidth(BARRE_RECHERCHE_WIDTH);

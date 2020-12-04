@@ -6,6 +6,8 @@
 package VIEW;
 
 import java.util.ArrayList;
+import javafx.event.EventType;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,6 +27,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -44,7 +47,7 @@ public class SceneProduits extends SceneCustom
     //////////////////////////
 
     private ArrayList<PaneProduit> paneProduits = new ArrayList<>();
-    private StackPane collectionPane = new StackPane();
+    private final VBox collectionBox = new VBox(40);
     private GridPane collectionGridPane = new GridPane();
 
     //menu trie
@@ -64,12 +67,13 @@ public class SceneProduits extends SceneCustom
     public void init()
     {
         ScrollPane pageScrollPane = new ScrollPane();
-        pageScrollPane.setContent(collectionPane);
+        pageScrollPane.setContent(collectionBox);
         pageScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         pageScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
         pageScrollPane.setFitToWidth(true);
         setRoot(pageScrollPane);
-
+        
+        
         ////////////////////////////////////////
         /*VBox pane = new VBox();
         
@@ -103,13 +107,16 @@ public class SceneProduits extends SceneCustom
     public void update(View v)
     {
         collectionGridPane = new GridPane();
-        collectionPane.getChildren().add(collectionGridPane);
-        for (int i = 0; i < paneProduits.size() * 2; i += 2)
+        collectionGridPane.setAlignment(Pos.CENTER);
+        collectionBox.getChildren().clear();
+        collectionBox.getChildren().add(v.getpEntete());
+        collectionBox.getChildren().add(collectionGridPane);
+        for (int i = 0; i < paneProduits.size(); ++i)
         {
             Separator newSeparator = new Separator();
-            newSeparator.setMinWidth(300);
-            collectionGridPane.add(paneProduits.get(i / 2), 0, i);
-            collectionGridPane.add(newSeparator, 0, i + 1);
+            newSeparator.setMinHeight(50);
+            collectionGridPane.add(paneProduits.get(i), 0, 2*i+1);
+            collectionGridPane.add(newSeparator, 0, 2*(i+1));
         }
 
     }

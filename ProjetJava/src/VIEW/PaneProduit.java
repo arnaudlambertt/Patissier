@@ -28,7 +28,7 @@ public final class PaneProduit extends GridPane
     {
         this.index = index;
         this.bAjouterPanier = new Button("AJOUTER AU PANIER");
-
+        setHgap(20);
         ImageView image = new ImageView(new Image("http://93.3.238.99/uploads/" + p.getLienImage()));
         image.setPreserveRatio(true);
         image.setFitWidth(300);

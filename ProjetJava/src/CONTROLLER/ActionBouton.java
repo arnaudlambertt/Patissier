@@ -115,13 +115,13 @@ public class ActionBouton
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+            ceButton.setStyle("-fx-background-color: "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC+"; -fx-font-weight: bold");
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-            ceButton.setStyle("-fx-background-color: "+COULEUR.BLANC+"; -fx-font-weight: bold");
+            ceButton.setStyle("-fx-background-color: "+Couleurs.BLANC+"; -fx-font-weight: bold");
         });
     }
 
@@ -130,13 +130,26 @@ public class ActionBouton
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+COULEUR.BLANC);
+            ceButton.setStyle("-fx-background-color: "+Couleurs.ORANGE_BOULANGER_CLAIR+"; -fx-text-fill: "+Couleurs.BLANC);
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-            ceButton.setStyle("-fx-background-color: "+COULEUR.ORANGE_BOULANGER+"; -fx-text-fill: "+COULEUR.BLANC);
+            ceButton.setStyle("-fx-background-color: "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
+        });
+    }
+    
+    public void setHover(Button ceButton)
+    {
+        ceButton.setOnMouseEntered((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
+        });
+
+        ceButton.setOnMouseExited((MouseEvent event) ->
+        {
+            controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
         });
     }
 }
