@@ -5,10 +5,12 @@
  */
 package VIEW;
 
-import CONSTANT.PaneC;
+import CONSTANT.Couleurs;
+import CONSTANT.Panes;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -17,7 +19,9 @@ import javafx.scene.layout.GridPane;
  */
 public class SceneProduits extends SceneCustom
 {
+
     private final ArrayList<PaneProduit> paneProduits;
+
     //menu trie
     //bouton revenir en haut
     public SceneProduits()
@@ -28,24 +32,23 @@ public class SceneProduits extends SceneCustom
     @Override
     public void init()
     {
-       
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
 
     @Override
     public void update(View v)
     {
-        super.update(v);
         //ajouter label accueil > recherche / accueil > catégorie...
-
         GridPane collectionGridPane = new GridPane();
-        collectionGridPane.setVgap(PaneC.VGAP_SCENE_PRODUITS);
-        collectionGridPane.setAlignment(Pos.CENTER);
-        conteneurPrincipal.getChildren().add(collectionGridPane);
+        collectionGridPane.setVgap(Panes.VGAP_SCENE_PRODUITS);
+        collectionGridPane.setAlignment(Pos.TOP_CENTER);
         for (int i = 0; i < paneProduits.size(); ++i)
         {
             collectionGridPane.add(paneProduits.get(i), 0, 2 * i + 1);
             collectionGridPane.add(new Separator(), 0, 2 * (i + 1));
         }
+        page.setCenter(collectionGridPane);
     }
 
     public ArrayList<PaneProduit> getPaneProduits()

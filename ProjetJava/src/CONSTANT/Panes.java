@@ -9,7 +9,7 @@ package CONSTANT;
  *
  * @author Benjamin
  */
-public class PaneC
+public class Panes
 {
     // PANE ENTETE
     public static final double SPACING_VBOX_PANE_ENTETE=15;

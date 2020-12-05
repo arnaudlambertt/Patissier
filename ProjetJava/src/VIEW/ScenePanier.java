@@ -5,6 +5,7 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
-import CONSTANT.PaneC;
+import CONSTANT.Panes;
 
 /**
  *
@@ -31,16 +32,17 @@ public class ScenePanier extends SceneCustom
     private Label lRemise;
     private Label lPrix;
     private Label lValeurRemise;
-    
+
     private Button bValider;
-    
+
     private Pane pArticles;
-    
+
     public ScenePanier()
     {
-    
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
-    
+
     @Override
     public void init()
     {
@@ -49,44 +51,44 @@ public class ScenePanier extends SceneCustom
         GridPane gridInterne = new GridPane();
         GridPane gridTotal = new GridPane();
         GridPane gridRemise = new GridPane();
-        
+
         //initialisation valeurs 
         lMonPanier = new Label("MON PANIER");
         lTotal = new Label("TOTAL");
         lHorsFraisLivraison = new Label("Hors frais de livraison");
         lRemise = new Label("Remise : ");
-        lPrix=new Label("Prix");
+        lPrix = new Label("Prix");
         lValeurRemise = new Label("Valeur");
-    
+
         bValider = new Button("VALIDER MON PANIER");
-    
+
         pArticles = new FlowPane();
         //Grid Remise
-        gridRemise.add(lRemise,0,0);
-        gridRemise.add(lValeurRemise,1,0);
+        gridRemise.add(lRemise, 0, 0);
+        gridRemise.add(lValeurRemise, 1, 0);
         gridRemise.setAlignment(Pos.CENTER);
         //Grid total
-        gridTotal.add(lTotal,0,0);
-        gridTotal.add(lPrix,1,0);
-        gridTotal.add(lHorsFraisLivraison,0,1);
-        
+        gridTotal.add(lTotal, 0, 0);
+        gridTotal.add(lPrix, 1, 0);
+        gridTotal.add(lHorsFraisLivraison, 0, 1);
+
         // GridPane Interne
         gridInterne.add(gridRemise, 1, 0);
         gridInterne.add(gridTotal, 1, 1);
         gridInterne.add(bValider, 1, 2);
         gridInterne.setAlignment(Pos.CENTER);
-        gridInterne.setGridLinesVisible (true);
-        
+        gridInterne.setGridLinesVisible(true);
+
         // GridPane
         grid.add(lMonPanier, 1, 1);
         grid.add(gridInterne, 1, 2);
         grid.add(bValider, 1, 3);
-        grid.setVgap(PaneC.VGAP_SCENE_PANIER);
-        
+        grid.setVgap(Panes.VGAP_SCENE_PANIER);
+
         //Panneau principal
         panneau.setRight(grid);
         panneau.setCenter(this.pArticles);
-        
+
         setRoot(panneau);
     }
 
@@ -96,6 +98,4 @@ public class ScenePanier extends SceneCustom
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
 }

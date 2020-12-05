@@ -5,7 +5,12 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -13,27 +18,31 @@ import javafx.scene.control.Label;
  */
 public class SceneErreur404 extends SceneCustom
 {
-    
+
     public SceneErreur404()
     {
-        
+
     }
-    
+
     @Override
     public void init()
-    {}
+    {
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
+    }
 
     @Override
     public void update(View v)
     {
-        super.update(v);
-        
+        VBox box = new VBox(300);
+        Region r = new Region();
+        box.getChildren().add(r);
         Label lMessageErreur404 = new Label();
-        lMessageErreur404.setText("Error 404 : File Not Found");
-        lMessageErreur404.setMinSize(0, 300);
+        lMessageErreur404.setText("Error 404 : Page Not Found");
         lMessageErreur404.setScaleX(5);
         lMessageErreur404.setScaleY(5);
-        conteneurPrincipal.getChildren().add(lMessageErreur404);
+        box.getChildren().add(lMessageErreur404);
+        page.setCenter(box);
     }
-    
+
 }

@@ -6,7 +6,7 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import CONSTANT.PaneC;
+import CONSTANT.Panes;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -35,25 +35,27 @@ public class SceneConnexion extends SceneCustom
 
     private TextField tEmail;
     private PasswordField pMotDePasse;
-    private BorderPane panneau;
+    private final GridPane grid;
 
     
     
     public SceneConnexion()
     {
-        this.panneau = new BorderPane();
+        this.grid = new GridPane();
     }
 
     @Override
     public void init()
     {
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
         bConnection = new Button("ME CONNECTER");
         bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
 
         
-        GridPane grid = new GridPane();
+        
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
 
@@ -67,9 +69,9 @@ public class SceneConnexion extends SceneCustom
         lEmailOuMdpIncorrect.setVisible(false);
 
         tEmail = new TextField();
-        tEmail.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
+        tEmail.setMaxWidth(Panes.SIZE_TEXTFIELD_SCENE_CONNEXION);
         pMotDePasse = new PasswordField();
-        pMotDePasse.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
+        pMotDePasse.setMaxWidth(Panes.SIZE_TEXTFIELD_SCENE_CONNEXION);
 
         // FLOW PANE EST
         vBoxEst.getChildren().add(lNouveauClient);
@@ -93,19 +95,14 @@ public class SceneConnexion extends SceneCustom
         grid.add(separator2, 1, 0);
         grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(PaneC.GRID_HGAP_SCENE_CONNEXION);
-
-        // BORDER PANE
-        //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
-        panneau.setCenter(grid);
+        grid.setHgap(Panes.GRID_HGAP_SCENE_CONNEXION);
     }
 
     @Override
     public void update(View v)
     {
-        super.update(v);
         lEmailOuMdpIncorrect.setVisible(false);
-        conteneurPrincipal.getChildren().add(panneau);
+        page.setCenter(grid);
     }
 
     public Label getlEmailOuMdpIncorrect()

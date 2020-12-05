@@ -48,6 +48,7 @@ public class View
 
     public void init()
     {
+        SceneCustom.setup(this);
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
@@ -71,14 +72,7 @@ public class View
                 changerScene(sCreationCompte);
                 break;
             default:
-                Alert alert = new Alert(AlertType.WARNING);
-                alert.setTitle("ERREUR 404 TEMPORAIRE");
-                alert.setHeaderText(null);
-                alert.setContentText("Cette scene n'existe pas."
-                + "\nMATHIAS TAS PAS ENCORE FAIT LERREUR 404");
-
-                alert.showAndWait();
-                changementScene(sErreur404);
+                changerScene(sErreur404);
                 //break;
         }
     }
@@ -86,6 +80,7 @@ public class View
     public void changerScene(SceneCustom scene)
     {
         scene.update(this);
+        scene.updateFenetre(this);
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.setMaximized(true);
