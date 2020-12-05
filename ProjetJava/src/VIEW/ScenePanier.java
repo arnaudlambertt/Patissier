@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
+import CONSTANT.PaneC;
+
 /**
  *
  * @author Benjamin
@@ -79,7 +81,7 @@ public class ScenePanier extends SceneCustom
         grid.add(lMonPanier, 1, 1);
         grid.add(gridInterne, 1, 2);
         grid.add(bValider, 1, 3);
-        grid.setVgap(10);
+        grid.setVgap(PaneC.VGAP_SCENE_PANIER);
         
         //Panneau principal
         panneau.setRight(grid);

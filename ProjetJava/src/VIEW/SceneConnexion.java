@@ -6,6 +6,7 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
+import CONSTANT.PaneC;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -29,16 +30,15 @@ public class SceneConnexion extends SceneCustom
 
     private Image iLogo; // à AJOUTER
 
-    private Label lEmail;
-    private Label lMotDePasse;
-    private Label lNouveauClient;
-    private Label lDejaClient;
+    
     private Label lEmailOuMdpIncorrect;
 
     private TextField tEmail;
     private PasswordField pMotDePasse;
     private BorderPane panneau;
 
+    
+    
     public SceneConnexion()
     {
         this.panneau = new BorderPane();
@@ -57,19 +57,19 @@ public class SceneConnexion extends SceneCustom
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
 
-        lEmail = new Label("Email");
-        lMotDePasse = new Label("Mot de passe");
-        lNouveauClient = new Label("Nouveau client ?");
-        lDejaClient = new Label("Déjà client ?");
+        Label lEmail = new Label("Email");
+        Label lMotDePasse = new Label("Mot de passe");
+        Label lNouveauClient = new Label("Nouveau client ?");
+        Label lDejaClient = new Label("Déjà client ?");
 
         lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
-        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
+        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : "+Couleurs.RED);
         lEmailOuMdpIncorrect.setVisible(false);
 
         tEmail = new TextField();
-        tEmail.setMaxWidth(300);
+        tEmail.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
         pMotDePasse = new PasswordField();
-        pMotDePasse.setMaxWidth(300);
+        pMotDePasse.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
 
         // FLOW PANE EST
         vBoxEst.getChildren().add(lNouveauClient);
@@ -93,7 +93,7 @@ public class SceneConnexion extends SceneCustom
         grid.add(separator2, 1, 0);
         grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(100);
+        grid.setHgap(PaneC.GRID_HGAP_SCENE_CONNEXION);
 
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT

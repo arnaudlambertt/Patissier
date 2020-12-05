@@ -5,6 +5,7 @@
  */
 package VIEW;
 
+import CONSTANT.PaneC;
 import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Separator;
@@ -37,7 +38,7 @@ public class SceneProduits extends SceneCustom
         //ajouter label accueil > recherche / accueil > catégorie...
 
         GridPane collectionGridPane = new GridPane();
-        collectionGridPane.setVgap(25);
+        collectionGridPane.setVgap(PaneC.VGAP_SCENE_PRODUITS);
         collectionGridPane.setAlignment(Pos.CENTER);
         conteneurPrincipal.getChildren().add(collectionGridPane);
         for (int i = 0; i < paneProduits.size(); ++i)

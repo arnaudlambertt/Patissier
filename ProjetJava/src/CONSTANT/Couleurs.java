@@ -14,4 +14,5 @@ public class Couleurs
     public static final String ORANGE_BOULANGER = "#fd5300";
     public static final String ORANGE_BOULANGER_CLAIR = "#ff7d33";
     public static final String BLANC = "#ffffff";
+    public static final String RED = "#ff0000";
 }
