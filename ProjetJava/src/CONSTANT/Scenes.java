@@ -12,4 +12,7 @@ package CONSTANT;
 public class Scenes
 {
     public static final int SCENE_PRODUITS = 0;
+    public static final int SCENE_CONNEXION = 1;
+    public static final int SCENE_CREATION_COMPTE = 2;
+    public static final int SCENE_PROFIL = 3;
 }

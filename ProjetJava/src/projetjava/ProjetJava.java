@@ -10,7 +10,7 @@ import DAO.*;
 import CONTROLLER.Controller;
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.util.Pair;
+
 
 /**
  *
@@ -21,7 +21,7 @@ public class ProjetJava extends Application
     @Override
     public void start(Stage primaryStage) throws Exception
     {
-        Controller controller=new Controller(primaryStage);
+        Controller controller = new Controller(primaryStage);
         controller.init();
     }
 }

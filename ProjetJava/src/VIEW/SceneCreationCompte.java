@@ -6,18 +6,15 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
+import CONSTANT.PaneC;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 
 /**
@@ -40,16 +37,17 @@ public class SceneCreationCompte extends SceneCustom
     private PasswordField pMotDePasse;
 
     private Button bCreeMonCompte;
+    private final BorderPane panneau;
 
     public SceneCreationCompte()
     {
+        this.panneau = new BorderPane();
     }
     
 
     @Override
     public void init()
     {
-        BorderPane panneau = new BorderPane();
         VBox box = new VBox();
         FlowPane FlowPaneNom = new FlowPane();
         FlowPane FlowPanePrenom = new FlowPane();
@@ -58,16 +56,16 @@ public class SceneCreationCompte extends SceneCustom
 
         lMesInformationsDeContact = new Label("Mes informations de contact : ");
         lNom = new Label("Nom* : ");
-        lNom.setMinWidth(90);
+        lNom.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lNom.setAlignment(Pos.CENTER_RIGHT);
         lPrenom = new Label("Prenom* : ");
-        lPrenom.setMinWidth(90);
+        lPrenom.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lPrenom.setAlignment(Pos.CENTER_RIGHT);
         lEmail = new Label("Email* : ");
-        lEmail.setMinWidth(90);
+        lEmail.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lEmail.setAlignment(Pos.CENTER_RIGHT);
         lMotDePasse = new Label("Mot de passe* : ");
-        lMotDePasse.setMinWidth(90);
+        lMotDePasse.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
 
@@ -76,13 +74,13 @@ public class SceneCreationCompte extends SceneCustom
         lEmailOuMdpIncorrect.setVisible(false);
 
         tNom = new TextField();
-        tNom.setMaxWidth(300);
+        tNom.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         tPrenom = new TextField();
-        tPrenom.setMaxWidth(300);
+        tPrenom.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         tEmail = new TextField();
-        tEmail.setMaxWidth(300);
+        tEmail.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         pMotDePasse = new PasswordField();
-        pMotDePasse.setMaxWidth(300);
+        pMotDePasse.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bCreeMonCompte = new Button("Cree Mon Compte");
         bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
@@ -114,17 +112,14 @@ public class SceneCreationCompte extends SceneCustom
         box.getChildren().add(lEmailOuMdpIncorrect);
         box.setAlignment(Pos.CENTER);
 
-
         panneau.setCenter(box);
-
-
-        setRoot(panneau);
     }
 
     @Override
     public void update(View v)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(v);
+        conteneurPrincipal.getChildren().add(panneau);
     }
 
     public Label getlEmailOuMdpIncorrect()

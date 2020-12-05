@@ -6,10 +6,9 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
+import CONSTANT.PaneC;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -17,7 +16,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -32,17 +30,18 @@ public class SceneConnexion extends SceneCustom
 
     private Image iLogo; // à AJOUTER
 
-    private Label lEmail;
-    private Label lMotDePasse;
-    private Label lNouveauClient;
-    private Label lDejaClient;
+    
     private Label lEmailOuMdpIncorrect;
 
     private TextField tEmail;
     private PasswordField pMotDePasse;
+    private BorderPane panneau;
 
+    
+    
     public SceneConnexion()
     {
+        this.panneau = new BorderPane();
     }
 
     @Override
@@ -53,26 +52,24 @@ public class SceneConnexion extends SceneCustom
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
 
-
-
-        BorderPane panneau = new BorderPane();
+        
         GridPane grid = new GridPane();
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
 
-        lEmail = new Label("Email");
-        lMotDePasse = new Label("Mot de passe");
-        lNouveauClient = new Label("Nouveau client ?");
-        lDejaClient = new Label("Déjà client ?");
+        Label lEmail = new Label("Email");
+        Label lMotDePasse = new Label("Mot de passe");
+        Label lNouveauClient = new Label("Nouveau client ?");
+        Label lDejaClient = new Label("Déjà client ?");
 
         lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
-        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
+        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : "+Couleurs.RED);
         lEmailOuMdpIncorrect.setVisible(false);
 
         tEmail = new TextField();
-        tEmail.setMaxWidth(300);
+        tEmail.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
         pMotDePasse = new PasswordField();
-        pMotDePasse.setMaxWidth(300);
+        pMotDePasse.setMaxWidth(PaneC.SIZE_TEXTFIELD_SCENE_CONNEXION);
 
         // FLOW PANE EST
         vBoxEst.getChildren().add(lNouveauClient);
@@ -96,21 +93,19 @@ public class SceneConnexion extends SceneCustom
         grid.add(separator2, 1, 0);
         grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(100);
-
+        grid.setHgap(PaneC.GRID_HGAP_SCENE_CONNEXION);
 
         // BORDER PANE
         //panneau.setPadding(new Insets(150, 200, 150, 200)); MARGES TOP/RIGHT/BOTTON/LEFT
         panneau.setCenter(grid);
-
-        setRoot(panneau);
-
     }
 
     @Override
     public void update(View v)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(v);
+        lEmailOuMdpIncorrect.setVisible(false);
+        conteneurPrincipal.getChildren().add(panneau);
     }
 
     public Label getlEmailOuMdpIncorrect()
@@ -118,7 +113,7 @@ public class SceneConnexion extends SceneCustom
         return lEmailOuMdpIncorrect;
     }
 
-    public Button getbConnection()
+    public Button getbConnexion()
     {
         return bConnection;
     }
