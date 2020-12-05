@@ -6,6 +6,7 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
+import CONSTANT.PaneC;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,16 +56,16 @@ public class SceneCreationCompte extends SceneCustom
 
         lMesInformationsDeContact = new Label("Mes informations de contact : ");
         lNom = new Label("Nom* : ");
-        lNom.setMinWidth(90);
+        lNom.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lNom.setAlignment(Pos.CENTER_RIGHT);
         lPrenom = new Label("Prenom* : ");
-        lPrenom.setMinWidth(90);
+        lPrenom.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lPrenom.setAlignment(Pos.CENTER_RIGHT);
         lEmail = new Label("Email* : ");
-        lEmail.setMinWidth(90);
+        lEmail.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lEmail.setAlignment(Pos.CENTER_RIGHT);
         lMotDePasse = new Label("Mot de passe* : ");
-        lMotDePasse.setMinWidth(90);
+        lMotDePasse.setMinWidth(PaneC.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
 
@@ -73,13 +74,13 @@ public class SceneCreationCompte extends SceneCustom
         lEmailOuMdpIncorrect.setVisible(false);
 
         tNom = new TextField();
-        tNom.setMaxWidth(300);
+        tNom.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         tPrenom = new TextField();
-        tPrenom.setMaxWidth(300);
+        tPrenom.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         tEmail = new TextField();
-        tEmail.setMaxWidth(300);
+        tEmail.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         pMotDePasse = new PasswordField();
-        pMotDePasse.setMaxWidth(300);
+        pMotDePasse.setMaxWidth(PaneC.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bCreeMonCompte = new Button("Cree Mon Compte");
         bCreeMonCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);

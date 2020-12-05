@@ -24,13 +24,13 @@ public class Controller
 
     private final Model model;
     private final View view;
-    private final ActionBouton actionBouton;
+    private final EventController eventController;
 
     public Controller(Stage primaryStage)
     {
         this.model = new Model();
         this.view = new View(primaryStage);
-        this.actionBouton = new ActionBouton(this);
+        this.eventController = new EventController(this);
     }
 
     public void init()
@@ -38,28 +38,34 @@ public class Controller
         model.init();
         view.init();
 
-        actionBouton.setHover(view.getpEntete().getbLogo());
-        actionBouton.setHover(view.getpEntete().getbRecherche());
-        actionBouton.setHover(view.getpEntete().getbBonjour());
-        actionBouton.setHover(view.getpEntete().getbPanier());
+        eventController.setHover(view.getpEntete().getbLogo());
+        eventController.setHover(view.getpEntete().getbRecherche());
+        eventController.setHover(view.getpEntete().getbBonjour());
+        eventController.setHover(view.getpEntete().getbPanier());
         
         for (int i = 0; i < 9; ++i)
-            actionBouton.setHoverButtonOrange(view.getpEntete().getbCategories(i));
+            eventController.setHoverButtonOrange(view.getpEntete().getbCategories(i));
 
         //Actions boutons connexion utilisateur
-        view.getbConnexion().setOnAction(actionBouton::btnConnexion);
-        actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbConnexion());
+        view.getbConnexion().setOnAction(eventController::btnConnexion);
+        eventController.setHoverButtonOrangeClair(view.getSConnexion().getbConnexion());
 
         //Actions boutons redirection vers cree compte
-        view.getbCreerCompte().setOnAction(actionBouton::btnRedirectionCreerCompte);
-        actionBouton.setHoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
+        view.getbCreerCompte().setOnAction(eventController::btnRedirectionCreerCompte);
+        eventController.setHoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
 
         //Actions boutons cree compte utilisateur
-        view.getCreationCompte().getbCreeMonCompte().setOnAction(actionBouton::btnCreerCompte);
-        actionBouton.setHoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
+        view.getCreationCompte().getbCreeMonCompte().setOnAction(eventController::btnCreerCompte);
+        eventController.setHoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
 
-        view.getpEntete().getbLogo().setOnAction(actionBouton::afficherAccueil);
-        view.getpEntete().getbBonjour().setOnAction(actionBouton::btnBonjour);
+        //Actions barre de recherche
+        eventController.setActionBarreRecherche(this.view.getpEntete().gettBarreRecherche());
+        
+        //Actions bouton rechercher
+        eventController.setHoverButtonOrangeClair(this.view.getpEntete().getbRecherche());
+        
+        view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
+        view.getpEntete().getbBonjour().setOnAction(eventController::btnBonjour);
         
         changementScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();

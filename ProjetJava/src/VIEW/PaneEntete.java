@@ -5,6 +5,7 @@
  */
 package VIEW;
 
+import CONSTANT.PaneC;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -23,15 +24,6 @@ import javafx.scene.text.TextAlignment;
  */
 public class PaneEntete extends VBox
 {
-    private final double SPACING_VBOX=15;
-    private final int HGAP_LIGNE_HAUT=25;
-    private final int HGAP_LIGNE_BAS=10;
-    private final int SEPARATOR_HORIZONTAL_WIDTH=850;
-    private final int BARRE_RECHERCHE_WIDTH=400;
-    private final int BARRE_RECHERCHE_HEIGHT=50;
-    private final int GRID_PANE_BUTTON_HGAP=20;
-    private final int GRID_PANE_RECHERCHER_HGAP=5;
-    private final int NOMBRE_CATEGORIES = 9;
     
     
     private final TextField tBarreRecherche;
@@ -55,15 +47,15 @@ public class PaneEntete extends VBox
         bRecherche = new Button();
         bPanier = new Button();
         bBonjour = new Button();
-        bCategories = new Button[NOMBRE_CATEGORIES];
+        bCategories = new Button[PaneC.NOMBRE_CATEGORIES_PANE_ENTETE];
         init();
     }
     
     public final void init()
     {
         //TEXTFIELD
-        tBarreRecherche.setPrefWidth(BARRE_RECHERCHE_WIDTH);
-        tBarreRecherche.setPrefHeight(BARRE_RECHERCHE_HEIGHT);
+        tBarreRecherche.setPrefWidth(PaneC.BARRE_RECHERCHE_WIDTH_PANE_ENTETE);
+        tBarreRecherche.setPrefHeight(PaneC.BARRE_RECHERCHE_HEIGHT_PANE_ENTETE);
         tBarreRecherche.setStyle("-fx-font-size: 20");
         
         //BUTTON
@@ -86,7 +78,7 @@ public class PaneEntete extends VBox
         }
         
         //Separator Verticale
-        Separator[] separationVerticale = new Separator[NOMBRE_CATEGORIES-1];
+        Separator[] separationVerticale = new Separator[PaneC.NOMBRE_CATEGORIES_PANE_ENTETE-1];
         for(int i=0; i<separationVerticale.length;i++)
         {
             separationVerticale[i] = new Separator(Orientation.VERTICAL);
@@ -97,8 +89,8 @@ public class PaneEntete extends VBox
         for(int i=0; i<separationHorizontale.length;i++)
         {
             separationHorizontale[i] = new Separator(Orientation.HORIZONTAL);
-            separationHorizontale[i].setMaxWidth(SEPARATOR_HORIZONTAL_WIDTH);
-            separationHorizontale[i].setMinWidth(SEPARATOR_HORIZONTAL_WIDTH);
+            separationHorizontale[i].setMaxWidth(PaneC.SEPARATOR_HORIZONTAL_WIDTH_PANE_ENTETE);
+            separationHorizontale[i].setMinWidth(PaneC.SEPARATOR_HORIZONTAL_WIDTH_PANE_ENTETE);
         }
         
         // Button LOGO
@@ -132,13 +124,13 @@ public class PaneEntete extends VBox
         for(int i=0; i< bCategories.length; i++)
         {
             flowPaneLigneBas.getChildren().add(bCategories[i]);
-            if(i<NOMBRE_CATEGORIES-1)
+            if(i<PaneC.NOMBRE_CATEGORIES_PANE_ENTETE-1)
             {
                 flowPaneLigneBas.getChildren().add(separationVerticale[i]);
             }
         }
         flowPaneLigneBas.setAlignment(Pos.TOP_CENTER);
-        flowPaneLigneBas.setHgap(HGAP_LIGNE_BAS);
+        flowPaneLigneBas.setHgap(PaneC.HGAP_LIGNE_BAS_PANE_ENTETE);
         
         //GRID PANE 
         GridPane gridPaneButton = new GridPane();
@@ -146,23 +138,23 @@ public class PaneEntete extends VBox
         
         gridPaneButton.add(bBonjour,0,0);
         gridPaneButton.add(bPanier,1,0);
-        gridPaneButton.setHgap(GRID_PANE_BUTTON_HGAP);
+        gridPaneButton.setHgap(PaneC.GRID_PANE_BUTTON_HGAP_PANE_ENTETE);
         
         gridPaneRechercher.add(tBarreRecherche,0,0);
         gridPaneRechercher.add(bRecherche,1,0);
-        gridPaneRechercher.setHgap(GRID_PANE_RECHERCHER_HGAP);
+        gridPaneRechercher.setHgap(PaneC.GRID_PANE_RECHERCHER_HGAP_PANE_ENTETE);
         gridPaneRechercher.setAlignment(Pos.CENTER);
         
         //FLOW PANE HAUT
         FlowPane flowPaneLigneHaut= new FlowPane();
         flowPaneLigneHaut.getChildren().addAll(bLogo, gridPaneRechercher, gridPaneButton);
-        flowPaneLigneHaut.setHgap(HGAP_LIGNE_HAUT);
+        flowPaneLigneHaut.setHgap(PaneC.HGAP_LIGNE_HAUT_PANE_ENTETE);
         flowPaneLigneHaut.setAlignment(Pos.CENTER);
         
         //PANE ENTETE
         this.getChildren().addAll(flowPaneLigneHaut, separationHorizontale[0],flowPaneLigneBas,separationHorizontale[1]);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(SPACING_VBOX);
+        this.setSpacing(PaneC.SPACING_VBOX_PANE_ENTETE);
     }
 
     public TextField gettBarreRecherche()
