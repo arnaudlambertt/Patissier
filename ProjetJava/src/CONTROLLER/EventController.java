@@ -7,6 +7,8 @@ package CONTROLLER;
 
 import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -34,9 +36,7 @@ public class EventController
         try
         {
             if (!controller.getModel().connexionUtilisateur(controller.getView().getSConnexion().gettEmail().getText(), controller.getView().getSConnexion().getpMotDePasse().getText()))
-            {
                 throw new Exception("Nous n'avons pas réussi à connecter l'utilisateur");
-            }
         } catch (Exception e)
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(true);
@@ -57,9 +57,7 @@ public class EventController
         try
         {
             if (!controller.getModel().creerUtilisateur(controller.getView().getCreationCompte().getpMotDePasse().getText()))
-            {
                 throw new Exception("Nous n'avons pas réussi à créer un utilisateur");
-            }
         } catch (Exception e)
         {
             controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(true);
@@ -88,7 +86,7 @@ public class EventController
 
     public void btnBonjour(ActionEvent event)
     {
-        if(controller.getUtilisateur().getId() == 0)
+        if (controller.getUtilisateur().getId() == 0)
             controller.changerScene(Scenes.SCENE_CONNEXION);
         else
             controller.changerScene(Scenes.SCENE_PROFIL);
@@ -172,28 +170,15 @@ public class EventController
 
     public void setActionBarreRecherche(TextField element)
     {
-        element.setOnMouseClicked(new EventHandler<MouseEvent>()
+        element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->
         {
-            @Override
-            public void handle(MouseEvent event)
+            if(newPropertyValue)
             {
                 if (element.getText().equals("Rechercher"))
-                {
                     element.clear();
-                }
             }
-        });
-
-        element.setOnMouseExited(new EventHandler<MouseEvent>()
-        {
-            @Override
-            public void handle(MouseEvent event)
-            {
-                if (element.getText().equals(""))
-                {
-                    element.setText("Rechercher");
-                }
-            }
+            else if(element.getText().equals(""))
+                element.setText("Rechercher");
         });
     }
 
