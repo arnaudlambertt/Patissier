@@ -34,15 +34,11 @@ public class SceneErreur404 extends SceneCustom
     @Override
     public void update(View v)
     {
-        VBox box = new VBox(300);
-        Region r = new Region();
-        box.getChildren().add(r);
         Label lMessageErreur404 = new Label();
         lMessageErreur404.setText("Error 404 : Page Not Found");
         lMessageErreur404.setScaleX(5);
         lMessageErreur404.setScaleY(5);
-        box.getChildren().add(lMessageErreur404);
-        page.setCenter(box);
+        page.setCenter(lMessageErreur404);
     }
 
 }
