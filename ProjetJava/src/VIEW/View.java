@@ -25,12 +25,13 @@ public class View
     Button buttonClose2;
     Button buttonConnection;
     Button submitNouveauCompte;
-    
+
     private PaneEntete pEntete;
     private Stage primaryStage;
     private SceneConnexion sConnexion;
     private SceneCreationCompte sCreationCompte;
     private SceneProduits sProduits;
+    private SceneErreur404 sErreur404;
 
     public View(Stage primaryStage)
     {
@@ -42,6 +43,7 @@ public class View
         this.primaryStage = primaryStage;
         this.sProduits = new SceneProduits();
         this.pEntete = new PaneEntete();
+        this.sErreur404 = new SceneErreur404();
     }
 
     public void init()
@@ -49,6 +51,9 @@ public class View
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
+        /////////////////
+        sErreur404.init();
+        ////////////////
     }
 
     public void changerScene(int SceneConstant)
@@ -65,7 +70,7 @@ public class View
             case Scenes.SCENE_CREATION_COMPTE:
                 changerScene(sCreationCompte);
                 break;
-            default: 
+            default:
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("ERREUR 404 TEMPORAIRE");
                 alert.setHeaderText(null);
@@ -73,6 +78,8 @@ public class View
                 + "\nMATHIAS TAS PAS ENCORE FAIT LERREUR 404");
 
                 alert.showAndWait();
+                changementScene(sErreur404);
+                //break;
         }
     }
 
@@ -88,7 +95,7 @@ public class View
     {
         return sConnexion.gettEmail();
     }
-    
+
     public Button getbConnexion()
     {
         return sConnexion.getbConnexion();
@@ -103,7 +110,7 @@ public class View
     {
         return sConnexion.getbCreerCompte();
     }
-    
+
     public Stage getPrimaryStage()
     {
         return primaryStage;
