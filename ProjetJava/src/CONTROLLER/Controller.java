@@ -61,23 +61,24 @@ public class Controller
         view.getpEntete().getbLogo().setOnAction(actionBouton::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(actionBouton::btnBonjour);
         
-        changementScene(Scenes.SCENE_PRODUITS);
+        changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
     }
 
-    public void changementScene(int SceneConstant)
+    public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //prepare scenes si besoin
         {
+            //case sceneRecherche SANS BREAK POUR QUE CA DESCENDE JUSQUA SCENE PRODUITS
             case Scenes.SCENE_PRODUITS:
-                preparationSceneProduits();
+                preparerSceneProduits();
                 break;
             default:;
         }
-        view.changementScene(SceneConstant);
+        view.changerScene(SceneConstant);
     }
 
-    public void preparationSceneProduits()
+    public void preparerSceneProduits()
     {
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
         ArrayList<PaneProduit> paneProduits = view.getPaneProduits();

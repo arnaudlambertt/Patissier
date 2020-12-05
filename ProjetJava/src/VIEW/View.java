@@ -78,20 +78,21 @@ public class View
         sCreationCompte.init();
     }
 
-    public void changementScene(int SceneConstant)
+    public void changerScene(int SceneConstant)
     {
-        switch (SceneConstant) //appelle changementScene correspondant
+        switch (SceneConstant) //appelle changerScene correspondant
         {
+            //case sceneRecherche SANS BREAK POUR QUE CA DESCENDE JUSQUA SCENE PRODUITS
             case Scenes.SCENE_PRODUITS:
-                changementScene(sProduits);
+                changerScene(sProduits);
                 break;
             case Scenes.SCENE_CONNEXION:
-                changementScene(sConnexion);
+                changerScene(sConnexion);
                 break;
             case Scenes.SCENE_CREATION_COMPTE:
-                changementScene(sCreationCompte);
+                changerScene(sCreationCompte);
                 break;
-            default:
+            default: 
                 Alert alert = new Alert(AlertType.WARNING);
                 alert.setTitle("ERREUR 404 TEMPORAIRE");
                 alert.setHeaderText(null);
@@ -102,7 +103,7 @@ public class View
         }
     }
 
-    public void changementScene(SceneCustom scene)
+    public void changerScene(SceneCustom scene)
     {
         scene.update(this);
         primaryStage.setScene(scene);

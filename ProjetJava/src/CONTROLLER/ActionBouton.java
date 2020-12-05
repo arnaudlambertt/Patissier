@@ -73,7 +73,7 @@ public class ActionBouton
     {
         System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
         controller.getView().getCreationCompte().clearTextField();
-        controller.changementScene(Scenes.SCENE_CREATION_COMPTE);
+        controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
 
         System.out.println("SUCCES : On a réussi la redirection");
     }
@@ -81,15 +81,15 @@ public class ActionBouton
     public void afficherAccueil(ActionEvent event)
     {
         controller.getModel().updateTousProduits();
-        controller.changementScene(Scenes.SCENE_PRODUITS);
+        controller.changerScene(Scenes.SCENE_PRODUITS);
     }
     
     public void btnBonjour(ActionEvent event)
     {
         if(controller.getUtilisateur().getId() == 0)
-            controller.changementScene(Scenes.SCENE_CONNEXION);
+            controller.changerScene(Scenes.SCENE_CONNEXION);
         else
-            controller.changementScene(Scenes.SCENE_PROFIL);
+            controller.changerScene(Scenes.SCENE_PROFIL);
     }
 
     //Boutons création compte
