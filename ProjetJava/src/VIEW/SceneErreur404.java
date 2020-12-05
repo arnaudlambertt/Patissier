@@ -5,6 +5,8 @@
  */
 package VIEW;
 
+import javafx.scene.control.Label;
+
 /**
  *
  * @author mathi
@@ -19,14 +21,19 @@ public class SceneErreur404 extends SceneCustom
     
     @Override
     public void init()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    {}
 
     @Override
     public void update(View v)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        super.update(v);
+        
+        Label lMessageErreur404 = new Label();
+        lMessageErreur404.setText("Error 404 : File Not Found");
+        lMessageErreur404.setMinSize(0, 300);
+        lMessageErreur404.setScaleX(5);
+        lMessageErreur404.setScaleY(5);
+        conteneurPrincipal.getChildren().add(lMessageErreur404);
     }
     
 }

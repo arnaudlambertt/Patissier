@@ -31,6 +31,7 @@ public class View
     private SceneConnexion sConnexion;
     private SceneCreationCompte sCreationCompte;
     private SceneProduits sProduits;
+    private SceneErreur404 sErreur404;
 
     public View(Stage primaryStage)
     {
@@ -42,6 +43,7 @@ public class View
         this.primaryStage = primaryStage;
         this.sProduits = new SceneProduits();
         this.pEntete = new PaneEntete();
+        this.sErreur404 = new SceneErreur404();
     }
 
     public void init()
@@ -49,6 +51,9 @@ public class View
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
+        /////////////////
+        sErreur404.init();
+        ////////////////
     }
 
     public void changementScene(int SceneConstant)
@@ -62,7 +67,8 @@ public class View
                 changementScene(sConnexion);
                 break;
             case Scenes.SCENE_CREATION_COMPTE:
-                changementScene(sCreationCompte);
+                //changementScene(sCreationCompte);
+                changementScene(sErreur404);
                 break;
             default:
                 Alert alert = new Alert(AlertType.WARNING);
@@ -72,6 +78,8 @@ public class View
                 + "\nMATHIAS TAS PAS ENCORE FAIT LERREUR 404");
 
                 alert.showAndWait();
+                changementScene(sErreur404);
+                //break;
         }
     }
 
