@@ -69,17 +69,12 @@ public class Model
     {
         produitsFiltre.clear();
         produitsFiltre.addAll(produitDAO.getProduits(categorie));
-        produitDAO.close();
-
-        tousLesProduits.stream().filter((p) -> (p.getCategorie().equals(categorie))).forEachOrdered((p) ->
-        {
-            produitsFiltre.add(p);
-        });
     }
     
     public void filtreRecherche(String recherche)
     {
         updateTousProduits();
+        produitsFiltre.clear();
         tousLesProduits.stream().filter((p) -> (p.getNom().contains(recherche)
                 || p.getCategorie().contains(recherche)
                 || p.getNomFournisseur().contains(recherche))).forEachOrdered((p) ->

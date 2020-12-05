@@ -5,6 +5,7 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
 import MODEL.Produit;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
@@ -54,6 +55,8 @@ public final class PaneProduit extends GridPane
         panePrixBouton.add(prix,0,0);
         
         bAjouterPanier.setPrefSize(240, 40);
+        bAjouterPanier.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
+        + "-fx-text-fill: " + Couleurs.BLANC + ";");
         GridPane.setValignment(bAjouterPanier, VPos.CENTER);
         panePrixBouton.add(bAjouterPanier,0,1);
     }

@@ -50,9 +50,9 @@ public class SceneConnexion extends SceneCustom
         ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
                 + "-fx-border-color: " + Couleurs.BLANC + ";");
         bConnection = new Button("ME CONNECTER");
-        bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
+        bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC);
         bCreerCompte = new Button("CRÉER MON COMPTE");
-        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_BOULANGER+"; -fx-text-fill: "+Couleurs.BLANC);
+        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC);
 
         
         

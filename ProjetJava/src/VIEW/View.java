@@ -61,7 +61,6 @@ public class View
     {
         switch (SceneConstant) //appelle changerScene correspondant
         {
-            //case sceneRecherche SANS BREAK POUR QUE CA DESCENDE JUSQUA SCENE PRODUITS
             case Scenes.SCENE_PRODUITS:
                 changerScene(sProduits);
                 break;

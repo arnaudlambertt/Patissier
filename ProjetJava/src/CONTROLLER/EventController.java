@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 /**
@@ -30,9 +32,9 @@ public class EventController
         controller = c;
     }
 
-    public void btnConnexion(ActionEvent event)
+    public void connexion(ActionEvent event)
     {
-        System.out.println("Vous avez appuyé sur le bouton de connexion");
+        //System.out.println("Vous avez appuyé sur le bouton de connexion");
         try
         {
             if (!controller.getModel().connexionUtilisateur(controller.getView().getSConnexion().gettEmail().getText(), controller.getView().getSConnexion().getpMotDePasse().getText()))
@@ -47,9 +49,9 @@ public class EventController
         System.out.println("SUCCES : On a réussi à connecter l'utilisateur");
     }
 
-    public void btnCreerCompte(ActionEvent event)
+    public void creerCompte(ActionEvent event)
     {
-        System.out.println("Vous avez appuyé sur le bouton de Création de compte");
+        //System.out.println("Vous avez appuyé sur le bouton de Création de compte");
         controller.getModel().setNom(controller.getView().getCreationCompte().gettNom().getText());
         controller.getModel().setPrenom(controller.getView().getCreationCompte().gettPrenom().getText());
         controller.getModel().setEmail(controller.getView().getCreationCompte().gettEmail().getText());
@@ -65,11 +67,11 @@ public class EventController
             return;
         }
         controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
-        System.out.println(controller.getUtilisateur().toString());
+        //System.out.println(controller.getUtilisateur().toString());
         System.out.println("SUCCES : On a réussi a créer un utilisateur");
     }
 
-    public void btnRedirectionCreerCompte(ActionEvent event)
+    public void redirectionCreerCompte(ActionEvent event)
     {
         System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
         controller.getView().getCreationCompte().clearTextField();
@@ -80,11 +82,93 @@ public class EventController
 
     public void afficherAccueil(ActionEvent event)
     {
+        //set text accueil
         controller.getModel().updateTousProduits();
         controller.changerScene(Scenes.SCENE_PRODUITS);
     }
 
-    public void btnBonjour(ActionEvent event)
+    public void afficherCategorie(ActionEvent event)
+    {
+        switch (((Button) event.getSource()).getText())
+        {
+            case "Gros\nélectroménager":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Gros électroménager");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Cuisine\nCuisson":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Cuisine Cuisson");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Maison\nEntretien":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Maison Entretien");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Beauté\nSanté":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Beauté Santé");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Objets\nconnectés":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Objets connectés");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Smartphone\nTéléphonie":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Smartphone Téléphonie");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Informatique\nTablette":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Informatique Tablette");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "TV Image\nSon":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("TV, Image Son");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+                break;
+            case "Console\nGaming":
+                //set text categorie ....
+                controller.getModel().filtreCategorie("Console Gaming");
+                controller.changerScene(Scenes.SCENE_PRODUITS);
+        }
+    }
+
+    public void afficherRecherche(ActionEvent event)
+    {
+        String recherche = controller.getView().getpEntete().gettBarreRecherche().getText();
+        if (!recherche.equals("Rechercher"))
+        {
+            controller.getModel().filtreRecherche(recherche);
+            controller.changerScene(Scenes.SCENE_PRODUITS);
+            controller.getView().getpEntete().requestFocus();
+        }
+    }
+
+    public void focusBarreRecherche(TextField element)
+    {
+        element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->
+        {
+            if (newPropertyValue)
+            {
+                if (element.getText().equals("Rechercher"))
+                    element.clear();
+            } else if (element.getText().equals(""))
+                element.setText("Rechercher");
+        });
+    }
+
+    public void entrerRercherche(KeyEvent event)
+    {
+        if (event.getCode() == KeyCode.ENTER && !controller.getView().getpEntete().gettBarreRecherche().getText().isEmpty())
+            afficherRecherche(new ActionEvent());
+    }
+
+    public void bonjour(ActionEvent event)
     {
         if (controller.getUtilisateur().getId() == 0)
             controller.changerScene(Scenes.SCENE_CONNEXION);
@@ -92,45 +176,12 @@ public class EventController
             controller.changerScene(Scenes.SCENE_PROFIL);
     }
 
-    //Boutons création compte
-    public void btnPasserSurBoutonsCreeCompte(MouseEvent event)
-    {
-        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    public void btnQuiterBoutonsCreeCompte(MouseEvent event)
-    {
-        controller.getView().getCreationCompte().getbCreeMonCompte().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    //Boutons redirection creation compte
-    public void btnPasserSurBoutonsRedirectionCreeCompte(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    public void btnQuiterBoutonsRedirectionCreeCompte(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbCreerCompte().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    //Boutons connexions
-    public void btnPasserSurBoutonsConnexion(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbConnexion().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    public void btnQuiterBoutonsConnexion(MouseEvent event)
-    {
-        controller.getView().getSConnexion().getbConnexion().setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC);
-    }
-
-    public void setHoverButtonOrange(Button ceButton)
+    public void hoverButtonOrange(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC + "; -fx-font-weight: bold");
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC + "; -fx-font-weight: bold");
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
@@ -140,22 +191,22 @@ public class EventController
         });
     }
 
-    public void setHoverButtonOrangeClair(Button ceButton)
+    public void hoverButtonOrangeClair(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_BOULANGER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC);
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC);
         });
     }
 
-    public void setHover(Button ceButton)
+    public void hover(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
@@ -165,20 +216,6 @@ public class EventController
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-        });
-    }
-
-    public void setActionBarreRecherche(TextField element)
-    {
-        element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->
-        {
-            if(newPropertyValue)
-            {
-                if (element.getText().equals("Rechercher"))
-                    element.clear();
-            }
-            else if(element.getText().equals(""))
-                element.setText("Rechercher");
         });
     }
 

@@ -38,44 +38,51 @@ public class Controller
         model.init();
         view.init();
 
-        eventController.setHover(view.getpEntete().getbLogo());
-        eventController.setHover(view.getpEntete().getbRecherche());
-        eventController.setHover(view.getpEntete().getbBonjour());
-        eventController.setHover(view.getpEntete().getbPanier());
+        eventController.hover(view.getpEntete().getbLogo());
+        eventController.hover(view.getpEntete().getbRecherche());
+        eventController.hover(view.getpEntete().getbBonjour());
+        eventController.hover(view.getpEntete().getbPanier());
         
         for (int i = 0; i < 9; ++i)
-            eventController.setHoverButtonOrange(view.getpEntete().getbCategories(i));
+        {
+            view.getpEntete().getbCategories(i).setOnAction(eventController::afficherCategorie);
+            eventController.hoverButtonOrange(view.getpEntete().getbCategories(i));
+        }
 
         //Actions boutons connexion utilisateur
-        view.getbConnexion().setOnAction(eventController::btnConnexion);
-        eventController.setHoverButtonOrangeClair(view.getSConnexion().getbConnexion());
+        view.getbConnexion().setOnAction(eventController::connexion);
+        eventController.hoverButtonOrangeClair(view.getSConnexion().getbConnexion());
 
         //Actions boutons redirection vers cree compte
-        view.getbCreerCompte().setOnAction(eventController::btnRedirectionCreerCompte);
-        eventController.setHoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
+        view.getbCreerCompte().setOnAction(eventController::redirectionCreerCompte);
+        eventController.hoverButtonOrangeClair(view.getSConnexion().getbCreerCompte());
 
         //Actions boutons cree compte utilisateur
-        view.getCreationCompte().getbCreeMonCompte().setOnAction(eventController::btnCreerCompte);
-        eventController.setHoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
+        view.getCreationCompte().getbCreeMonCompte().setOnAction(eventController::creerCompte);
+        eventController.hoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
 
         //Actions barre de recherche
-        eventController.setActionBarreRecherche(this.view.getpEntete().gettBarreRecherche());
+        view.getpEntete().gettBarreRecherche().setOnKeyPressed(eventController::entrerRercherche);
+        eventController.focusBarreRecherche(view.getpEntete().gettBarreRecherche());
         
         //Actions bouton rechercher
-        eventController.setHoverButtonOrangeClair(this.view.getpEntete().getbRecherche());
+        view.getpEntete().getbRecherche().setOnAction(eventController::afficherRecherche);
+        eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
         
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
-        view.getpEntete().getbBonjour().setOnAction(eventController::btnBonjour);
+        view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
         
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
+        
+        //APRES LE SHOW
+        view.getpEntete().format();
     }
 
     public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //prepare scenes si besoin
         {
-            //case sceneRecherche SANS BREAK POUR QUE CA DESCENDE JUSQUA SCENE PRODUITS
             case Scenes.SCENE_PRODUITS:
                 preparerSceneProduits();
                 break;
@@ -92,6 +99,8 @@ public class Controller
         for (int i = 0; i < produitsFiltre.size(); ++i)
         {
             PaneProduit pp = new PaneProduit(i, produitsFiltre.get(i));
+            eventController.hoverButtonOrangeClair(pp.getbAjouterPanier());
+            //pp.getbAjouterPanier().setOnAction(eventController::ajouterAuPanier);
             paneProduits.add(pp);
         }
     }

@@ -84,7 +84,7 @@ public class SceneCreationCompte extends SceneCustom
         pMotDePasse.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bCreeMonCompte = new Button("Cree Mon Compte");
-        bCreeMonCompte.setStyle("-fx-background-color : " + Couleurs.ORANGE_BOULANGER + "; -fx-text-fill: " + Couleurs.BLANC);
+        bCreeMonCompte.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC);
 
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
