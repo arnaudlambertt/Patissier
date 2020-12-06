@@ -7,6 +7,7 @@ package MODEL;
 import DAO.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import javafx.util.Pair;
 
 /**
  *
@@ -20,6 +21,8 @@ public class Model
     private Utilisateur utilisateur;
     private ArrayList<Produit> tousLesProduits;
     private ArrayList<Produit> produitsFiltre;
+    
+    private Commande panier;
         
     public Model()
     {
@@ -29,6 +32,12 @@ public class Model
         this.utilisateur = new Utilisateur();
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
+        this.panier = new Commande();
+    }
+    
+    public Commande getPanier()
+    {
+        return panier;
     }
 
     public Utilisateur getUtilisateur()
@@ -54,6 +63,16 @@ public class Model
     public void init()
     {
         updateTousProduits();
+    }
+    
+    public void ajouterAuPanier(int index)
+    {
+        panier.addProduitCommande(new Pair<>(produitsFiltre.get(index),1));
+    }
+    
+    public void modifierQuantitePanier(int index, int quantite)
+    {
+        panier.modifierQuantite(index,quantite);
     }
     
     public void updateTousProduits()
@@ -87,6 +106,7 @@ public class Model
     {
         return produitsFiltre;
     }
+    
     
     public boolean creerUtilisateur(String motDePasse)
     {

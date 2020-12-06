@@ -6,7 +6,9 @@
 package MODEL;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import javafx.util.Pair;
 
 /**
@@ -144,6 +146,13 @@ public class Commande
         });
 
         this.prix = Math.round( this.prix * 100.0 ) / 100.0;
+    }
+    
+    public void modifierQuantite(int index, int quantite )
+    {
+        ArrayList<Produit> keys = new ArrayList<>(produitsCommande.keySet());
+        Produit p = (Produit) keys.get(index);
+        addProduitCommande(new Pair<>(p,quantite));
     }
 
     @Override

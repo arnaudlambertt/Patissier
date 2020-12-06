@@ -7,12 +7,15 @@ package CONTROLLER;
 
 import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
+import VIEW.PaneProduit;
+import VIEW.PaneProduitPanier;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -31,7 +34,7 @@ public class EventController
     {
         controller = c;
     }
-
+    
     public void connexion(ActionEvent event)
     {
         //System.out.println("Vous avez appuyé sur le bouton de connexion");
@@ -149,6 +152,27 @@ public class EventController
         }
     }
 
+    public void afficherPanier(ActionEvent event)
+    {
+        controller.changerScene(Scenes.SCENE_PANIER);
+
+    }
+    ////////////////////////////////:
+    public void ajouterProduitPanier(ActionEvent event)
+    {
+        Button source = ((Button) event.getSource());
+        controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex());
+    }
+    //////////////////////////////////
+    
+    public void changementQuantiteProduit(ActionEvent event)
+    {
+        ComboBox source = ((ComboBox)event.getSource());
+        controller.getModel().modifierQuantitePanier(((PaneProduitPanier) source.getParent()).getIndex(),(int)source.getValue());
+        controller.getView().setPrixPanier(controller.getModel().getPanier().getPrix());
+        controller.getView().getsPanier().update(controller.getView());
+    }
+    
     public void focusBarreRecherche(TextField element)
     {
         element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->

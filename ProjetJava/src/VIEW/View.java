@@ -32,6 +32,7 @@ public class View
     private SceneCreationCompte sCreationCompte;
     private SceneProduits sProduits;
     private SceneErreur404 sErreur404;
+    private ScenePanier sPanier;
 
     public View(Stage primaryStage)
     {
@@ -44,6 +45,7 @@ public class View
         this.sProduits = new SceneProduits();
         this.pEntete = new PaneEntete();
         this.sErreur404 = new SceneErreur404();
+        this.sPanier = new ScenePanier();
     }
 
     public void init()
@@ -54,6 +56,7 @@ public class View
         sCreationCompte.init();
         /////////////////
         sErreur404.init();
+        sPanier.init();
         ////////////////
     }
 
@@ -69,6 +72,9 @@ public class View
                 break;
             case Scenes.SCENE_CREATION_COMPTE:
                 changerScene(sCreationCompte);
+                break;
+            case Scenes.SCENE_PANIER:
+                changerScene(sPanier);
                 break;
             default:
                 changerScene(sErreur404);
@@ -134,9 +140,24 @@ public class View
     {
         return sProduits;
     }
+    
+    public ArrayList<PaneProduitPanier> getPaneProduitPanier()
+    {
+        return sPanier.getPaneProduitPanier();
+    }
+
+    public ScenePanier getsPanier()
+    {
+        return sPanier;
+    }
 
     public PaneEntete getpEntete()
     {
         return pEntete;
+    }
+    
+    public void setPrixPanier(double prixTotal)
+    {
+        sPanier.setPrixTotal(prixTotal);
     }
 }

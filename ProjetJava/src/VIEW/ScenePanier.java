@@ -18,6 +18,8 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 
 import CONSTANT.Panes;
+import java.util.ArrayList;
+import javafx.scene.control.Separator;
 
 /**
  *
@@ -25,8 +27,101 @@ import CONSTANT.Panes;
  */
 public class ScenePanier extends SceneCustom
 {
+    private final ArrayList<PaneProduitPanier> paneProduitPanier;
+    private final Button bValiderMonPanier =  new Button("VALIDER MON PANIER");
+    private double prixTotal;
 
-    private Label lMonPanier;
+    public ScenePanier()
+    {
+        prixTotal=0;
+        this.paneProduitPanier = new ArrayList<>();
+    }
+    
+    @Override
+    public void init()
+    {
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
+    }
+
+    @Override
+    public void update(View v)
+    {
+        GridPane gridPaneCollectionEtAchat = new GridPane();
+        
+        
+        GridPane collectionGridPane = new GridPane();
+        
+        collectionGridPane.setVgap(Panes.VGAP_SCENE_PRODUITS);
+        collectionGridPane.setAlignment(Pos.CENTER);
+        
+        for (int i = 0; i < paneProduitPanier.size(); ++i)
+        {
+            collectionGridPane.add(paneProduitPanier.get(i), 0, 2 * i + 1);
+            collectionGridPane.add(new Separator(), 0, 2 * (i + 1));
+        }
+        
+        GridPane achatGridPane = new GridPane();
+        achatGridPane.setHgap(20);
+        
+        Label nbrProduit = new Label();
+        if(this.paneProduitPanier.size()>1)
+        {
+            nbrProduit.setText("Mon Panier (" + this.paneProduitPanier.size() + " produits) ");
+        }
+        else
+        {
+            nbrProduit.setText("Mon Panier (" + this.paneProduitPanier.size() + " produit) ");
+        }
+        achatGridPane.add(nbrProduit, 0, 0);
+        
+        Label total = new Label("TOTAL  " + prixTotal );
+        
+        achatGridPane.add(total, 0, 1);
+        
+        achatGridPane.add(bValiderMonPanier, 0, 3);
+        
+       
+        
+        
+        gridPaneCollectionEtAchat.add(collectionGridPane, 0, 0);
+        gridPaneCollectionEtAchat.add(achatGridPane, 1, 0);
+        page.setCenter(gridPaneCollectionEtAchat);
+    }
+    
+    
+    public ArrayList<PaneProduitPanier> getPaneProduitPanier()
+    {
+        return paneProduitPanier;
+    }
+
+    public Button getValiderMonPanier()
+    {
+        return bValiderMonPanier;
+    }
+    
+    public void setPrixTotal(double prixTotal)
+    {
+        this.prixTotal = prixTotal;
+    }
+    
+    /*public double calculerTotal()
+    {
+        double total = 0;
+        
+        for (PaneProduitPanier e : paneProduitPanier)
+        {
+            System.out.println("Total "+ total);
+            System.out.println("Prix " + e.getPrix());
+            System.out.println("Value "+e.getCbNombreProduit().getValue());
+            total+=(e.getPrix()*e.getCbNombreProduit().getValue());
+        }
+        return total;
+    }*/
+
+    //private final ArrayList<PaneProduit>
+    
+    /*private Label lMonPanier;
     private Label lTotal;
     private Label lHorsFraisLivraison;
     private Label lRemise;
@@ -96,6 +191,9 @@ public class ScenePanier extends SceneCustom
     public void update(View v)
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    }*/
+
+
+
 
 }

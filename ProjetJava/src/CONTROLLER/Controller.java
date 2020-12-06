@@ -8,9 +8,12 @@ package CONTROLLER;
 import CONSTANT.Scenes;
 import MODEL.*;
 import VIEW.PaneProduit;
+import VIEW.PaneProduitPanier;
 import VIEW.SceneCustom;
 import VIEW.View;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import javafx.stage.Stage;
 import org.bouncycastle.crypto.prng.RandomGenerator;
@@ -48,6 +51,7 @@ public class Controller
             view.getpEntete().getbCategories(i).setOnAction(eventController::afficherCategorie);
             eventController.hoverButtonOrange(view.getpEntete().getbCategories(i));
         }
+        
 
         //Actions boutons connexion utilisateur
         view.getbConnexion().setOnAction(eventController::connexion);
@@ -72,6 +76,10 @@ public class Controller
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
         
+        view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
+        
+
+        
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
         
@@ -85,6 +93,9 @@ public class Controller
         {
             case Scenes.SCENE_PRODUITS:
                 preparerSceneProduits();
+                break;
+            case Scenes.SCENE_PANIER:
+                preparerScenePanier();
                 break;
             default:;
         }
@@ -100,9 +111,26 @@ public class Controller
         {
             PaneProduit pp = new PaneProduit(i, produitsFiltre.get(i));
             eventController.hoverButtonOrangeClair(pp.getbAjouterPanier());
-            //pp.getbAjouterPanier().setOnAction(eventController::ajouterAuPanier);
+            pp.getbAjouterPanier().setOnAction(eventController::ajouterProduitPanier);
             paneProduits.add(pp);
         }
+    }
+    
+    public void preparerScenePanier()
+    {
+        Commande panier = model.getPanier();
+        ArrayList<PaneProduitPanier> paneProduitPanier = view.getPaneProduitPanier();
+        paneProduitPanier.clear();
+        
+        ArrayList<Produit> keys = new ArrayList<>(panier.getProduitsCommande().keySet());
+        
+        for (int i = 0; i < keys.size(); ++i)
+        {
+            PaneProduitPanier pp = new PaneProduitPanier(i,(Produit)keys.get(i),panier.getProduitsCommande().get((Produit)keys.get(i)));
+            pp.getCbNombreProduit().setOnAction(eventController::changementQuantiteProduit);
+            paneProduitPanier.add(pp);
+        }
+        view.setPrixPanier(panier.getPrix());
     }
 
     public Utilisateur getUtilisateur()
