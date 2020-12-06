@@ -15,5 +15,5 @@ public class Couleurs
     public static final String ORANGE_PATISSIER_CLAIR = "#ff7d33";
     public static final String BLANC = "#ffffff";
     public static final String RED = "#ff0000";
-    public static final String GRIS = "#E4E4E4";
+    public static final String GRIS_FONCE = "#3b3b3b";
 }

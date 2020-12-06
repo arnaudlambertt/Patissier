@@ -9,14 +9,9 @@ import CONSTANT.Scenes;
 import MODEL.*;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitPanier;
-import VIEW.SceneCustom;
 import VIEW.View;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
 import javafx.stage.Stage;
-import org.bouncycastle.crypto.prng.RandomGenerator;
 
 /**
  *
@@ -81,6 +76,8 @@ public class Controller
 
         
         changerScene(Scenes.SCENE_PRODUITS);
+        //primaryStage.centerOnScreen();
+        //primaryStage.setMaximized(true);
         view.getPrimaryStage().show();
         
         //APRES LE SHOW
@@ -119,16 +116,18 @@ public class Controller
     public void preparerScenePanier()
     {
         Commande panier = model.getPanier();
-        ArrayList<PaneProduitPanier> paneProduitPanier = view.getPaneProduitPanier();
-        paneProduitPanier.clear();
+        ArrayList<PaneProduitPanier> panesProduitPanier = view.getPanesProduitPanier();
+        panesProduitPanier.clear(); 
         
         ArrayList<Produit> keys = new ArrayList<>(panier.getProduitsCommande().keySet());
         
         for (int i = 0; i < keys.size(); ++i)
         {
             PaneProduitPanier pp = new PaneProduitPanier(i,(Produit)keys.get(i),panier.getProduitsCommande().get((Produit)keys.get(i)));
-            pp.getCbNombreProduit().setOnAction(eventController::changementQuantiteProduit);
-            paneProduitPanier.add(pp);
+            pp.getCbNombreProduit().setOnAction(eventController::changementQuantitePanier);
+            pp.getbSupprimer().setOnAction(eventController::supprimerProduitPanier);
+            eventController.hover(pp.getbSupprimer());
+            panesProduitPanier.add(pp);
         }
         view.setPrixPanier(panier.getPrix());
     }

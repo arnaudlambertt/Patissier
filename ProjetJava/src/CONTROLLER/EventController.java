@@ -157,20 +157,29 @@ public class EventController
         controller.changerScene(Scenes.SCENE_PANIER);
 
     }
-    ////////////////////////////////:
+    
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex());
     }
-    //////////////////////////////////
     
-    public void changementQuantiteProduit(ActionEvent event)
+    public void changementQuantitePanier(ActionEvent event)
     {
         ComboBox source = ((ComboBox)event.getSource());
         controller.getModel().modifierQuantitePanier(((PaneProduitPanier) source.getParent()).getIndex(),(int)source.getValue());
         controller.getView().setPrixPanier(controller.getModel().getPanier().getPrix());
         controller.getView().getsPanier().update(controller.getView());
+        controller.getView().getpEntete().requestFocus();
+    }
+    
+    public void supprimerProduitPanier(ActionEvent event)
+    {
+        Button source = ((Button) event.getSource());
+        int index = ((PaneProduitPanier) source.getParent()).getIndex();
+        controller.getModel().supprimerProduitPanier(index);
+        controller.getView().getPanesProduitPanier().remove(index);
+        controller.changerScene(Scenes.SCENE_PANIER);
     }
     
     public void focusBarreRecherche(TextField element)

@@ -68,11 +68,12 @@ public final class PaneProduitPanier extends GridPane
         GridPane.setValignment(prix, VPos.CENTER);
         panePrixBouton.add(prix, 0, 0);
         
-        bSupprimer.setPrefSize(240,40);
         bSupprimer.setStyle("-fx-background-color: " + Couleurs.BLANC + ";"
-        + "-fx-text-fill: " + Couleurs.GRIS + ";");
+        + "-fx-text-fill: " + Couleurs.GRIS_FONCE + ";"
+        + "-fx-font-weight: bold;"
+        + "-fx-underline: true;");
         GridPane.setValignment(bSupprimer, VPos.CENTER);
-        panePrixBouton.add(bSupprimer,0,1);
+        add(bSupprimer,5,0);
         
     }
     

@@ -54,10 +54,8 @@ public class View
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
-        /////////////////
         sErreur404.init();
         sPanier.init();
-        ////////////////
     }
 
     public void changerScene(int SceneConstant)
@@ -141,7 +139,7 @@ public class View
         return sProduits;
     }
     
-    public ArrayList<PaneProduitPanier> getPaneProduitPanier()
+    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
     {
         return sPanier.getPaneProduitPanier();
     }
