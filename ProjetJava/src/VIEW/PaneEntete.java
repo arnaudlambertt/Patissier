@@ -78,7 +78,8 @@ public class PaneEntete extends VBox
         for (Button i : bCategories)
         {
             i.setStyle("-fx-background-color: " + Couleurs.BLANC + ";"
-                    + "-fx-font-weight: bold");
+                    + "-fx-font-weight: bold;"
+                    + "-fx-background-radius: 0;");
             i.setTextAlignment(TextAlignment.CENTER);
             i.setPrefHeight(Panes.BOUTONS_CATEGORIES_HEIGHT_PANE_ENTETE);
         }

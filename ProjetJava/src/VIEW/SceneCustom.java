@@ -5,6 +5,8 @@
  */
 package VIEW;
 
+import CONSTANT.Couleurs;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -24,6 +26,8 @@ public abstract class SceneCustom extends Scene
     public SceneCustom()
     {
         super(new BorderPane(), Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
+        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
+                + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
 
     public static void setup(View v)
@@ -55,7 +59,7 @@ public abstract class SceneCustom extends Scene
     public abstract void init();
 
     public abstract void update(View v);
-    
+
     public void updateFenetre(View v)
     {
         ((BorderPane) getRoot()).setCenter(navigateur);

@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -37,24 +39,26 @@ public class SceneCreationCompte extends SceneCustom
     private PasswordField pMotDePasse;
 
     private Button bCreeMonCompte;
+    private final ImageView progressionPanier;
     private final VBox box;
 
     public SceneCreationCompte()
     {
         this.box = new VBox();
+        this.progressionPanier = new ImageView();
     }
 
     @Override
     public void init()
     {
-        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
-                + "-fx-border-color: " + Couleurs.BLANC + ";");
-
         FlowPane FlowPaneNom = new FlowPane();
         FlowPane FlowPanePrenom = new FlowPane();
         FlowPane FlowPaneEmail = new FlowPane();
         FlowPane FlowPaneMotDePasse = new FlowPane();
 
+        progressionPanier.setImage(new Image("http://93.3.238.99/uploads/Panier-2.png"));
+        progressionPanier.setVisible(false);
+        
         lMesInformationsDeContact = new Label("Mes informations de contact : ");
         lNom = new Label("Nom* : ");
         lNom.setMinWidth(Panes.LABEL_WIDTH_SCENE_CREATION_COMPTE);
@@ -84,7 +88,8 @@ public class SceneCreationCompte extends SceneCustom
         pMotDePasse.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bCreeMonCompte = new Button("Cree Mon Compte");
-        bCreeMonCompte.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC);
+        bCreeMonCompte.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
 
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
@@ -103,6 +108,8 @@ public class SceneCreationCompte extends SceneCustom
         FlowPaneMotDePasse.setAlignment(Pos.CENTER);
 
         //Box
+        box.getChildren().add(progressionPanier);
+        box.setAlignment(Pos.TOP_CENTER);
         box.getChildren().add(lMesInformationsDeContact);
         box.getChildren().add(FlowPaneNom);
         box.getChildren().add(FlowPanePrenom);
@@ -111,7 +118,6 @@ public class SceneCreationCompte extends SceneCustom
         box.getChildren().add(bCreeMonCompte);
         box.getChildren().add(lChampsObligatoire);
         box.getChildren().add(lEmailOuMdpIncorrect);
-        box.setAlignment(Pos.CENTER);
     }
     
 
@@ -157,6 +163,11 @@ public class SceneCreationCompte extends SceneCustom
         this.tNom.clear();
         this.tPrenom.clear();
         this.pMotDePasse.clear();
+    }
+    
+    public void setProgressionVisible(boolean visible)
+    {
+        progressionPanier.setVisible(visible);
     }
 
 }

@@ -40,13 +40,12 @@ public class Controller
         eventController.hover(view.getpEntete().getbRecherche());
         eventController.hover(view.getpEntete().getbBonjour());
         eventController.hover(view.getpEntete().getbPanier());
-        
+
         for (int i = 0; i < 9; ++i)
         {
             view.getpEntete().getbCategories(i).setOnAction(eventController::afficherCategorie);
             eventController.hoverButtonOrange(view.getpEntete().getbCategories(i));
         }
-        
 
         //Actions boutons connexion utilisateur
         view.getbConnexion().setOnAction(eventController::connexion);
@@ -63,24 +62,26 @@ public class Controller
         //Actions barre de recherche
         view.getpEntete().gettBarreRecherche().setOnKeyPressed(eventController::entrerRercherche);
         eventController.focusBarreRecherche(view.getpEntete().gettBarreRecherche());
-        
+
         //Actions bouton rechercher
         view.getpEntete().getbRecherche().setOnAction(eventController::afficherRecherche);
         eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
-        
+
+        //Actions boutons entete
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
-        
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
-        
+
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
-        
+
+        //Actions bouton valider Panier
+        view.getbValiderPanier().setOnAction(eventController::validerPanier);
+        eventController.hover(view.getbValiderPanier());
+
         changerScene(Scenes.SCENE_PRODUITS);
-        //primaryStage.centerOnScreen();
-        //primaryStage.setMaximized(true);
         view.getPrimaryStage().show();
-        
+
         //APRES LE SHOW
         view.getpEntete().format();
     }
@@ -103,14 +104,15 @@ public class Controller
                 break;
             default:;
         }
+
         view.changerScene(SceneConstant);
     }
-    
+
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
     }
-    
+
     public void preparerSceneCreationCompte()
     {
         view.getCreationCompte().clearTextField();
@@ -130,15 +132,15 @@ public class Controller
             paneProduits.add(pp);
         }
     }
-    
+
     public void preparerScenePanier()
     {
         Commande panier = model.getPanier();
         ArrayList<PaneProduitPanier> panesProduitPanier = view.getPanesProduitPanier();
-        panesProduitPanier.clear(); 
-        
+        panesProduitPanier.clear();
+
         ArrayList<Produit> keys = new ArrayList<>(panier.getProduitsCommande().keySet());
-        
+
         for (int i = 0; i < keys.size(); ++i)
         {
             PaneProduitPanier pp = new PaneProduitPanier(i,(Produit)keys.get(i),panier.getProduitsCommande().get((Produit)keys.get(i)));
@@ -149,11 +151,11 @@ public class Controller
         }
         view.setPrixPanier(panier.getPrix());
     }
-    
+
     public void preparerSceneUtilisateur()
     {
         Utilisateur utilisateurActif = model.getUtilisateur();
- 
+
         view.getsProfil().gettNom().setText(utilisateurActif.getNom());
         view.getsProfil().gettPrenom().setText(utilisateurActif.getPrenom());
         view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
@@ -187,4 +189,19 @@ public class Controller
         return view;
     }
 
+    public boolean utilisateurConnecte()
+    {
+        return model.utilisateurConnecte();
+    }
+
+    public void setPanierValide(boolean panierValide)
+    {
+        model.setPanierValide(panierValide);
+        view.setProgressionVisible(panierValide);
+    }
+
+    public boolean panierValide()
+    {
+        return model.panierValide();
+    }
 }

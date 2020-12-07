@@ -32,8 +32,6 @@ public class SceneProduits extends SceneCustom
     @Override
     public void init()
     {
-        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
-                + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
 
     @Override
