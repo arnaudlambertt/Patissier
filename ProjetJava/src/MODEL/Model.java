@@ -23,9 +23,9 @@ public class Model
     private final CommandeDAO commandeDAO;
     private Utilisateur utilisateur;
     private ArrayList<Produit> tousLesProduits;
-    private ArrayList<Produit> produitsFiltre;
-
+    private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
+    private boolean panierValide;
 
     public Model()
     {
@@ -36,6 +36,7 @@ public class Model
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
+        this.panierValide = false;
     }
 
     public Commande getPanier()
@@ -125,39 +126,31 @@ public class Model
 
     public boolean creerUtilisateur(String motDePasse)
     {
-        try
-        {
-            if (this.utilisateurDAO.emailExistant(utilisateur.getEmail()))
-                throw new IOException("Email déjà existant");
-        } catch (IOException e)
-        {
-            System.out.println("ERROR : " + e.getMessage());
-            return false;
-        } finally
-        {
-            utilisateurDAO.close();
-        }
-        this.utilisateur = this.utilisateurDAO.create(utilisateur, motDePasse);
-        return true;
+        if(!utilisateurDAO.emailExistant(utilisateur.getEmail()))
+            this.utilisateur = this.utilisateurDAO.create(utilisateur, motDePasse);
+        utilisateurDAO.close();
+        return utilisateurConnecte();
     }
 
-    public boolean connexionUtilisateur(String email, String motDePasse)
+    public boolean connecterUtilisateur(String email, String motDePasse)
     {
         this.utilisateur = this.utilisateurDAO.connexion(email, motDePasse);
-        System.out.println(utilisateur.toString());
+        utilisateurDAO.close();
+        return utilisateurConnecte();
+    }
+    
+    public boolean utilisateurConnecte()
+    {
+        return utilisateur.getId() != 0;
+    }
 
-        try
-        {
-            if (utilisateur.getEmail().equals(""))
-                throw new Exception("Email ou mot de passe incorrect");
-        } catch (Exception e)
-        {
-            System.out.println(e.getMessage());
-            return false;
-        } finally
-        {
-            utilisateurDAO.close();
-        }
-        return true;
+    public void setPanierValide(boolean panierValide)
+    {
+        this.panierValide = panierValide;
+    }
+    
+    public boolean panierValide()
+    {
+        return panierValide;
     }
 }

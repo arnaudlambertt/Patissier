@@ -47,7 +47,6 @@ public class Controller
             eventController.hoverButtonOrange(view.getpEntete().getbCategories(i));
         }
         
-
         //Actions boutons connexion utilisateur
         view.getbConnexion().setOnAction(eventController::connexion);
         eventController.hoverButtonOrangeClair(view.getSConnexion().getbConnexion());
@@ -68,16 +67,17 @@ public class Controller
         view.getpEntete().getbRecherche().setOnAction(eventController::afficherRecherche);
         eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
         
+        //Actions boutons entete
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
-        
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
         
+        //Actions bouton valider Panier
+        view.getbValiderPanier().setOnAction(eventController::validerPanier);
+        eventController.hover(view.getbValiderPanier());
 
         
         changerScene(Scenes.SCENE_PRODUITS);
-        //primaryStage.centerOnScreen();
-        //primaryStage.setMaximized(true);
         view.getPrimaryStage().show();
         
         //APRES LE SHOW
@@ -96,6 +96,7 @@ public class Controller
                 break;
             default:;
         }
+        
         view.changerScene(SceneConstant);
     }
 
@@ -158,4 +159,19 @@ public class Controller
         return view;
     }
 
+    public boolean utilisateurConnecte()
+    {
+        return model.utilisateurConnecte();
+    }
+    
+    public void setPanierValide(boolean panierValide)
+    {
+        model.setPanierValide(panierValide);
+        view.setProgressionVisible(panierValide);
+    }
+    
+    public boolean panierValide()
+    {
+        return model.panierValide();
+    }
 }

@@ -15,6 +15,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -27,34 +28,30 @@ public class SceneConnexion extends SceneCustom
 {
     private Button bConnection;
     private Button bCreerCompte;
-
-    private Image iLogo; // à AJOUTER
-
-    
     private Label lEmailOuMdpIncorrect;
-
     private TextField tEmail;
     private PasswordField pMotDePasse;
-    private final GridPane grid;
-
-    
+    private final ImageView progressionPanier;
+    private final VBox box;
     
     public SceneConnexion()
     {
-        this.grid = new GridPane();
+        this.progressionPanier = new ImageView();
+        this.box = new VBox();
     }
 
     @Override
     public void init()
     {
-        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
-                + "-fx-border-color: " + Couleurs.BLANC + ";");
-        bConnection = new Button("ME CONNECTER");
-        bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC);
-        bCreerCompte = new Button("CRÉER MON COMPTE");
-        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC);
-
+        progressionPanier.setImage(new Image("http://93.3.238.99/uploads/Panier-2.png"));
+        progressionPanier.setVisible(false);
         
+        bConnection = new Button("ME CONNECTER");
+        bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
+        bCreerCompte = new Button("CRÉER MON COMPTE");
+        bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
         
         VBox vBoxEst = new VBox();
         VBox vBoxWest = new VBox();
@@ -90,19 +87,23 @@ public class SceneConnexion extends SceneCustom
 
         Separator separator2 = new Separator();
         separator2.setOrientation(Orientation.VERTICAL);
-
+        
+        GridPane grid = new GridPane();
         grid.add(vBoxWest, 0, 0);
         grid.add(separator2, 1, 0);
         grid.add(vBoxEst, 2, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(Panes.GRID_HGAP_SCENE_CONNEXION);
+        box.getChildren().add(progressionPanier);
+        box.setAlignment(Pos.TOP_CENTER);
+        box.getChildren().add(grid);
     }
 
     @Override
     public void update(View v)
     {
         lEmailOuMdpIncorrect.setVisible(false);
-        page.setCenter(grid);
+        page.setCenter(box);
     }
 
     public Label getlEmailOuMdpIncorrect()
@@ -128,5 +129,10 @@ public class SceneConnexion extends SceneCustom
     public PasswordField getpMotDePasse()
     {
         return pMotDePasse;
+    }
+    
+    public void setProgressionVisible(boolean visible)
+    {
+        progressionPanier.setVisible(visible);
     }
 }

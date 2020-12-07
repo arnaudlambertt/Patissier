@@ -34,57 +34,54 @@ public class EventController
     {
         controller = c;
     }
-    
+
     public void connexion(ActionEvent event)
     {
-        //System.out.println("Vous avez appuyé sur le bouton de connexion");
-        try
-        {
-            if (!controller.getModel().connexionUtilisateur(controller.getView().getSConnexion().gettEmail().getText(), controller.getView().getSConnexion().getpMotDePasse().getText()))
-                throw new Exception("Nous n'avons pas réussi à connecter l'utilisateur");
-        } catch (Exception e)
-        {
+        if (!controller.getModel().connecterUtilisateur(controller.getView().getSConnexion().gettEmail().getText(), controller.getView().getSConnexion().getpMotDePasse().getText()))
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(true);
-            System.out.println("ERROR : " + e.getMessage());
-            return;
+        else
+        {
+            controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
+            if(controller.panierValide())
+                controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
+            else
+            {
+                controller.changerScene(Scenes.SCENE_ERREUR_404); //profil
+                controller.setPanierValide(false);
+            }
         }
-        controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-        System.out.println("SUCCES : On a réussi à connecter l'utilisateur");
     }
 
     public void creerCompte(ActionEvent event)
     {
-        //System.out.println("Vous avez appuyé sur le bouton de Création de compte");
         controller.getModel().setNom(controller.getView().getCreationCompte().gettNom().getText());
         controller.getModel().setPrenom(controller.getView().getCreationCompte().gettPrenom().getText());
         controller.getModel().setEmail(controller.getView().getCreationCompte().gettEmail().getText());
-
-        try
-        {
-            if (!controller.getModel().creerUtilisateur(controller.getView().getCreationCompte().getpMotDePasse().getText()))
-                throw new Exception("Nous n'avons pas réussi à créer un utilisateur");
-        } catch (Exception e)
-        {
+        
+        if (!controller.getModel().creerUtilisateur(controller.getView().getCreationCompte().getpMotDePasse().getText()))
             controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(true);
-            System.out.println("ERROR : " + e.getMessage());
-            return;
+        else
+        {
+            controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
+            if(controller.panierValide())
+                controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
+            else
+            {
+                controller.changerScene(Scenes.SCENE_ERREUR_404); //profil
+                controller.setPanierValide(false);
+            }
         }
-        controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
-        //System.out.println(controller.getUtilisateur().toString());
-        System.out.println("SUCCES : On a réussi a créer un utilisateur");
     }
 
     public void redirectionCreerCompte(ActionEvent event)
     {
-        System.out.println("Vous avez appuyé sur le bouton de redirection vers Création de compte");
         controller.getView().getCreationCompte().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
-
-        System.out.println("SUCCES : On a réussi la redirection");
     }
 
     public void afficherAccueil(ActionEvent event)
     {
+        controller.setPanierValide(false);
         //set text accueil
         controller.getModel().updateTousProduits();
         controller.changerScene(Scenes.SCENE_PRODUITS);
@@ -92,6 +89,7 @@ public class EventController
 
     public void afficherCategorie(ActionEvent event)
     {
+        controller.setPanierValide(false);
         switch (((Button) event.getSource()).getText())
         {
             case "Gros\nélectroménager":
@@ -146,6 +144,7 @@ public class EventController
         String recherche = controller.getView().getpEntete().gettBarreRecherche().getText();
         if (!recherche.equals("Rechercher"))
         {
+            controller.setPanierValide(false);
             controller.getModel().filtreRecherche(recherche);
             controller.changerScene(Scenes.SCENE_PRODUITS);
             controller.getView().getpEntete().requestFocus();
@@ -154,25 +153,36 @@ public class EventController
 
     public void afficherPanier(ActionEvent event)
     {
+        controller.setPanierValide(false);
         controller.changerScene(Scenes.SCENE_PANIER);
-
     }
-    
+
+    public void validerPanier(ActionEvent event)
+    {
+        if (!controller.getModel().getPanier().getProduitsCommande().isEmpty())
+            if (!controller.utilisateurConnecte())
+            {
+                controller.setPanierValide(true);
+                controller.changerScene(Scenes.SCENE_CONNEXION);
+            } else
+                controller.changerScene(Scenes.SCENE_ERREUR_404);
+    }
+
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex());
     }
-    
+
     public void changementQuantitePanier(ActionEvent event)
     {
-        ComboBox source = ((ComboBox)event.getSource());
-        controller.getModel().modifierQuantitePanier(((PaneProduitPanier) source.getParent()).getIndex(),(int)source.getValue());
+        ComboBox source = ((ComboBox) event.getSource());
+        controller.getModel().modifierQuantitePanier(((PaneProduitPanier) source.getParent()).getIndex(), (int) source.getValue());
         controller.getView().setPrixPanier(controller.getModel().getPanier().getPrix());
         controller.getView().getsPanier().update(controller.getView());
         controller.getView().getpEntete().requestFocus();
     }
-    
+
     public void supprimerProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -181,7 +191,7 @@ public class EventController
         controller.getView().getPanesProduitPanier().remove(index);
         controller.changerScene(Scenes.SCENE_PANIER);
     }
-    
+
     public void focusBarreRecherche(TextField element)
     {
         element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->
@@ -203,7 +213,8 @@ public class EventController
 
     public void bonjour(ActionEvent event)
     {
-        if (controller.getUtilisateur().getId() == 0)
+        controller.setPanierValide(false);
+        if (!controller.utilisateurConnecte())
             controller.changerScene(Scenes.SCENE_CONNEXION);
         else
             controller.changerScene(Scenes.SCENE_PROFIL);
@@ -214,13 +225,13 @@ public class EventController
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC + "; -fx-font-weight: bold");
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC + "; -fx-font-weight: bold;" + "-fx-background-radius: 0;");
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.BLANC + "; -fx-font-weight: bold");
+            ceButton.setStyle("-fx-background-color: " + Couleurs.BLANC + "; -fx-font-weight: bold;" + "-fx-background-radius: 0;");
         });
     }
 
@@ -229,13 +240,15 @@ public class EventController
         ceButton.setOnMouseEntered((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.HAND);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC);
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER_CLAIR + "; -fx-text-fill: " + Couleurs.BLANC
+                    + ";-fx-font-weight: bold;");
         });
 
         ceButton.setOnMouseExited((MouseEvent event) ->
         {
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
-            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC);
+            ceButton.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
+                    + ";-fx-font-weight: bold;");
         });
     }
 

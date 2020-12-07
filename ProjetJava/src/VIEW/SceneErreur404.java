@@ -5,12 +5,7 @@
  */
 package VIEW;
 
-import CONSTANT.Couleurs;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 
 /**
  *
@@ -27,8 +22,6 @@ public class SceneErreur404 extends SceneCustom
     @Override
     public void init()
     {
-        ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
-                + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
 
     @Override

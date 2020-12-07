@@ -24,7 +24,7 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
 
     public UtilisateurDAO()
     {
-        this.className = "UtilsateurDAO";
+        this.className = "UtilisateurDAO";
     }
 
     @Override

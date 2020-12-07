@@ -56,7 +56,8 @@ public final class PaneProduit extends GridPane
         
         bAjouterPanier.setPrefSize(240, 40);
         bAjouterPanier.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
-        + "-fx-text-fill: " + Couleurs.BLANC + ";");
+        + "-fx-text-fill: " + Couleurs.BLANC + ";"
+                + "-fx-font-weight: bold;");
         GridPane.setValignment(bAjouterPanier, VPos.CENTER);
         panePrixBouton.add(bAjouterPanier,0,1);
     }

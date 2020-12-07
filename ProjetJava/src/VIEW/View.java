@@ -7,8 +7,6 @@ package VIEW;
 
 import CONSTANT.Scenes;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -20,32 +18,23 @@ import javafx.stage.Stage;
  */
 public class View
 {
-
-    Button buttonClose;
-    Button buttonClose2;
-    Button buttonConnection;
-    Button submitNouveauCompte;
-
-    private PaneEntete pEntete;
-    private Stage primaryStage;
-    private SceneConnexion sConnexion;
-    private SceneCreationCompte sCreationCompte;
-    private SceneProduits sProduits;
-    private SceneErreur404 sErreur404;
-    private ScenePanier sPanier;
+    private final Stage primaryStage;
+    private final PaneEntete pEntete;
+    private final SceneProduits sProduits;
+    private final SceneConnexion sConnexion;
+    private final SceneCreationCompte sCreationCompte;
+    private final ScenePanier sPanier;
+    private final SceneErreur404 sErreur404;
 
     public View(Stage primaryStage)
     {
-        this.buttonClose = new Button();
-        this.buttonClose2 = new Button();
-        this.buttonConnection = new Button();
+        this.primaryStage = primaryStage;
+        this.pEntete = new PaneEntete();
+        this.sProduits = new SceneProduits();
         this.sConnexion = new SceneConnexion();
         this.sCreationCompte = new SceneCreationCompte();
-        this.primaryStage = primaryStage;
-        this.sProduits = new SceneProduits();
-        this.pEntete = new PaneEntete();
-        this.sErreur404 = new SceneErreur404();
         this.sPanier = new ScenePanier();
+        this.sErreur404 = new SceneErreur404();
     }
 
     public void init()
@@ -76,7 +65,6 @@ public class View
                 break;
             default:
                 changerScene(sErreur404);
-                //break;
         }
     }
 
@@ -112,11 +100,6 @@ public class View
     public Stage getPrimaryStage()
     {
         return primaryStage;
-    }
-
-    public Button getSubmitNouveauCompte()
-    {
-        return submitNouveauCompte;
     }
 
     public SceneConnexion getSConnexion()
@@ -157,5 +140,16 @@ public class View
     public void setPrixPanier(double prixTotal)
     {
         sPanier.setPrixTotal(prixTotal);
+    }
+    
+    public Button getbValiderPanier()
+    {
+        return sPanier.gebtValiderPanier();
+    }
+    
+    public void setProgressionVisible(boolean visible)
+    {
+        sConnexion.setProgressionVisible(visible);
+        sCreationCompte.setProgressionVisible(visible);
     }
 }
