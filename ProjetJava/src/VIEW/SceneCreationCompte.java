@@ -70,7 +70,7 @@ public class SceneCreationCompte extends SceneCustom
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         lChampsObligatoire = new Label("* Champs obligatoires");
 
-        lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
+        lEmailOuMdpIncorrect = new Label("Email déjà existant !");
         lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
         lEmailOuMdpIncorrect.setVisible(false);
 
@@ -113,6 +113,7 @@ public class SceneCreationCompte extends SceneCustom
         box.getChildren().add(lEmailOuMdpIncorrect);
         box.setAlignment(Pos.CENTER);
     }
+    
 
     @Override
     public void update(View v)
@@ -154,7 +155,7 @@ public class SceneCreationCompte extends SceneCustom
     {
         this.tEmail.clear();
         this.tNom.clear();
-        this.tNom.clear();
+        this.tPrenom.clear();
         this.pMotDePasse.clear();
     }
 

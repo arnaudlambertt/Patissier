@@ -108,9 +108,14 @@ public class Controller
     
     public void preparerSceneConnexion()
     {
-        view.getSConnexion().getpMotDePasse().setText("");
-        view.getSConnexion().gettEmail().setText("");
+        view.getSConnexion().clear();
     }
+    
+    public void preparerSceneCreationCompte()
+    {
+        view.getCreationCompte().clearTextField();
+    }
+
 
     public void preparerSceneProduits()
     {

@@ -98,6 +98,12 @@ public class SceneConnexion extends SceneCustom
         grid.setHgap(Panes.GRID_HGAP_SCENE_CONNEXION);
     }
 
+    public void clear()
+    {
+        this.tEmail.clear();
+        this.pMotDePasse.clear();
+    }
+    
     @Override
     public void update(View v)
     {

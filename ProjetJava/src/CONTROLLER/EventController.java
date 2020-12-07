@@ -37,15 +37,20 @@ public class EventController
     
     public void supprimerUtilisateur(ActionEvent event)
     {
-        //if(controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))
+        if(controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))  
+        {
             System.out.println("On a bien supprimé l'utilisateur");
+            System.out.println("deconnecter utilisateur");
+            controller.getModel().deconnecterUtilisateur();
+            controller.changerScene(Scenes.SCENE_CONNEXION);
+        }
     }
     
     public void deconnecterUtilisateur(ActionEvent event)
     {
         System.out.println("deconnecter utilisateur");
         controller.getModel().deconnecterUtilisateur();
-        controller.changerScene(Scenes.SCENE_CONNEXION);
+        controller.changerScene(Scenes.SCENE_PRODUITS);
     }
     
     public void connexion(ActionEvent event)
@@ -85,6 +90,7 @@ public class EventController
         }
         controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
         //System.out.println(controller.getUtilisateur().toString());
+        controller.changerScene(Scenes.SCENE_PROFIL);
         System.out.println("SUCCES : On a réussi a créer un utilisateur");
     }
 
