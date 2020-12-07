@@ -35,6 +35,19 @@ public class EventController
         controller = c;
     }
     
+    public void supprimerUtilisateur(ActionEvent event)
+    {
+        //if(controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))
+            System.out.println("On a bien supprimé l'utilisateur");
+    }
+    
+    public void deconnecterUtilisateur(ActionEvent event)
+    {
+        System.out.println("deconnecter utilisateur");
+        controller.getModel().deconnecterUtilisateur();
+        controller.changerScene(Scenes.SCENE_CONNEXION);
+    }
+    
     public void connexion(ActionEvent event)
     {
         //System.out.println("Vous avez appuyé sur le bouton de connexion");
@@ -49,6 +62,7 @@ public class EventController
             return;
         }
         controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
+        controller.changerScene(Scenes.SCENE_PROFIL);
         System.out.println("SUCCES : On a réussi à connecter l'utilisateur");
     }
 

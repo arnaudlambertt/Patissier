@@ -33,6 +33,7 @@ public class View
     private SceneProduits sProduits;
     private SceneErreur404 sErreur404;
     private ScenePanier sPanier;
+    private SceneProfil sProfil;
 
     public View(Stage primaryStage)
     {
@@ -46,6 +47,7 @@ public class View
         this.pEntete = new PaneEntete();
         this.sErreur404 = new SceneErreur404();
         this.sPanier = new ScenePanier();
+        this.sProfil = new SceneProfil();
     }
 
     public void init()
@@ -74,6 +76,9 @@ public class View
             case Scenes.SCENE_PANIER:
                 changerScene(sPanier);
                 break;
+            case Scenes.SCENE_PROFIL:
+                changerScene(sProfil);
+                break;           
             default:
                 changerScene(sErreur404);
                 //break;
@@ -129,6 +134,11 @@ public class View
         return sCreationCompte;
     }
 
+    public SceneProfil getsProfil()
+    {
+        return sProfil;
+    }
+    
     public ArrayList<PaneProduit> getPaneProduits()
     {
         return sProduits.getPaneProduits();

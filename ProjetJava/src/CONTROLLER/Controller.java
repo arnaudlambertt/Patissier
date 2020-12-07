@@ -73,7 +73,8 @@ public class Controller
         
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
         
-
+        view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
+        view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
         
         changerScene(Scenes.SCENE_PRODUITS);
         //primaryStage.centerOnScreen();
@@ -94,9 +95,21 @@ public class Controller
             case Scenes.SCENE_PANIER:
                 preparerScenePanier();
                 break;
+            case Scenes.SCENE_PROFIL:
+                preparerSceneUtilisateur();
+                break;
+            case Scenes.SCENE_CONNEXION:
+                preparerSceneConnexion();
+                break;
             default:;
         }
         view.changerScene(SceneConstant);
+    }
+    
+    public void preparerSceneConnexion()
+    {
+        view.getSConnexion().getpMotDePasse().setText("");
+        view.getSConnexion().gettEmail().setText("");
     }
 
     public void preparerSceneProduits()
@@ -130,6 +143,17 @@ public class Controller
             panesProduitPanier.add(pp);
         }
         view.setPrixPanier(panier.getPrix());
+    }
+    
+    public void preparerSceneUtilisateur()
+    {
+        Utilisateur utilisateurActif = model.getUtilisateur();
+ 
+        view.getsProfil().gettNom().setText(utilisateurActif.getNom());
+        view.getsProfil().gettPrenom().setText(utilisateurActif.getPrenom());
+        view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
+        view.getsProfil().update(view);
+        System.out.println("test reussi");
     }
 
     public Utilisateur getUtilisateur()

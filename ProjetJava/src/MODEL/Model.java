@@ -37,6 +37,11 @@ public class Model
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
     }
+    
+    public void deconnecterUtilisateur()
+    {
+        utilisateur = new Utilisateur();
+    }
 
     public Commande getPanier()
     {
@@ -159,5 +164,26 @@ public class Model
             utilisateurDAO.close();
         }
         return true;
+    }
+    
+    public boolean supprimerUtilisateur(String email)
+    {
+        try
+        {
+            if(!(this.utilisateurDAO.emailExistant(utilisateur.getEmail())))
+            {
+                throw new Exception("Utilisateur n'est pas dans la base de donnée");
+            }
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }finally
+        {
+            utilisateurDAO.close();
+        }
+        this.utilisateurDAO.delete(this.utilisateur);
+        return true;
+        
     }
 }
