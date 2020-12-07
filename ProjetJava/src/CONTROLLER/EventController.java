@@ -9,10 +9,8 @@ import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitPanier;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -37,24 +35,24 @@ public class EventController
 
     public void supprimerUtilisateur(ActionEvent event)
     {
-try{
-        if(!controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))
-            throw new Exception("Echec de suppression utilisateur");
+        try
         {
-            controller.getModel().deconnecterUtilisateur();
-            controller.changerScene(Scenes.SCENE_CONNEXION);
-        }
-  }
-    catch(Exception e)
+            if (!controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))
+                throw new Exception("Echec de suppression utilisateur");
+            {
+                controller.getModel().deconnecterUtilisateur();
+                controller.changerScene(Scenes.SCENE_CONNEXION);
+            }
+        } catch (Exception e)
         {
-          System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
-      }
+    }
 
     public void deconnecterUtilisateur(ActionEvent event)
     {
         controller.getModel().deconnecterUtilisateur();
-        controller.changerScene(Scenes.SCENE_PRODUITS);
+        afficherAccueil(event);
     }
 
     public void connexion(ActionEvent event)
@@ -64,7 +62,7 @@ try{
         else
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-            if(controller.panierValide())
+            if (controller.panierValide())
                 controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
             else
             {
@@ -85,7 +83,7 @@ try{
         else
         {
             controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
-            if(controller.panierValide())
+            if (controller.panierValide())
                 controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
             else
             {
