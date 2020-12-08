@@ -30,6 +30,7 @@ public class SceneProfil extends SceneCustom
     private final TextField tEmail = new TextField();
     private final PasswordField tAncienMotDePasse = new PasswordField();
     private final TextField tNouveauMotDePasse = new TextField();
+    private final Label lEmailDejaExistant = new Label("L'adresse email saisie est déjà utilisée dans notre système");
     //mesCommandes
 
     @Override
@@ -81,6 +82,10 @@ public class SceneProfil extends SceneCustom
         donneeProfil.add(gEmail, 1, 3);
         donneeProfil.add(gMdp, 1, 4);
         
+        lEmailDejaExistant.setVisible(false);
+        lEmailDejaExistant.setStyle("-fx-text-fill : "+Couleurs.RED);
+        donneeProfil.add(lEmailDejaExistant, 1, 5);
+        
         donneeProfil.add(bEnregisterModifs, 1, 9);
         donneeProfil.add(bDeconnectionUtilisateur, 0, 0);
         donneeProfil.add(bSupprimerCompte, 0, 1);
@@ -88,6 +93,11 @@ public class SceneProfil extends SceneCustom
         donneeProfil.add(lProfil, 2, 0);
         
         page.setCenter(donneeProfil);
+    }
+
+    public Label getlEmailDejaExistant()
+    {
+        return lEmailDejaExistant;
     }
 
     public TextField gettNom()

@@ -29,6 +29,7 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
+    private final SceneCommande sCommande;
 
     public View(Stage primaryStage)
     {
@@ -42,6 +43,7 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
+        this.sCommande = new SceneCommande();
     }
 
     public void init()
@@ -55,6 +57,7 @@ public class View
         sAdresse.init();
         sPaiement.init();
         sErreur404.init();
+        sCommande.init();
     }
 
     public void changerScene(int SceneConstant)
@@ -81,6 +84,9 @@ public class View
                 break;
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
+                break;
+            case Scenes.SCENE_COMMANDES:
+                changerScene(sCommande);
                 break;
             default:
                 changerScene(sErreur404);
@@ -160,7 +166,17 @@ public class View
     {
         return sPanier;
     }
+    
+    public ArrayList<PaneCommande> getPanesCommandes()
+    {
+        return sCommande.getPaneProduit();
+    }
 
+    public SceneCommande getsCommande()
+    {
+        return sCommande;
+    }
+    
     public PaneEntete getpEntete()
     {
         return pEntete;

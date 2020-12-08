@@ -24,6 +24,7 @@ public class Model
     private ArrayList<Produit> tousLesProduits;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
+    private ArrayList<Commande> commandesUtilisateur;
 
     public Model()
     {
@@ -34,6 +35,33 @@ public class Model
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
+        this.commandesUtilisateur = new ArrayList<>();
+    }
+
+    public void updateCommandesUtilisateurs()
+    {
+        commandesUtilisateur = commandeDAO.getCommandes(utilisateur.getId());
+        commandeDAO.close();
+    }
+    
+    public boolean verifierEmail(String nouvelEmail)
+    {
+        return ((!(utilisateurDAO.emailExistant(nouvelEmail))||nouvelEmail.equals(utilisateur.getEmail())));
+    }
+    
+    public boolean updateUtilisateur()
+    {
+        return utilisateurDAO.update(utilisateur);
+    }
+    
+    public boolean modifierMotDePasse(String ancien, String nouveau)
+    {
+        return utilisateurDAO.modifierMotDePasse(utilisateur,ancien,nouveau);
+    }
+    
+    public ArrayList<Commande> getCommandesUtilisateur()
+    {
+        return commandesUtilisateur;
     }
 
     public void deconnecterUtilisateur()
