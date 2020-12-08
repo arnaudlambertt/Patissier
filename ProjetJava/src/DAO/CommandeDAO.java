@@ -73,8 +73,15 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             int id = result.getInt(1);
 
             ProduitCommandeDAO dao = new ProduitCommandeDAO();
-            obj.getProduitsCommande().forEach((k, v) -> dao.create(new Pair<>(k, v), id));
-
+            for (Map.Entry<Produit, Integer> entry : obj.getProduitsCommande().entrySet())
+            {
+                if(dao.create(new Pair<>(entry.getKey(), entry.getValue()), id).getValue() == 0)
+                {
+                    this.delete(this.find(id));
+                    return new Commande();
+                }
+            }
+                    
             return this.find(id);
 
         } catch (NullPointerException | SQLException e)

@@ -62,9 +62,11 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                 throw new NullPointerException("ERREUR: Si un lot a un prix alors il faut avoir la quantité de produit par lot");
             if (produit.getQuantiteUnLot() > 0 && produit.getPrixUnLot() <= 0.0)
                 throw new NullPointerException("ERREUR: Si un lot a une quantité alors il faut avoir un prix de produit par lot");
-
+            if(!new ProduitDAO().diminuerStock(produit,quantite))
+                throw new SQLException("ERREUR : Produit introuvable");
+            
             this.open();
-
+            
             prepare = this.connect
                     .prepareStatement(
                             "INSERT INTO produit_commande "
@@ -83,7 +85,7 @@ public class ProduitCommandeDAO extends DAO<Pair<Produit, Integer>, Integer>
                     * (1 - (produit.isPromotionActive() ? produit.getPromotion() : 0)));
 
             prepare.executeUpdate();
-
+            
             return this.find(produit.getId(), idCommande);
 
         } catch (NullPointerException | SQLException e)

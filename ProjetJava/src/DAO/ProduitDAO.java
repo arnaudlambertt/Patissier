@@ -376,4 +376,41 @@ public class ProduitDAO extends DAO<Produit, Object>
             close(prepare);
         }
     }
+    
+    public boolean diminuerStock(Produit obj, int quantiteVoulue)
+    {
+        PreparedStatement prepare = null;
+
+        try
+        {
+            if (obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getId() == 0)
+                throw new NullPointerException("ERREUR: ID nulle");
+            if (quantiteVoulue <= 0)
+                throw new NullPointerException("ERREUR: quantite incorrecte");
+            
+            this.open();
+
+            prepare = this.connect
+                        .prepareStatement("UPDATE produit "
+                                + "SET stock = stock - ? "
+                                + "WHERE id = ?"
+                    );
+            prepare.setInt(1, quantiteVoulue);
+            prepare.setInt(2, obj.getId());
+
+            prepare.executeUpdate();
+
+            return this.find(obj.getId()).getId() != 0;//true / false
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " diminuerStock() " + e.getMessage());
+            return false;
+        } finally
+        {
+            close(prepare);
+        }
+    }
 }
