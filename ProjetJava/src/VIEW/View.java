@@ -18,13 +18,15 @@ import javafx.stage.Stage;
  */
 public class View
 {
+
     private final Stage primaryStage;
     private final PaneEntete pEntete;
     private final SceneProduits sProduits;
     private final SceneConnexion sConnexion;
     private final SceneCreationCompte sCreationCompte;
-    private final ScenePanier sPanier;
     private final SceneProfil sProfil;
+    private final ScenePanier sPanier;
+    private final sceneAdresseLivraison sAdresseLivraison;
     private final SceneErreur404 sErreur404;
 
     public View(Stage primaryStage)
@@ -34,8 +36,9 @@ public class View
         this.sProduits = new SceneProduits();
         this.sConnexion = new SceneConnexion();
         this.sCreationCompte = new SceneCreationCompte();
-        this.sPanier = new ScenePanier();
         this.sProfil = new SceneProfil();
+        this.sPanier = new ScenePanier();
+        this.sAdresseLivraison = new sceneAdresseLivraison();
         this.sErreur404 = new SceneErreur404();
     }
 
@@ -45,8 +48,10 @@ public class View
         sProduits.init();
         sConnexion.init();
         sCreationCompte.init();
-        sErreur404.init();
+        sProfil.init();
         sPanier.init();
+        sAdresseLivraison.init();
+        sErreur404.init();
     }
 
     public void changerScene(int SceneConstant)
@@ -62,11 +67,14 @@ public class View
             case Scenes.SCENE_CREATION_COMPTE:
                 changerScene(sCreationCompte);
                 break;
+            case Scenes.SCENE_PROFIL:
+                changerScene(sProfil);
+                break;
             case Scenes.SCENE_PANIER:
                 changerScene(sPanier);
                 break;
-            case Scenes.SCENE_PROFIL:
-                changerScene(sProfil);
+            case Scenes.SCENE_ADRESSE_LIVRAISON:
+                changerScene(sAdresseLivraison);
                 break;
             default:
                 changerScene(sErreur404);
@@ -155,6 +163,36 @@ public class View
     public Button getbValiderPanier()
     {
         return sPanier.gebtValiderPanier();
+    }
+    
+    public Button getbValiderAdresse()
+    {
+        return sAdresseLivraison.getbValiderAdresse();
+    }
+    
+    public TextField gettCodePostal()
+    {
+        return sAdresseLivraison.gettCodePostal();
+    }
+    
+    public TextField gettVille()
+    {
+        return sAdresseLivraison.gettVille();
+    }
+    
+    public TextField gettRue()
+    {
+        return sAdresseLivraison.gettRue();
+    }
+    
+    public TextField gettNumero()
+    {
+        return sAdresseLivraison.gettNumero();
+    }
+    
+    public void setAdresseIncompleteVisible()
+    {
+        sAdresseLivraison.setAdresseIncompleteVisible();
     }
 
     public void setProgressionVisible(boolean visible)

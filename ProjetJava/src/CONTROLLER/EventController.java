@@ -63,7 +63,7 @@ public class EventController
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
             if (controller.panierValide())
-                controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
+                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON); //adresse livraison
             else
             {
                 controller.changerScene(Scenes.SCENE_PROFIL); //profil
@@ -84,7 +84,7 @@ public class EventController
         {
             controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
             if (controller.panierValide())
-                controller.changerScene(Scenes.SCENE_ERREUR_404); //adresse livraison
+                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON); //adresse livraison
             else
             {
                 controller.changerScene(Scenes.SCENE_PROFIL); //profil
@@ -185,7 +185,7 @@ public class EventController
                 controller.setPanierValide(true);
                 controller.changerScene(Scenes.SCENE_CONNEXION);
             } else
-                controller.changerScene(Scenes.SCENE_ERREUR_404);
+                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON);
     }
 
     public void ajouterProduitPanier(ActionEvent event)
@@ -210,6 +210,22 @@ public class EventController
         controller.getModel().supprimerProduitPanier(index);
         controller.getView().getPanesProduitPanier().remove(index);
         controller.changerScene(Scenes.SCENE_PANIER);
+    }
+    
+    public void validerAdresse(ActionEvent event)
+    {
+        String codePostal = controller.getView().gettCodePostal().getText();
+        String ville = controller.getView().gettVille().getText();
+        String rue = controller.getView().gettRue().getText();
+        String numero = controller.getView().gettNumero().getText();
+        
+        if(!codePostal.isEmpty() && !ville.isEmpty() && !rue.isEmpty() && !numero.isEmpty())
+        {
+            controller.getModel().getPanier().setAdresse(numero + " " + rue + " " + codePostal + " " + ville);
+            controller.changerScene(Scenes.SCENE_PAIEMENT);
+        }
+        else
+            controller.getView().setAdresseIncompleteVisible();
     }
 
     public void focusBarreRecherche(TextField element)

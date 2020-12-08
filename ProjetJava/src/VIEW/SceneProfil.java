@@ -64,9 +64,6 @@ public class SceneProfil extends SceneCustom
         Label lAncienMotDePasse= new Label("Ancien Mot de passe");
         Label lNouveauMotDePasse= new Label("Nouveau Mot de passe");
         
-        
-        
-        
         donneeProfil.add(lTitre, 1, 0);
         gNom.add(lNom, 1, 0);
         gNom.add(tNom, 1, 1);

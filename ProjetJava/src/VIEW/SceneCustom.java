@@ -6,8 +6,6 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;

@@ -79,6 +79,10 @@ public class Controller
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
 
+        //Actions bouton validerLivraison
+        view.getbValiderAdresse().setOnAction(eventController::validerAdresse);//
+        eventController.hover(view.getbValiderAdresse());
+       
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
 
@@ -160,7 +164,6 @@ public class Controller
         view.getsProfil().gettPrenom().setText(utilisateurActif.getPrenom());
         view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
         view.getsProfil().update(view);
-        System.out.println("test reussi");
     }
 
     public Utilisateur getUtilisateur()
