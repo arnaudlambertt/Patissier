@@ -24,7 +24,6 @@ public class Model
     private ArrayList<Produit> tousLesProduits;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
-    private boolean panierValide;
 
     public Model()
     {
@@ -35,7 +34,6 @@ public class Model
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
-        this.panierValide = false;
     }
 
     public void deconnecterUtilisateur()
@@ -146,16 +144,6 @@ public class Model
     public boolean utilisateurConnecte()
     {
         return utilisateur.getId() != 0;
-    }
-
-    public void setPanierValide(boolean panierValide)
-    {
-        this.panierValide = panierValide;
-    }
-
-    public boolean panierValide()
-    {
-        return panierValide;
     }
 
     public boolean stockSuffisantPanier()

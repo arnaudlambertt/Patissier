@@ -21,7 +21,7 @@ import javafx.scene.layout.VBox;
  *
  * @author Arnaud
  */
-public class sceneAdresseLivraison extends SceneCustom
+public class sceneAdresse extends SceneCustom
 {
     private final VBox box;
     private final TextField tCodePostal;
@@ -31,7 +31,7 @@ public class sceneAdresseLivraison extends SceneCustom
     private final Button bValiderAdresse;
     private final Label lAdresseIncomplete;
 
-    public sceneAdresseLivraison()
+    public sceneAdresse()
     {
         this.box = new VBox(10);
         this.tCodePostal = new TextField();

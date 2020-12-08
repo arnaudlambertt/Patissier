@@ -26,7 +26,7 @@ public class View
     private final SceneCreationCompte sCreationCompte;
     private final SceneProfil sProfil;
     private final ScenePanier sPanier;
-    private final sceneAdresseLivraison sAdresseLivraison;
+    private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
 
@@ -39,7 +39,7 @@ public class View
         this.sCreationCompte = new SceneCreationCompte();
         this.sProfil = new SceneProfil();
         this.sPanier = new ScenePanier();
-        this.sAdresseLivraison = new sceneAdresseLivraison();
+        this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
     }
@@ -52,7 +52,7 @@ public class View
         sCreationCompte.init();
         sProfil.init();
         sPanier.init();
-        sAdresseLivraison.init();
+        sAdresse.init();
         sPaiement.init();
         sErreur404.init();
     }
@@ -76,8 +76,8 @@ public class View
             case Scenes.SCENE_PANIER:
                 changerScene(sPanier);
                 break;
-            case Scenes.SCENE_ADRESSE_LIVRAISON:
-                changerScene(sAdresseLivraison);
+            case Scenes.SCENE_ADRESSE:
+                changerScene(sAdresse);
                 break;
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
@@ -178,32 +178,32 @@ public class View
     
     public Button getbValiderAdresse()
     {
-        return sAdresseLivraison.getbValiderAdresse();
+        return sAdresse.getbValiderAdresse();
     }
     
     public TextField gettCodePostal()
     {
-        return sAdresseLivraison.gettCodePostal();
+        return sAdresse.gettCodePostal();
     }
     
     public TextField gettVille()
     {
-        return sAdresseLivraison.gettVille();
+        return sAdresse.gettVille();
     }
     
     public TextField gettRue()
     {
-        return sAdresseLivraison.gettRue();
+        return sAdresse.gettRue();
     }
     
     public TextField gettNumero()
     {
-        return sAdresseLivraison.gettNumero();
+        return sAdresse.gettNumero();
     }
     
     public void setAdresseIncompleteVisible()
     {
-        sAdresseLivraison.setAdresseIncompleteVisible();
+        sAdresse.setAdresseIncompleteVisible();
     }
     
     public Button getbConfirmerCommande()
@@ -211,6 +211,11 @@ public class View
         return sPaiement.getbConfirmer();
     }
 
+    public void setAdresse(String adresse)
+    {
+        sPaiement.setAdresse(adresse);
+    }
+    
     public void setProgressionVisible(boolean visible)
     {
         sConnexion.setProgressionVisible(visible);

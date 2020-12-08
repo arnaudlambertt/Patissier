@@ -334,7 +334,7 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             
             boolean bool = true;
             ProduitDAO dao = new ProduitDAO();
-            for (Map.Entry<Produit, Integer> entry : ((HashMap<Produit,Integer>)obj.getProduitsCommande().clone()).entrySet())
+            for (Map.Entry<Produit, Integer> entry : (new HashMap<>(obj.getProduitsCommande()).entrySet()))
             {
                 if(!dao.stockSuffisant(entry.getKey(), entry.getValue()))
                 {

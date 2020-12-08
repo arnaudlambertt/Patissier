@@ -52,12 +52,12 @@ public class EventController
         else
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-            if (controller.panierValide())
-                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON); //adresse livraison
+            if (controller.redirectionCommande())
+                controller.changerScene(Scenes.SCENE_ADRESSE); //adresse livraison
             else
             {
                 controller.changerScene(Scenes.SCENE_PROFIL); //profil
-                controller.setPanierValide(false);
+                controller.setRedirectionCommande(false);
             }
         }
     }
@@ -73,12 +73,12 @@ public class EventController
         else
         {
             controller.getView().getCreationCompte().getlEmailOuMdpIncorrect().setVisible(false);
-            if (controller.panierValide())
-                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON); //adresse livraison
+            if (controller.redirectionCommande())
+                controller.changerScene(Scenes.SCENE_ADRESSE); //adresse livraison
             else
             {
                 controller.changerScene(Scenes.SCENE_PROFIL); //profil
-                controller.setPanierValide(false);
+                controller.setRedirectionCommande(false);
             }
         }
     }
@@ -91,14 +91,14 @@ public class EventController
 
     public void afficherAccueil(ActionEvent event)
     {
-        controller.setPanierValide(false);
+        controller.setRedirectionCommande(false);
         controller.getModel().updateTousProduits();
         controller.changerScene(Scenes.SCENE_PRODUITS);
     }
 
     public void afficherCategorie(ActionEvent event)
     {
-        controller.setPanierValide(false);
+        controller.setRedirectionCommande(false);
         switch (((Button) event.getSource()).getText())
         {
             case "Gros\nélectroménager":
@@ -144,7 +144,7 @@ public class EventController
         String recherche = controller.getView().getpEntete().gettBarreRecherche().getText();
         if (!recherche.equals("Rechercher"))
         {
-            controller.setPanierValide(false);
+            controller.setRedirectionCommande(false);
             controller.getModel().filtreRecherche(recherche);
             controller.changerScene(Scenes.SCENE_PRODUITS);
             controller.getView().getpEntete().requestFocus();
@@ -153,7 +153,7 @@ public class EventController
 
     public void afficherPanier(ActionEvent event)
     {
-        controller.setPanierValide(false);
+        controller.setRedirectionCommande(false);
         controller.getModel().stockSuffisantPanier();
         controller.changerScene(Scenes.SCENE_PANIER);
     }
@@ -163,10 +163,10 @@ public class EventController
         if (!controller.getModel().getPanier().getProduitsCommande().isEmpty())
             if (!controller.utilisateurConnecte())
             {
-                controller.setPanierValide(true);
+                controller.setRedirectionCommande(true);
                 controller.changerScene(Scenes.SCENE_CONNEXION);
             } else
-                controller.changerScene(Scenes.SCENE_ADRESSE_LIVRAISON);
+                controller.changerScene(Scenes.SCENE_ADRESSE);
     }
 
     public void ajouterProduitPanier(ActionEvent event)
@@ -215,7 +215,7 @@ public class EventController
        
         else if (controller.getModel().validerCommande())
         {
-            controller.setPanierValide(false);
+            controller.setRedirectionCommande(false);
             controller.changerScene(Scenes.SCENE_COMMANDES);
         }
     }
@@ -241,7 +241,7 @@ public class EventController
 
     public void bonjour(ActionEvent event)
     {
-        controller.setPanierValide(false);
+        controller.setRedirectionCommande(false);
         if (!controller.utilisateurConnecte())
             controller.changerScene(Scenes.SCENE_CONNEXION);
         else

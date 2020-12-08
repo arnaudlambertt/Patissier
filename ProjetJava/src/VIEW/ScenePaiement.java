@@ -24,6 +24,7 @@ public class ScenePaiement extends SceneCustom
 {
 
     private final VBox box;
+    private final Label ladresse;
     private final Label ltotal;
     private final Button bConfirmer;
     private double prixTotal;
@@ -31,6 +32,7 @@ public class ScenePaiement extends SceneCustom
     public ScenePaiement()
     {
         this.box = new VBox();
+        this.ladresse = new Label();
         this.ltotal = new Label();
         this.bConfirmer = new Button();
         this.prixTotal = 0.0;
@@ -54,6 +56,10 @@ public class ScenePaiement extends SceneCustom
         rbPaiement[2] = new RadioButton("Paypal");
         rbPaiement[2].setToggleGroup(group);
 
+        ladresse.setStyle("-fx-border-color: " + Couleurs.GRIS_FONCE
+        + ";-fx-border-width: 2px"
+        + ";-fx-font-weight: bold;");
+        
         bConfirmer.setText("CONFIRMER");
         bConfirmer.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
                 + ";-fx-font-weight: bold;");
@@ -64,8 +70,9 @@ public class ScenePaiement extends SceneCustom
         grid.add(rbPaiement[0], 0, 0);
         grid.add(rbPaiement[1], 0, 1);
         grid.add(rbPaiement[2], 0, 2);
-        grid.add(ltotal,1,0);
-        grid.add(bConfirmer, 1, 1);
+        grid.add(ladresse,1,0);
+        grid.add(ltotal,1,1);
+        grid.add(bConfirmer, 1, 2);
         
         box.setAlignment(Pos.TOP_CENTER);
         grid.setAlignment(Pos.CENTER);
@@ -88,6 +95,11 @@ public class ScenePaiement extends SceneCustom
     public void setPrixTotal(double prixTotal)
     {
         this.prixTotal = prixTotal;
+    }
+    
+    public void setAdresse(String adresse)
+    {
+        ladresse.setText(adresse);
     }
 
 }

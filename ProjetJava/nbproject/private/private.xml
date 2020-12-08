@@ -6,17 +6,18 @@
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneProduitPanier.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneEntete.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ConnectionMySQL.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/ScenePaiement.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Commande.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneCreationCompte.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Scenes.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/UtilisateurDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/View.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneProfil.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/sceneAdresseLivraison.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/sceneAdresse.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneProduits.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Model.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/ScenePanier.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitCommandeDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/CommandeDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Produit.java</file>

@@ -23,12 +23,14 @@ public class Controller
     private final Model model;
     private final View view;
     private final EventController eventController;
+    private boolean redirectionCommande;
 
     public Controller(Stage primaryStage)
     {
         this.model = new Model();
         this.view = new View(primaryStage);
         this.eventController = new EventController(this);
+        this.redirectionCommande = false;
     }
 
     public void init()
@@ -110,6 +112,9 @@ public class Controller
                 break;
             case Scenes.SCENE_CONNEXION:
                 preparerSceneConnexion();
+                break;
+            case Scenes.SCENE_PAIEMENT:
+                view.setAdresse(model.getPanier().getAdresse());
                 break;
             default:;
         }
@@ -202,14 +207,14 @@ public class Controller
         return model.utilisateurConnecte();
     }
 
-    public void setPanierValide(boolean panierValide)
+    public void setRedirectionCommande(boolean redirige)
     {
-        model.setPanierValide(panierValide);
-        view.setProgressionVisible(panierValide);
+        this.redirectionCommande = redirige;
+        view.setProgressionVisible(redirige);
     }
-
-    public boolean panierValide()
+ 
+    public boolean redirectionCommande()
     {
-        return model.panierValide();
+        return redirectionCommande;
     }
 }

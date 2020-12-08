@@ -30,8 +30,6 @@ public final class PaneProduitPanier extends GridPane
     
     public PaneProduitPanier(int index, Produit p, int quantite)
     {
-        
-        
         this.index = index;
         this.bSupprimer = new Button("Supprimer");
         
