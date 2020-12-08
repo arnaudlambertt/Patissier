@@ -80,7 +80,7 @@ public class Model
 
         if (!pc.containsKey(p) && p.getStock() > 0)
             panier.addProduitCommande(new Pair<>(p, 1)); //creer
-        else if (pc.get(p) < Integer.min(p.getStock(), 10))
+        else if (p.getStock() > 0 && pc.get(p) < Integer.min(p.getStock(), 10))
             panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer 
     }
 
@@ -162,12 +162,7 @@ public class Model
     {
         try
         {
-            if(!commandeDAO.stockSuffisantCommande(panier))
-            {
-                panier = new Commande();
-                return false;
-            }
-            return true;
+            return commandeDAO.verificationStockPanier(panier);
         } 
         finally
         {

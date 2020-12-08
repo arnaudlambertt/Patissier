@@ -323,17 +323,30 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
         }
     }
 
-    public boolean stockSuffisantCommande(Commande obj)
+    public boolean verificationStockPanier(Commande obj)
     {
         try
         {
             if(obj == null)
                 throw new NullPointerException("ERREUR: Parametre 1 nul");
             if (obj.getProduitsCommande().isEmpty())
-                throw new NullPointerException("ERREUR: Pas de produits");
+                return false;
             
+            boolean bool = true;
             ProduitDAO dao = new ProduitDAO();
-            return obj.getProduitsCommande().entrySet().stream().noneMatch((entry) -> (!dao.stockSuffisant(entry.getKey(), entry.getValue())));
+            for (Map.Entry<Produit, Integer> entry : ((HashMap<Produit,Integer>)obj.getProduitsCommande().clone()).entrySet())
+            {
+                if(!dao.stockSuffisant(entry.getKey(), entry.getValue()))
+                {
+                    bool = false;
+                    Produit p = dao.find(entry.getKey().getId());
+                    if(p.getId() == 0 || p.getStock() <= 0)
+                        obj.removeProduitCommande(p);
+                    else
+                        obj.addProduitCommande(new Pair<>(p,Integer.min(entry.getValue(),p.getStock())));
+                }
+            }
+            return bool;
         } catch (NullPointerException e)
         {
             System.err.println(className + " stockSuffisantCommande() " + e.getMessage());

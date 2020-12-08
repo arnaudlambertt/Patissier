@@ -154,6 +154,7 @@ public class EventController
     public void afficherPanier(ActionEvent event)
     {
         controller.setPanierValide(false);
+        controller.getModel().stockSuffisantPanier();
         controller.changerScene(Scenes.SCENE_PANIER);
     }
 
