@@ -6,7 +6,6 @@
 package MODEL;
 
 import DAO.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import javafx.util.Pair;
@@ -159,20 +158,36 @@ public class Model
         return panierValide;
     }
 
+    public boolean stockSuffisantPanier()
+    {
+        try
+        {
+            if(!commandeDAO.stockSuffisantCommande(panier))
+            {
+                panier = new Commande();
+                return false;
+            }
+            return true;
+        } 
+        finally
+        {
+            commandeDAO.close();
+        }
+    }
+    
     public boolean validerCommande()
     {
         try
         {
             if (commandeDAO.create(panier, utilisateur).getId() == 0)
-                throw new Exception("Echec de validation de commande");
+                throw new Exception("Echec validation commande");
             panier = new Commande();
             return true;
-        } catch(Exception e)
+        } catch (Exception e)
         {
             System.out.println(e.getMessage());
             return false;
-        }
-        finally
+        } finally
         {
             commandeDAO.close();
         }

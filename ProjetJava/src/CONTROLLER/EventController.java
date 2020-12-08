@@ -209,7 +209,10 @@ public class EventController
 
     public void commander(ActionEvent event)
     {
-        if (controller.getModel().validerCommande())
+        if(!controller.getModel().stockSuffisantPanier())
+            controller.changerScene(Scenes.SCENE_PANIER);
+       
+        else if (controller.getModel().validerCommande())
         {
             controller.setPanierValide(false);
             controller.changerScene(Scenes.SCENE_COMMANDES);

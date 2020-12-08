@@ -176,20 +176,17 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             prepare.executeUpdate();
 
             ProduitCommandeDAO dao = new ProduitCommandeDAO();
-            HashMap<Produit,Integer> bbdProduitsCommande = dao.getProduitsCommande(obj.getId());
-            for(Map.Entry<Produit, Integer> entry : bbdProduitsCommande.entrySet())
-            {
-                if(obj.getProduitsCommande().containsKey(entry.getKey()))
+            HashMap<Produit, Integer> bbdProduitsCommande = dao.getProduitsCommande(obj.getId());
+            for (Map.Entry<Produit, Integer> entry : bbdProduitsCommande.entrySet())
+                if (obj.getProduitsCommande().containsKey(entry.getKey()))
                 {
-                    if(!dao.update(new Pair<>(entry.getKey(),obj.getId()),obj.getProduitsCommande().get(entry.getKey())))
+                    if (!dao.update(new Pair<>(entry.getKey(), obj.getId()), obj.getProduitsCommande().get(entry.getKey())))
                         throw new SQLException("ERREUR: Echec mise a jour produit_commande");
-                }
-                else if(!dao.delete(new Pair<>(entry.getKey(),obj.getId())))
-                    throw new SQLException("ERREUR: Echec suppression produit_commande"); 
-            }
+                } else if (!dao.delete(new Pair<>(entry.getKey(), obj.getId())))
+                    throw new SQLException("ERREUR: Echec suppression produit_commande");
             obj.getProduitsCommande().entrySet().stream().filter((entry) -> (!bbdProduitsCommande.containsKey(entry.getKey()))).forEachOrdered((entry) ->
             {
-                dao.create(new Pair<>(entry.getKey(),entry.getValue()),obj.getId());
+                dao.create(new Pair<>(entry.getKey(), entry.getValue()), obj.getId());
             });
 
             return this.find(obj.getId()).getId() != 0;
@@ -225,11 +222,11 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             prepare.setInt(1, obj.getId());
 
             prepare.executeUpdate();
-            
+
             ProduitCommandeDAO dao = new ProduitCommandeDAO();
             for (Map.Entry<Produit, Integer> entry : dao.getProduitsCommande(obj.getId()).entrySet())
-                if(!dao.delete(new Pair<>(entry.getKey(),obj.getId())))
-                    throw new SQLException("ERREUR: Echec suppression produit_commande"); 
+                if (!dao.delete(new Pair<>(entry.getKey(), obj.getId())))
+                    throw new SQLException("ERREUR: Echec suppression produit_commande");
 
             return this.find(obj.getId()).getId() == 0;//true / false
 
@@ -242,7 +239,7 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             close(prepare);
         }
     }
-    
+
     public ArrayList<Commande> getCommandes(int idUtilisateur)
     {
         PreparedStatement prepare = null;
@@ -268,7 +265,9 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             ArrayList<Commande> commandes = new ArrayList<>();
 
             while (result.next())
+            {
                 commandes.add(this.find(result.getInt("id")));
+            }
 
             return commandes;
 
@@ -282,7 +281,7 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             close(prepare);
         }
     }
-    
+
     public ArrayList<Commande> getCommandes()
     {
         ResultSet result = null;
@@ -301,7 +300,9 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             ArrayList<Commande> commandes = new ArrayList<>();
 
             while (result.next())
+            {
                 commandes.add(this.find(result.getInt("id")));
+            }
 
             return commandes;
 
@@ -315,5 +316,22 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
         }
     }
 
-}
+    public boolean stockSuffisantCommande(Commande obj)
+    {
+        try
+        {
+            if(obj == null)
+                throw new NullPointerException("ERREUR: Parametre 1 nul");
+            if (obj.getProduitsCommande().isEmpty())
+                throw new NullPointerException("ERREUR: Pas de produits");
+            
+            ProduitDAO dao = new ProduitDAO();
+            return obj.getProduitsCommande().entrySet().stream().noneMatch((entry) -> (!dao.stockSuffisant(entry.getKey(), entry.getValue())));
+        } catch (NullPointerException e)
+        {
+            System.err.println(className + " stockSuffisantCommande() " + e.getMessage());
+            return false;
+        }
+    }
 
+}
