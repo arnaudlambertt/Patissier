@@ -58,7 +58,7 @@ public class ScenePanier extends SceneCustom
     {
         VBox box = new VBox();
         box.setAlignment(Pos.TOP_CENTER);
-
+        
         GridPane gridPaneCollectionEtAchat = new GridPane();
         GridPane collectionGridPane = new GridPane();
 
@@ -88,13 +88,10 @@ public class ScenePanier extends SceneCustom
         achatGridPane.add(total, 0, 1);
 
         achatGridPane.add(bValiderMonPanier, 0, 3);
-        gridPaneCollectionEtAchat.setAlignment(Pos.TOP_RIGHT);
-        gridPaneCollectionEtAchat.setHgap(75);
-        gridPaneCollectionEtAchat.add(collectionGridPane, 0, 1);
-        gridPaneCollectionEtAchat.add(achatGridPane, 1, 1);
-        Region r = new Region();
-        r.setMinWidth(225);
-        gridPaneCollectionEtAchat.add(r, 2, 0);
+        gridPaneCollectionEtAchat.add(collectionGridPane, 0, 0);
+        gridPaneCollectionEtAchat.add(achatGridPane, 1, 0);
+        gridPaneCollectionEtAchat.setAlignment(Pos.TOP_CENTER);
+
         box.getChildren().add(progressionPanier);
         box.getChildren().add(gridPaneCollectionEtAchat);
         page.setCenter(box);
