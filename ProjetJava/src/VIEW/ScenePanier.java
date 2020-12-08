@@ -17,6 +17,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 
 /**
  *
@@ -54,6 +56,9 @@ public class ScenePanier extends SceneCustom
     @Override
     public void update(View v)
     {
+        VBox box = new VBox();
+        box.setAlignment(Pos.TOP_CENTER);
+
         GridPane gridPaneCollectionEtAchat = new GridPane();
         GridPane collectionGridPane = new GridPane();
 
@@ -83,12 +88,16 @@ public class ScenePanier extends SceneCustom
         achatGridPane.add(total, 0, 1);
 
         achatGridPane.add(bValiderMonPanier, 0, 3);
-        gridPaneCollectionEtAchat.setAlignment(Pos.TOP_LEFT);
-        gridPaneCollectionEtAchat.add(progressionPanier, 0, 0);
+        gridPaneCollectionEtAchat.setAlignment(Pos.TOP_RIGHT);
+        gridPaneCollectionEtAchat.setHgap(75);
         gridPaneCollectionEtAchat.add(collectionGridPane, 0, 1);
         gridPaneCollectionEtAchat.add(achatGridPane, 1, 1);
-        page.setCenter(gridPaneCollectionEtAchat);
-        //BorderPane.setMargin(gridPaneCollectionEtAchat, new Insets(0, 0, 0, 540));
+        Region r = new Region();
+        r.setMinWidth(225);
+        gridPaneCollectionEtAchat.add(r, 2, 0);
+        box.getChildren().add(progressionPanier);
+        box.getChildren().add(gridPaneCollectionEtAchat);
+        page.setCenter(box);
     }
 
     public ArrayList<PaneProduitPanier> getPaneProduitPanier()
@@ -105,5 +114,5 @@ public class ScenePanier extends SceneCustom
     {
         this.prixTotal = prixTotal;
     }
-    
+
 }
