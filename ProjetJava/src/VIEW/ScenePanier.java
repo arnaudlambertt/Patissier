@@ -73,9 +73,8 @@ public class ScenePanier extends SceneCustom
 
         if (paneProduitPanier.size() > 1)
             nbrProduit.setText("Mon Panier (" + this.paneProduitPanier.size() + " produits) ");
-
         else
-            nbrProduit.setText("Mon Panier (0 produit) ");
+            nbrProduit.setText("Mon Panier (" + this.paneProduitPanier.size() + " produit) ");
 
         achatGridPane.add(nbrProduit, 0, 0);
 
