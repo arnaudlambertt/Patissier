@@ -9,6 +9,7 @@ import CONSTANT.Couleurs;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 
 /**
  *
@@ -22,7 +23,7 @@ public abstract class SceneCustom extends Scene
 
     public SceneCustom()
     {
-        super(new BorderPane());
+        super(new BorderPane(), Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
                 + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
