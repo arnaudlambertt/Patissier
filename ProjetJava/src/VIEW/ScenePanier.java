@@ -88,7 +88,7 @@ public class ScenePanier extends SceneCustom
         gridPaneCollectionEtAchat.add(collectionGridPane, 0, 1);
         gridPaneCollectionEtAchat.add(achatGridPane, 1, 1);
         page.setCenter(gridPaneCollectionEtAchat);
-        BorderPane.setMargin(gridPaneCollectionEtAchat, new Insets(0, 0, 0, 540));
+        //BorderPane.setMargin(gridPaneCollectionEtAchat, new Insets(0, 0, 0, 540));
     }
 
     public ArrayList<PaneProduitPanier> getPaneProduitPanier()

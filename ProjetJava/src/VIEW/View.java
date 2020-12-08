@@ -89,15 +89,16 @@ public class View
 
     public void changerScene(SceneCustom scene)
     {
-        double width = primaryStage.getWidth();
-        double height = primaryStage.getHeight();
+        //double width = primaryStage.getWidth();
+        //double height = primaryStage.getHeight();
         
         scene.update(this);
         scene.updateFenetre(this);
 
         primaryStage.setScene(scene);
-        primaryStage.setWidth(width);
-        primaryStage.setHeight(height);
+        primaryStage.setMaximized(true);
+        //primaryStage.setWidth(width);
+        //primaryStage.setHeight(height);
     }
 
     public TextField gettEmail()

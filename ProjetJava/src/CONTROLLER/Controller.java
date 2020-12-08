@@ -91,7 +91,7 @@ public class Controller
         
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
-        view.getPrimaryStage().setMaximized(true);
+        //view.getPrimaryStage().setMaximized(true);
 
         //APRES LE SHOW
         view.getpEntete().format();
