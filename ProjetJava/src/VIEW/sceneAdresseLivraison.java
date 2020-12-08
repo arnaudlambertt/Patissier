@@ -74,7 +74,7 @@ public class sceneAdresseLivraison extends SceneCustom
         bValiderAdresse.setText("VALIDER");
         bValiderAdresse.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
                 + ";-fx-font-weight: bold;");
-        bValiderAdresse.setPrefSize(240, 40);
+        bValiderAdresse.setMinSize(240, 40);
         
         lAdresseIncomplete.setText("Adresse incomplète.");
         lAdresseIncomplete.setStyle("-fx-text-fill : ff0000");

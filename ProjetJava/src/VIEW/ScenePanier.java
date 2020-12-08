@@ -7,26 +7,16 @@ package VIEW;
 
 import CONSTANT.Couleurs;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
-
 import CONSTANT.Panes;
-import static VIEW.SceneCustom.page;
 import java.util.ArrayList;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Priority;
 
 /**
  *
@@ -57,7 +47,7 @@ public class ScenePanier extends SceneCustom
                 + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;"
         );
-        bValiderMonPanier.setPrefSize(240, 40);
+        bValiderMonPanier.setMinSize(240, 40);
         progressionPanier.setImage(new Image("http://93.3.238.99/uploads/Panier-1.png"));
     }
 
@@ -89,7 +79,7 @@ public class ScenePanier extends SceneCustom
 
         achatGridPane.add(nbrProduit, 0, 0);
 
-        Label total = new Label("TOTAL  " + prixTotal);
+        Label total = new Label("TOTAL  " + prixTotal + "€");
 
         achatGridPane.add(total, 0, 1);
 
@@ -99,9 +89,7 @@ public class ScenePanier extends SceneCustom
         gridPaneCollectionEtAchat.add(collectionGridPane, 0, 1);
         gridPaneCollectionEtAchat.add(achatGridPane, 1, 1);
         page.setCenter(gridPaneCollectionEtAchat);
-        //gridPaneCollectionEtAchat.setMarg
         BorderPane.setMargin(gridPaneCollectionEtAchat, new Insets(0, 0, 0, 540));
-
     }
 
     public ArrayList<PaneProduitPanier> getPaneProduitPanier()

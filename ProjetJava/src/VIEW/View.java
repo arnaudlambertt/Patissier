@@ -27,6 +27,7 @@ public class View
     private final SceneProfil sProfil;
     private final ScenePanier sPanier;
     private final sceneAdresseLivraison sAdresseLivraison;
+    private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
 
     public View(Stage primaryStage)
@@ -39,6 +40,7 @@ public class View
         this.sProfil = new SceneProfil();
         this.sPanier = new ScenePanier();
         this.sAdresseLivraison = new sceneAdresseLivraison();
+        this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
     }
 
@@ -51,6 +53,7 @@ public class View
         sProfil.init();
         sPanier.init();
         sAdresseLivraison.init();
+        sPaiement.init();
         sErreur404.init();
     }
 
@@ -76,6 +79,9 @@ public class View
             case Scenes.SCENE_ADRESSE_LIVRAISON:
                 changerScene(sAdresseLivraison);
                 break;
+            case Scenes.SCENE_PAIEMENT:
+                changerScene(sPaiement);
+                break;
             default:
                 changerScene(sErreur404);
         }
@@ -83,11 +89,15 @@ public class View
 
     public void changerScene(SceneCustom scene)
     {
+        double width = primaryStage.getWidth();
+        double height = primaryStage.getHeight();
+        
         scene.update(this);
         scene.updateFenetre(this);
+
         primaryStage.setScene(scene);
-        primaryStage.centerOnScreen();
-        primaryStage.setMaximized(true);
+        primaryStage.setWidth(width);
+        primaryStage.setHeight(height);
     }
 
     public TextField gettEmail()
@@ -158,6 +168,7 @@ public class View
     public void setPrixPanier(double prixTotal)
     {
         sPanier.setPrixTotal(prixTotal);
+        sPaiement.setPrixTotal(prixTotal);
     }
 
     public Button getbValiderPanier()
@@ -193,6 +204,11 @@ public class View
     public void setAdresseIncompleteVisible()
     {
         sAdresseLivraison.setAdresseIncompleteVisible();
+    }
+    
+    public Button getbConfirmerCommande()
+    {
+        return sPaiement.getbConfirmer();
     }
 
     public void setProgressionVisible(boolean visible)

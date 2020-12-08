@@ -25,7 +25,7 @@ import javafx.scene.layout.VBox;
  */
 public class SceneConnexion extends SceneCustom
 {
-    private Button bConnection;
+    private Button bConnexion;
     private Button bCreerCompte;
     private Label lEmailOuMdpIncorrect;
     private TextField tEmail;
@@ -45,15 +45,17 @@ public class SceneConnexion extends SceneCustom
         progressionPanier.setImage(new Image("http://93.3.238.99/uploads/Panier-2.png"));
         progressionPanier.setVisible(false);
         
-        bConnection = new Button("ME CONNECTER");
-        bConnection.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        bConnexion = new Button("ME CONNECTER");
+        bConnexion.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
         + ";-fx-font-weight: bold;");
+        bConnexion.setMinSize(240, 40);
         bCreerCompte = new Button("CRÉER MON COMPTE");
         bCreerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
         + ";-fx-font-weight: bold;");
+        bCreerCompte.setMinSize(240, 40);
         
-        VBox vBoxEst = new VBox();
-        VBox vBoxWest = new VBox();
+        VBox vBoxEst = new VBox(5);
+        VBox vBoxWest = new VBox(5);
 
         Label lEmail = new Label("Email");
         Label lMotDePasse = new Label("Mot de passe");
@@ -80,7 +82,7 @@ public class SceneConnexion extends SceneCustom
         vBoxWest.getChildren().add(tEmail);
         vBoxWest.getChildren().add(lMotDePasse);
         vBoxWest.getChildren().add(pMotDePasse);
-        vBoxWest.getChildren().add(bConnection);
+        vBoxWest.getChildren().add(bConnexion);
         vBoxWest.getChildren().add(lEmailOuMdpIncorrect);
         vBoxWest.setAlignment(Pos.CENTER);
 
@@ -118,7 +120,7 @@ public class SceneConnexion extends SceneCustom
 
     public Button getbConnexion()
     {
-        return bConnection;
+        return bConnexion;
     }
 
     public Button getbCreerCompte()

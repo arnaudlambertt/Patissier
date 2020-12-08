@@ -19,4 +19,5 @@ public class Scenes
     public static final int SCENE_PANIER = 4;
     public static final int SCENE_ADRESSE_LIVRAISON = 5;
     public static final int SCENE_PAIEMENT = 6;
+    public static final int SCENE_COMMANDES = 7;
 }

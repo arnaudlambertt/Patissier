@@ -14,11 +14,6 @@ import javafx.scene.control.Label;
 public class SceneErreur404 extends SceneCustom
 {
 
-    public SceneErreur404()
-    {
-
-    }
-
     @Override
     public void init()
     {

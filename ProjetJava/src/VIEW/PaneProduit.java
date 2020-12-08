@@ -37,7 +37,7 @@ public final class PaneProduit extends GridPane
         add(image,0,0);
         
         Label lNom = new Label(p.getNom() + "\n" + p.getNomFournisseur());
-        lNom.setPrefSize(300, 300);
+        lNom.setMinSize(300, 300);
         lNom.setWrapText(true);
         lNom.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lNom, VPos.TOP);
@@ -49,12 +49,12 @@ public final class PaneProduit extends GridPane
         
         Label prix = new Label(String.valueOf(p.getPrixUnitaire()) + "€");
         prix.setAlignment(Pos.TOP_CENTER);
-        prix.setPrefHeight(25);
+        prix.setMinHeight(25);
         GridPane.setHalignment(prix, HPos.RIGHT);
         GridPane.setValignment(prix, VPos.CENTER);
         panePrixBouton.add(prix,0,0);
         
-        bAjouterPanier.setPrefSize(240, 40);
+        bAjouterPanier.setMinSize(240, 40);
         bAjouterPanier.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
         + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;");

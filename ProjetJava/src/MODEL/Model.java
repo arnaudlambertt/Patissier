@@ -38,7 +38,7 @@ public class Model
         this.panier = new Commande();
         this.panierValide = false;
     }
-    
+
     public void deconnecterUtilisateur()
     {
         utilisateur = new Utilisateur();
@@ -77,11 +77,11 @@ public class Model
     public void ajouterAuPanier(int index)
     {
         Produit p = produitsFiltre.get(index);
-        Map<Produit,Integer> pc = panier.getProduitsCommande();
-        
+        Map<Produit, Integer> pc = panier.getProduitsCommande();
+
         if (!pc.containsKey(p) && p.getStock() > 0)
             panier.addProduitCommande(new Pair<>(p, 1)); //creer
-        else if(pc.get(p) < Integer.min(p.getStock(), 10))
+        else if (pc.get(p) < Integer.min(p.getStock(), 10))
             panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer 
     }
 
@@ -89,7 +89,7 @@ public class Model
     {
         panier.modifierQuantite(index, quantite);
     }
-    
+
     public void supprimerProduitPanier(int index)
     {
         ArrayList<Produit> keys = new ArrayList<>(panier.getProduitsCommande().keySet());
@@ -131,7 +131,7 @@ public class Model
 
     public boolean creerUtilisateur(String motDePasse)
     {
-        if(!utilisateurDAO.emailExistant(utilisateur.getEmail()))
+        if (!utilisateurDAO.emailExistant(utilisateur.getEmail()))
             this.utilisateur = this.utilisateurDAO.create(utilisateur, motDePasse);
         utilisateurDAO.close();
         return utilisateurConnecte();
@@ -143,7 +143,7 @@ public class Model
         utilisateurDAO.close();
         return utilisateurConnecte();
     }
-    
+
     public boolean utilisateurConnecte()
     {
         return utilisateur.getId() != 0;
@@ -153,30 +153,46 @@ public class Model
     {
         this.panierValide = panierValide;
     }
-    
+
     public boolean panierValide()
     {
         return panierValide;
     }
-    
-    public boolean supprimerUtilisateur(String email)
+
+    public boolean validerCommande()
     {
         try
         {
-            if(!(this.utilisateurDAO.emailExistant(utilisateur.getEmail())))
-            {
-                throw new Exception("Utilisateur n'est pas dans la base de donnée");
-            }
+            if (commandeDAO.create(panier, utilisateur).getId() == 0)
+                throw new Exception("Echec de validation de commande");
+            panier = new Commande();
+            return true;
+        } catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        finally
+        {
+            commandeDAO.close();
+        }
+    }
+
+    public boolean supprimerUtilisateur()
+    {
+        try
+        {
+            if (!utilisateurDAO.delete(this.utilisateur))
+                throw new Exception("Echec suppression utilisateur");
+            utilisateur = new Utilisateur();
+            return true;
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
             return false;
-        }finally
+        } finally
         {
             utilisateurDAO.close();
         }
-        this.utilisateurDAO.delete(this.utilisateur);
-        return true;
-        
     }
 }

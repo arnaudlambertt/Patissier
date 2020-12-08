@@ -83,8 +83,13 @@ public class Controller
         view.getbValiderAdresse().setOnAction(eventController::validerAdresse);//
         eventController.hover(view.getbValiderAdresse());
        
+        //Actions bouton confirmerCommande
+        view.getbConfirmerCommande().setOnAction(eventController::commander);
+        eventController.hover(view.getbConfirmerCommande());        
+        
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
+        view.getPrimaryStage().setMaximized(true);
 
         //APRES LE SHOW
         view.getpEntete().format();

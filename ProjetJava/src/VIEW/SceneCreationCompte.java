@@ -82,7 +82,7 @@ public class SceneCreationCompte extends SceneCustom
         bCreerMonCompte.setText("CRÉER MON COMPTE");
         bCreerMonCompte.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
         + ";-fx-font-weight: bold;");
-        bCreerMonCompte.setPrefSize(240, 40);
+        bCreerMonCompte.setMinSize(240, 40);
 
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);

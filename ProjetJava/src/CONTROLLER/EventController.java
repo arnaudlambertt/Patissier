@@ -35,18 +35,8 @@ public class EventController
 
     public void supprimerUtilisateur(ActionEvent event)
     {
-        try
-        {
-            if (!controller.getModel().supprimerUtilisateur(controller.getUtilisateur().getEmail()))
-                throw new Exception("Echec de suppression utilisateur");
-            {
-                controller.getModel().deconnecterUtilisateur();
-                controller.changerScene(Scenes.SCENE_CONNEXION);
-            }
-        } catch (Exception e)
-        {
-            System.err.println(e.getMessage());
-        }
+        if (controller.getModel().supprimerUtilisateur())
+            controller.changerScene(Scenes.SCENE_CONNEXION);
     }
 
     public void deconnecterUtilisateur(ActionEvent event)
@@ -102,7 +92,6 @@ public class EventController
     public void afficherAccueil(ActionEvent event)
     {
         controller.setPanierValide(false);
-        //set text accueil
         controller.getModel().updateTousProduits();
         controller.changerScene(Scenes.SCENE_PRODUITS);
     }
@@ -113,47 +102,38 @@ public class EventController
         switch (((Button) event.getSource()).getText())
         {
             case "Gros\nélectroménager":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Gros électroménager");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Cuisine\nCuisson":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Cuisine Cuisson");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Maison\nEntretien":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Maison Entretien");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Beauté\nSanté":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Beauté Santé");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Objets\nconnectés":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Objets connectés");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Smartphone\nTéléphonie":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Smartphone Téléphonie");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Informatique\nTablette":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Informatique Tablette");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "TV Image\nSon":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("TV, Image Son");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 break;
             case "Console\nGaming":
-                //set text categorie ....
                 controller.getModel().filtreCategorie("Console Gaming");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
         }
@@ -211,21 +191,29 @@ public class EventController
         controller.getView().getPanesProduitPanier().remove(index);
         controller.changerScene(Scenes.SCENE_PANIER);
     }
-    
+
     public void validerAdresse(ActionEvent event)
     {
         String codePostal = controller.getView().gettCodePostal().getText();
         String ville = controller.getView().gettVille().getText();
         String rue = controller.getView().gettRue().getText();
         String numero = controller.getView().gettNumero().getText();
-        
-        if(!codePostal.isEmpty() && !ville.isEmpty() && !rue.isEmpty() && !numero.isEmpty())
+
+        if (!codePostal.isEmpty() && !ville.isEmpty() && !rue.isEmpty() && !numero.isEmpty())
         {
             controller.getModel().getPanier().setAdresse(numero + " " + rue + " " + codePostal + " " + ville);
             controller.changerScene(Scenes.SCENE_PAIEMENT);
-        }
-        else
+        } else
             controller.getView().setAdresseIncompleteVisible();
+    }
+
+    public void commander(ActionEvent event)
+    {
+        if (controller.getModel().validerCommande())
+        {
+            controller.setPanierValide(false);
+            controller.changerScene(Scenes.SCENE_COMMANDES);
+        }
     }
 
     public void focusBarreRecherche(TextField element)
