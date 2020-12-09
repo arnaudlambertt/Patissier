@@ -9,6 +9,7 @@ import CONSTANT.Couleurs;
 import CONSTANT.Panes;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -118,7 +119,7 @@ public class PaneEntete extends VBox
         viewBonjour.setPreserveRatio(true);
         bBonjour.setStyle("-fx-background-color: " + Couleurs.BLANC + ";");
         bBonjour.setGraphic(viewBonjour);
-
+        
         // Button Rechercher
         Image imgRechercher = new Image("http://93.3.238.99/uploads/icon-loupe.png");
         ImageView viewRechercher = new ImageView(imgRechercher);
@@ -139,15 +140,16 @@ public class PaneEntete extends VBox
         GridPane gridPaneButton = new GridPane();
         GridPane gridPaneRechercher = new GridPane();
 
-        gridPaneButton.add(bBonjour, 0, 0);
-        gridPaneButton.add(bPanier, 1, 0);
         gridPaneButton.setHgap(Panes.GRID_PANE_BUTTON_HGAP_PANE_ENTETE);
-
+        gridPaneButton.setVgap(Panes.GRID_PANE_BUTTON_VGAP_PANE_ENTETE);
+        gridPaneButton.add(bBonjour, 0, 1);
+        gridPaneButton.add(bPanier, 1, 1);
+        
         gridPaneRechercher.add(tBarreRecherche, 0, 0);
         gridPaneRechercher.add(bRecherche, 1, 0);
         gridPaneRechercher.setHgap(Panes.GRID_PANE_RECHERCHER_HGAP_PANE_ENTETE);
         gridPaneRechercher.setAlignment(Pos.CENTER);
-
+        
         //FLOW PANE HAUT
         FlowPane flowPaneLigneHaut = new FlowPane();
         flowPaneLigneHaut.getChildren().addAll(bLogo, gridPaneRechercher, gridPaneButton);
