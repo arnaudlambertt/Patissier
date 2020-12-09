@@ -78,7 +78,7 @@ public final class PaneCommande extends GridPane
         GridPane.setValignment(image, VPos.TOP);
         gridProduit.add(image,0,0);
         
-        Label lNom = new Label(p.getNom() + "\n" + p.getNomFournisseur());
+        Label lNom = new Label(p.getNom() + "\n" + p.getFournisseur());
         lNom.setMinSize(150, 150);
         lNom.setWrapText(true);
         lNom.setAlignment(Pos.TOP_LEFT);
