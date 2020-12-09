@@ -13,6 +13,7 @@ import MODEL.Utilisateur;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import org.bouncycastle.util.encoders.Hex;
 
 /**
@@ -345,6 +346,38 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
         } finally
         {
             close(prepare);
+        }
+    }
+    
+    public ArrayList<Utilisateur> getUtilisateurs()
+    {
+        ResultSet result = null;
+
+        try
+        {
+            this.open();
+
+            result = this.connect
+                    .createStatement(
+                            ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE)
+                    .executeQuery("SELECT * FROM utilisateur where role = 'Utilisateur'"
+                    );
+
+            ArrayList<Utilisateur> utilisateurs = new ArrayList<>();
+
+            while (result.next())
+                utilisateurs.add(this.find(result.getInt("id")));
+            
+            return utilisateurs;
+
+        } catch (NullPointerException | SQLException e)
+        {
+            System.err.println(className + " getUtilisateurs() " + e.getMessage());
+            return new ArrayList<>();
+        } finally
+        {
+            close(result);
         }
     }
 
