@@ -134,7 +134,7 @@ public class Controller
             model.getUtilisateur().setEmail(view.getsProfil().gettEmail().getText());
         if(!view.getsProfil().gettPrenom().getText().isEmpty())
             model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
-        if(view.getsProfil().gettNom().getText().isEmpty())
+        if(!view.getsProfil().gettNom().getText().isEmpty())
             model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
             
     }
