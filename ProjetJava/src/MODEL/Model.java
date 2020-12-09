@@ -24,8 +24,11 @@ public class Model
     private ArrayList<Produit> tousLesProduits;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
+
     private Produit produitSelectionne;
     private Utilisateur utilisateurSelectionne;
+
+    private ArrayList<Commande> commandesUtilisateur;
 
     public Model()
     {
@@ -36,8 +39,38 @@ public class Model
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
+
         this.produitSelectionne = new Produit();
         this.utilisateurSelectionne = new Utilisateur();
+
+        this.commandesUtilisateur = new ArrayList<>();
+    }
+
+    public void updateCommandesUtilisateurs()
+    {
+        commandesUtilisateur = commandeDAO.getCommandes(utilisateur.getId());
+        commandeDAO.close();
+    }
+
+    public boolean verifierEmail(String nouvelEmail)
+    {
+        return ((!(utilisateurDAO.emailExistant(nouvelEmail))||nouvelEmail.equals(utilisateur.getEmail())));
+    }
+
+    public boolean updateUtilisateur()
+    {
+        return utilisateurDAO.update(utilisateur);
+    }
+
+    public boolean modifierMotDePasse(String ancien, String nouveau)
+    {
+        return utilisateurDAO.modifierMotDePasse(utilisateur,ancien,nouveau);
+    }
+
+    public ArrayList<Commande> getCommandesUtilisateur()
+    {
+        return commandesUtilisateur;
+
     }
 
     public void deconnecterUtilisateur()
@@ -99,7 +132,7 @@ public class Model
     {
         return tousLesProduits;
     }
-    
+
 
     public void ajouterAuPanier(int index)
     {
@@ -109,7 +142,7 @@ public class Model
         if (!pc.containsKey(p) && p.getStock() > 0)
             panier.addProduitCommande(new Pair<>(p, 1)); //creer
         else if (p.getStock() > 0 && pc.get(p) < Integer.min(p.getStock(), 10))
-            panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer 
+            panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer
     }
 
     public void modifierQuantitePanier(int index, int quantite)
@@ -181,13 +214,13 @@ public class Model
         try
         {
             return commandeDAO.verificationStockPanier(panier);
-        } 
+        }
         finally
         {
             commandeDAO.close();
         }
     }
-    
+
     public boolean validerCommande()
     {
         try
@@ -223,7 +256,7 @@ public class Model
             utilisateurDAO.close();
         }
     }
-    
+
     boolean utilisateurAdmin()
     {
         return utilisateur.getRole().equals("Administrateur");

@@ -15,6 +15,7 @@ import javafx.util.Pair;
 import MODEL.Commande;
 import MODEL.Produit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -272,9 +273,9 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
             ArrayList<Commande> commandes = new ArrayList<>();
 
             while (result.next())
-            {
                 commandes.add(this.find(result.getInt("id")));
-            }
+            
+            commandes.sort(Comparator.comparing(Commande::getId).reversed()); 
 
             return commandes;
 
@@ -340,9 +341,8 @@ public class CommandeDAO extends DAO<Commande, Utilisateur>
                 {
                     bool = false;
                     Produit p = dao.find(entry.getKey().getId());
-                    if(p.getId() == 0 || p.getStock() <= 0)
-                        obj.removeProduitCommande(p);
-                    else
+                    obj.removeProduitCommande(p);
+                    if(!(p.getId() == 0 || p.getStock() <= 0))
                         obj.addProduitCommande(new Pair<>(p,Integer.min(entry.getValue(),p.getStock())));
                 }
             }

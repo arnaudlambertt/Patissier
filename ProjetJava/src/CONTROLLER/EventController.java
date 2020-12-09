@@ -46,6 +46,33 @@ public class EventController
         afficherAccueil(event);
     }
 
+    public void mettreAJourUtilisateur(ActionEvent event)
+    {
+        if (controller.getModel().verifierEmail(controller.getView().getsProfil().gettEmail().getText()))
+        {
+            controller.getView().getsProfil().getlEmailDejaExistant().setVisible(false);
+            if (controller.getView().getsProfil().gettNouveauMotDePasse().getText().isEmpty())
+            {
+
+                controller.mettreAJourUtilisateur();
+                controller.getModel().updateUtilisateur();
+            } else if (controller.getModel().modifierMotDePasse(
+                    controller.getView().getsProfil().gettAncienMotDePasse().getText(),
+                    controller.getView().getsProfil().gettNouveauMotDePasse().getText()))
+            {
+                controller.mettreAJourUtilisateur();
+                controller.getModel().updateUtilisateur();
+            } 
+        }
+        else
+            {
+                controller.getView().getsProfil().getlEmailDejaExistant().setVisible(true);
+            }
+        
+        controller.changerScene(Scenes.SCENE_PROFIL);
+
+    }
+
     public void connexion(ActionEvent event)
     {
         //Si identifiant incorrecte ou mot de passe indorecte alors on affiche un message sur la page
@@ -195,6 +222,11 @@ public class EventController
         controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
     }
 
+    public void afficherCommandesUtilisateur(ActionEvent event)
+    {
+        controller.changerScene(Scenes.SCENE_COMMANDES);
+    }
+
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -236,9 +268,9 @@ public class EventController
 
     public void commander(ActionEvent event)
     {
-        if(!controller.getModel().stockSuffisantPanier())
+        if (!controller.getModel().stockSuffisantPanier())
             controller.changerScene(Scenes.SCENE_PANIER);
-       
+
         else if (controller.getModel().validerCommande())
         {
             controller.setRedirectionCommande(false);

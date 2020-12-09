@@ -7,6 +7,7 @@ package CONTROLLER;
 
 import CONSTANT.Scenes;
 import MODEL.*;
+import VIEW.PaneCommande;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
@@ -79,10 +80,13 @@ public class Controller
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
 
+
         //Actions boutons zone admin
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
         view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
-        
+        view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
+        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
+
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -90,11 +94,11 @@ public class Controller
         //Actions bouton validerLivraison
         view.getbValiderAdresse().setOnAction(eventController::validerAdresse);//
         eventController.hover(view.getbValiderAdresse());
-       
+
         //Actions bouton confirmerCommande
         view.getbConfirmerCommande().setOnAction(eventController::commander);
-        eventController.hover(view.getbConfirmerCommande());        
-        
+        eventController.hover(view.getbConfirmerCommande());
+
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
         //view.getPrimaryStage().setMaximized(true);
@@ -128,11 +132,41 @@ public class Controller
             case Scenes.SCENE_PAIEMENT:
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
+            case Scenes.SCENE_COMMANDES:
+                preparerSceneCommande();
+                break;
             default:;
         }
 
         view.changerScene(SceneConstant);
     }
+
+    public void mettreAJourUtilisateur()
+    {
+        if(!view.getsProfil().gettEmail().getText().isEmpty())
+            model.getUtilisateur().setEmail(view.getsProfil().gettEmail().getText());
+        if(!view.getsProfil().gettPrenom().getText().isEmpty())
+            model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
+        if(view.getsProfil().gettNom().getText().isEmpty())
+            model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
+
+    }
+
+    public void preparerSceneCommande()
+    {
+        model.updateCommandesUtilisateurs();
+        ArrayList<Commande> commandeUtilisateur = model.getCommandesUtilisateur();
+        ArrayList<PaneCommande> paneCommande = view.getPanesCommandes();
+
+        paneCommande.clear();
+
+        for (int i = 0; i < commandeUtilisateur.size(); ++i)
+        {
+            PaneCommande pp = new PaneCommande(i, commandeUtilisateur.get(i));
+            paneCommande.add(pp);
+        }
+    }
+
 
     public void preparerSceneConnexion()
     {
@@ -158,7 +192,7 @@ public class Controller
             paneProduits.add(pp);
         }
     }
-    
+
     public void preparerSceneModifierProduit()
     {
         view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
@@ -172,7 +206,7 @@ public class Controller
         view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
         view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
     }
-    
+
     public void preparerSceneProduitsAdmin()
     {
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
@@ -187,8 +221,8 @@ public class Controller
             panesProduitAdmin.add(pp);
         }
     }
-    
-    
+
+
 
     public void preparerScenePanier()
     {
@@ -216,9 +250,11 @@ public class Controller
         view.getsProfil().gettNom().setText(utilisateurActif.getNom());
         view.getsProfil().gettPrenom().setText(utilisateurActif.getPrenom());
         view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
+        view.getsProfil().gettNouveauMotDePasse().setText("");
+        view.getsProfil().gettAncienMotDePasse().setText("");
         view.getsProfil().update(view);
     }
-    
+
     public Utilisateur getUtilisateur()
     {
         return model.getUtilisateur();
@@ -255,7 +291,7 @@ public class Controller
         this.redirectionCommande = redirige;
         view.setProgressionVisible(redirige);
     }
- 
+
     public boolean redirectionCommande()
     {
         return redirectionCommande;
