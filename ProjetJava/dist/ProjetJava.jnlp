@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ProjetJava.jar" size="87965" download="eager" />
+    <jar href="ProjetJava.jar" size="88058" download="eager" />
     <jar href="lib\bcprov-jdk15to18-167.jar" size="4540667" download="eager" />
     <jar href="lib\mysql-connector-java-8.0.22.jar" size="2389216" download="eager" />
   </resources>
