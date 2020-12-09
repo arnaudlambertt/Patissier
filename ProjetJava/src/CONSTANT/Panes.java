@@ -19,6 +19,7 @@ public class Panes
     public static final int BARRE_RECHERCHE_WIDTH_PANE_ENTETE=400;
     public static final int BARRE_RECHERCHE_HEIGHT_PANE_ENTETE=50;
     public static final int GRID_PANE_BUTTON_HGAP_PANE_ENTETE=20;
+    public static final int GRID_PANE_BUTTON_VGAP_PANE_ENTETE=5;
     public static final int GRID_PANE_RECHERCHER_HGAP_PANE_ENTETE=5;
     public static final int NOMBRE_CATEGORIES_PANE_ENTETE = 9;
     public static final int BOUTONS_CATEGORIES_HEIGHT_PANE_ENTETE=62;
