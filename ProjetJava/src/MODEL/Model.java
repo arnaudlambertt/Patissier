@@ -157,6 +157,11 @@ public class Model
     {
         this.produitSelectionne = produitSelectionne;
     }
+    
+    public boolean updateProduitSelectionne()
+    {
+        return produitDAO.update(produitSelectionne);
+    }
 
     public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne)
     {

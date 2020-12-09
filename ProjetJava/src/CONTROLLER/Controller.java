@@ -97,8 +97,11 @@ public class Controller
         eventController.hoverButtonOrangeClair(view.getCreationCompteAdmin().getbCreeMonCompte());
         
         //Actions boutons modifier compte utilisateur (zone administrateur)
-        
         view.getsModifierUtilisateur().getbValiderModificationProduit().setOnAction(eventController::modifierUtilisateurSelectionne);
+        eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
+        
+        //Actions boutons modifier produit (zone administrateur)
+        view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
         eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
 
         //Actions bouton valider Panier
@@ -246,7 +249,7 @@ public class Controller
             PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
             eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
             eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
-            pp.getbModifierProduit().setOnAction(eventController::modifierUtilisateurAdminRedirection);
+            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdminRedirection);
             panesProduitAdmin.add(pp);
         }
     }

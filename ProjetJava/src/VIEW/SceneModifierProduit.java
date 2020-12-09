@@ -287,6 +287,11 @@ public class SceneModifierProduit extends SceneCustom
     {
         lProduitIncomplete.setVisible(true);
     }
+    
+    public void setProduitIncompleteInvisible()
+    {
+        lProduitIncomplete.setVisible(false);
+    }
 
     public Button getbValiderModificationProduit()
     {
@@ -296,6 +301,18 @@ public class SceneModifierProduit extends SceneCustom
     public void setSelectCategorie(String categorie)
     {
         listCategorie.getSelectionModel().select(categorie);
+    }
+    
+    public String getSelectCategorie()
+    {
+        return listCategorie.getSelectionModel().getSelectedItem();
+    }
+    
+    public boolean getSelectPromotion()
+    {
+        if(listPromotionActive.getSelectionModel().getSelectedItem().equals("true"))
+                return true;
+        else return false;
     }
     
     public void setSelectPromotion(boolean promotion)

@@ -366,6 +366,28 @@ public class EventController
         }
     }
     
+    public void modifierProduitSelectionne(ActionEvent event)
+    {
+        controller.getModel().getProduitSelectionne().setNom(controller.getView().getsModifierProduit().gettNom().getText());
+        controller.getModel().getProduitSelectionne().setCategorie(controller.getView().getsModifierProduit().getSelectCategorie());
+        controller.getModel().getProduitSelectionne().setNomFournisseur(controller.getView().getsModifierProduit().gettFournisseur().getText());
+        controller.getModel().getProduitSelectionne().setPrixUnitaire(Double.parseDouble(controller.getView().getsModifierProduit().gettPrixUnitaire().getText()));
+        controller.getModel().getProduitSelectionne().setStock(Integer.parseInt(controller.getView().getsModifierProduit().gettStock().getText()));
+        controller.getModel().getProduitSelectionne().setQuantiteUnLot(Integer.parseInt(controller.getView().getsModifierProduit().gettQuantiteUnLot().getText()));
+        controller.getModel().getProduitSelectionne().setPrixUnLot(Double.parseDouble(controller.getView().getsModifierProduit().gettPrixUnLot().getText()));
+        controller.getModel().getProduitSelectionne().setPromotion(Double.parseDouble(controller.getView().getsModifierProduit().gettPromotion().getText()));
+        controller.getModel().getProduitSelectionne().setPromotionActive(controller.getView().getsModifierProduit().getSelectPromotion());
+        controller.getModel().getProduitSelectionne().setLienImage(controller.getView().getsModifierProduit().gettImage().getText());
+        
+        if (!controller.getModel().updateProduitSelectionne())
+            controller.getView().getsModifierProduit().setProduitIncompleteVisible();
+        else
+        {
+            controller.getView().getsModifierProduit().setProduitIncompleteInvisible();
+            controller.changerScene(Scenes.SCENE_ADMIN_Produit); //zone admin utilisateur
+        }
+    }
+    
 
     public void hoverButtonOrange(Button ceButton)
     {
