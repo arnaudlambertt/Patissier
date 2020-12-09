@@ -7,6 +7,7 @@ package CONTROLLER;
 
 import CONSTANT.Scenes;
 import MODEL.*;
+import VIEW.PaneCommande;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitPanier;
 import VIEW.View;
@@ -76,7 +77,9 @@ public class Controller
 
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
-
+        view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
+        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
+        
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -116,12 +119,42 @@ public class Controller
             case Scenes.SCENE_PAIEMENT:
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
+            case Scenes.SCENE_COMMANDES:
+                preparerSceneCommande();                
+                break;
             default:;
         }
 
         view.changerScene(SceneConstant);
     }
 
+    public void mettreAJourUtilisateur()
+    {
+        if(!view.getsProfil().gettEmail().getText().isEmpty())
+            model.getUtilisateur().setEmail(view.getsProfil().gettEmail().getText());
+        if(!view.getsProfil().gettPrenom().getText().isEmpty())
+            model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
+        if(view.getsProfil().gettNom().getText().isEmpty())
+            model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
+            
+    }
+    
+    public void preparerSceneCommande()
+    {
+        model.updateCommandesUtilisateurs();
+        ArrayList<Commande> commandeUtilisateur = model.getCommandesUtilisateur();
+        ArrayList<PaneCommande> paneCommande = view.getPanesCommandes();
+        
+        paneCommande.clear();
+        
+        for (int i = 0; i < commandeUtilisateur.size(); ++i)
+        {
+            PaneCommande pp = new PaneCommande(i, commandeUtilisateur.get(i));
+            paneCommande.add(pp);
+        }
+    }
+    
+    
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
@@ -173,6 +206,8 @@ public class Controller
         view.getsProfil().gettNom().setText(utilisateurActif.getNom());
         view.getsProfil().gettPrenom().setText(utilisateurActif.getPrenom());
         view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
+        view.getsProfil().gettNouveauMotDePasse().setText("");
+        view.getsProfil().gettAncienMotDePasse().setText("");
         view.getsProfil().update(view);
     }
 
