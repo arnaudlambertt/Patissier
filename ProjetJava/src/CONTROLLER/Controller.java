@@ -11,6 +11,7 @@ import VIEW.PaneCommande;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
+import VIEW.PaneUtilisateurAdmin;
 import VIEW.View;
 import java.util.ArrayList;
 import javafx.stage.Stage;
@@ -80,12 +81,16 @@ public class Controller
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
 
-
         //Actions boutons zone admin
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
         view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
+        view.getpAdmin().getbBonjour().setOnAction(eventController::deconnecterUtilisateur);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //Elles sont au bon endroit ? c'est bien en zone admin ?
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
 
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
@@ -123,11 +128,17 @@ public class Controller
             case Scenes.SCENE_CONNEXION:
                 preparerSceneConnexion();
                 break;
-            case Scenes.SCENE_ADMIN:
+            case Scenes.SCENE_ADMIN_Produit:
                 preparerSceneProduitsAdmin();
+                break;
+            case Scenes.SCENE_ADMIN_Utilisateur:
+                preparerSceneUtilisateursAdmin();
                 break;
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 preparerSceneModifierProduit();
+                break;
+            case Scenes.SCENE_MODIFIER_UTILISATEUR:
+                preparerSceneModifierUtilisateur();
                 break;
             case Scenes.SCENE_PAIEMENT:
                 view.setAdresse(model.getPanier().getAdresse());
@@ -206,9 +217,18 @@ public class Controller
         view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
         view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
     }
+    
+    public void preparerSceneModifierUtilisateur()
+    {
+        view.getsModifierUtilisateur().gettNom().setText(model.getUtilisateurSelectionne().getNom());
+        view.getsModifierUtilisateur().gettPrenom().setText(model.getUtilisateurSelectionne().getPrenom());
+        view.getsModifierUtilisateur().gettEmail().setText(model.getUtilisateurSelectionne().getEmail());
+        view.getsModifierUtilisateur().setSelectRole(model.getUtilisateurSelectionne().getRole());
+    }
 
     public void preparerSceneProduitsAdmin()
     {
+        model.updateTousProduits();
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
         ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
         panesProduitAdmin.clear();
@@ -217,12 +237,26 @@ public class Controller
             PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
             eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
             eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
-            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdmin);
+            pp.getbModifierProduit().setOnAction(eventController::modifierUtilisateurAdmin);
             panesProduitAdmin.add(pp);
         }
     }
-
-
+    
+    public void preparerSceneUtilisateursAdmin()
+    {
+        model.updateTousUtilisateurs();
+        ArrayList<Utilisateur> utilisateurs = model.getTousLesUtilisateurs();
+        ArrayList<PaneUtilisateurAdmin> panesUtilisateursAdmin = view.getPanesUtilisateurAdmin();
+        panesUtilisateursAdmin.clear();
+        for (int i = 0; i < utilisateurs.size(); ++i) 
+        {
+            PaneUtilisateurAdmin uu = new PaneUtilisateurAdmin(i, utilisateurs.get(i));
+            eventController.hoverButtonOrangeClair(uu.getbModifierUtilisateur());
+            eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
+            uu.getbModifierUtilisateur().setOnAction(eventController::modifierUtilisateurAdmin);
+            panesUtilisateursAdmin.add(uu);
+        }
+    }
 
     public void preparerScenePanier()
     {

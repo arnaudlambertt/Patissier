@@ -22,6 +22,7 @@ public class Model
     private final CommandeDAO commandeDAO;
     private Utilisateur utilisateur;
     private ArrayList<Produit> tousLesProduits;
+    private ArrayList<Utilisateur> tousLesUtilisateurs;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
 
@@ -37,6 +38,7 @@ public class Model
         this.commandeDAO = new CommandeDAO();
         this.utilisateur = new Utilisateur();
         this.tousLesProduits = new ArrayList<>();
+        this.tousLesUtilisateurs = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
 
@@ -106,6 +108,7 @@ public class Model
     public void init()
     {
         updateTousProduits();
+        updateTousUtilisateurs();
     }
 
     public Produit getProduitSelectionne()
@@ -131,6 +134,11 @@ public class Model
     public ArrayList<Produit> getTousLesProduits()
     {
         return tousLesProduits;
+    }
+    
+    public ArrayList<Utilisateur> getTousLesUtilisateurs()
+    {
+        return tousLesUtilisateurs;
     }
 
 
@@ -164,6 +172,12 @@ public class Model
 
         produitsFiltre.clear();
         produitsFiltre.addAll(tousLesProduits);
+    }
+    
+    public void updateTousUtilisateurs()
+    {
+        tousLesUtilisateurs = utilisateurDAO.getUtilisateurs();
+        utilisateurDAO.close();
     }
 
     public void filtreCategorie(String categorie)

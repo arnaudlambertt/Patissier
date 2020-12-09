@@ -33,6 +33,9 @@ public class View
 
     private final SceneProduitsAdmin sProduitAdmin;
     private final SceneModifierProduit sModifierProduit;
+    
+    private final SceneUtilisateurAdmin sUtilisateurAdmin;
+    private final SceneModifierUtilisateur sModifierUtilisateur;
 
     private final SceneCommande sCommande;
 
@@ -50,9 +53,13 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
-
+        
+        //Produit admin
         this.sProduitAdmin = new SceneProduitsAdmin();
         this.sModifierProduit = new SceneModifierProduit();
+        //Utilisateur admin
+        this.sUtilisateurAdmin = new SceneUtilisateurAdmin();
+        this.sModifierUtilisateur = new SceneModifierUtilisateur();
 
         this.sCommande = new SceneCommande();
 
@@ -72,6 +79,8 @@ public class View
 
         sProduitAdmin.init();
         sModifierProduit.init();
+        sUtilisateurAdmin.init();
+        sModifierUtilisateur.init();
 
         sCommande.init();
 
@@ -102,12 +111,17 @@ public class View
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
                 break;
-
-            case Scenes.SCENE_ADMIN:
+            case Scenes.SCENE_ADMIN_Produit:
                 changerScene(sProduitAdmin);
+                break;
+            case Scenes.SCENE_ADMIN_Utilisateur:
+                changerScene(sUtilisateurAdmin);
                 break;
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 changerScene(sModifierProduit);
+                break;
+            case Scenes.SCENE_MODIFIER_UTILISATEUR:
+                changerScene(sModifierUtilisateur);
                 break;
             case Scenes.SCENE_COMMANDES:
                 changerScene(sCommande);
@@ -188,14 +202,24 @@ public class View
         return sModifierProduit;
     }
 
+    public SceneModifierUtilisateur getsModifierUtilisateur()
+    {
+        return sModifierUtilisateur;
+    }
+
     public ArrayList<PaneProduit> getPanesProduit()
     {
         return sProduits.getPanesProduit();
     }
 
-     public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
+    public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
     {
         return sProduitAdmin.getPanesProduitAdmin();
+    }
+    
+    public ArrayList<PaneUtilisateurAdmin> getPanesUtilisateurAdmin()
+    {
+        return sUtilisateurAdmin.getPanesProduitAdmin();
     }
 
     public ArrayList<PaneProduitPanier> getPanesProduitPanier()

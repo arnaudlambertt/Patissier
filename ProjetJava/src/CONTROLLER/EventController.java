@@ -10,6 +10,7 @@ import CONSTANT.Scenes;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
+import VIEW.PaneUtilisateurAdmin;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
@@ -43,6 +44,8 @@ public class EventController
     public void deconnecterUtilisateur(ActionEvent event)
     {
         controller.getModel().deconnecterUtilisateur();
+        controller.getView().getpAdmin().setVisible(false);
+        controller.getView().getpEntete().setVisible(true);
         afficherAccueil(event);
     }
 
@@ -85,7 +88,7 @@ public class EventController
             {
                 controller.getView().getpEntete().setVisible(false);
                 controller.getView().getpAdmin().setVisible(true);
-                controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+                controller.changerScene(Scenes.SCENE_ADMIN_Produit); // ZONE ADMIN
             }else{
                 controller.getView().getpEntete().setVisible(true);
                 controller.getView().getpAdmin().setVisible(false);
@@ -211,7 +214,7 @@ public class EventController
     {
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(true);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(false);
-        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_Produit); // ZONE ADMIN
     }
     
     public void GestionUtilisateurAdmin(ActionEvent event)
@@ -219,7 +222,7 @@ public class EventController
         
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(false);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(true);
-        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); // ZONE ADMIN
     }
 
     public void afficherCommandesUtilisateur(ActionEvent event)
@@ -310,9 +313,15 @@ public class EventController
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
-        System.out.println(controller.getModel().getProduitSelectionne().toString());
         controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
     }
+    public void modifierUtilisateurAdmin(ActionEvent event)
+    {
+        Button source = ((Button) event.getSource());
+        controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
+        controller.changerScene(Scenes.SCENE_MODIFIER_UTILISATEUR);
+    }
+    
 
     public void hoverButtonOrange(Button ceButton)
     {

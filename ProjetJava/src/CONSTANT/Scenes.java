@@ -20,6 +20,8 @@ public class Scenes
     public static final int SCENE_ADRESSE = 5;
     public static final int SCENE_PAIEMENT = 6;
     public static final int SCENE_COMMANDES = 7;
-    public static final int SCENE_ADMIN = 8;
+    public static final int SCENE_ADMIN_Produit = 8;
     public static final int SCENE_MODIFIER_PRODUIT=9;
+    public static final int SCENE_MODIFIER_UTILISATEUR=10;
+    public static final int SCENE_ADMIN_Utilisateur=11;
 }
