@@ -21,6 +21,7 @@ public class View
 
     private final Stage primaryStage;
     private final PaneEntete pEntete;
+    private final PaneAdmin pAdmin;
     private final SceneProduits sProduits;
     private final SceneConnexion sConnexion;
     private final SceneCreationCompte sCreationCompte;
@@ -29,11 +30,14 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
+    private final SceneProduitsAdmin sProduitAdmin;
+    private final SceneModifierProduit sModifierProduit;
 
     public View(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
         this.pEntete = new PaneEntete();
+        this.pAdmin = new PaneAdmin();
         this.sProduits = new SceneProduits();
         this.sConnexion = new SceneConnexion();
         this.sCreationCompte = new SceneCreationCompte();
@@ -42,6 +46,8 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
+        this.sProduitAdmin = new SceneProduitsAdmin();
+        this.sModifierProduit = new SceneModifierProduit();
     }
 
     public void init()
@@ -55,6 +61,8 @@ public class View
         sAdresse.init();
         sPaiement.init();
         sErreur404.init();
+        sProduitAdmin.init();
+        sModifierProduit.init();
     }
 
     public void changerScene(int SceneConstant)
@@ -81,6 +89,12 @@ public class View
                 break;
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
+                break;
+            case Scenes.SCENE_ADMIN:
+                changerScene(sProduitAdmin);
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                changerScene(sModifierProduit);
                 break;
             default:
                 changerScene(sErreur404);
@@ -125,7 +139,8 @@ public class View
     {
         return primaryStage;
     }
-
+    
+    /// GETTER SCENES
     public SceneConnexion getSConnexion()
     {
         return sConnexion;
@@ -140,30 +155,47 @@ public class View
     {
         return sProfil;
     }
-
-    public ArrayList<PaneProduit> getPaneProduits()
-    {
-        return sProduits.getPaneProduits();
-    }
-
+    
     public SceneProduits getsProduits()
     {
         return sProduits;
     }
-
-    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
-    {
-        return sPanier.getPaneProduitPanier();
-    }
-
+    
     public ScenePanier getsPanier()
     {
         return sPanier;
     }
 
+    public SceneModifierProduit getsModifierProduit()
+    {
+        return sModifierProduit;
+    }
+
+    public ArrayList<PaneProduit> getPanesProduit()
+    {
+        return sProduits.getPanesProduit();
+    }
+    
+     public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
+    {
+        return sProduitAdmin.getPanesProduitAdmin();
+    }
+
+    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
+    {
+        return sPanier.getPanesProduitPanier();
+    }
+
+    
+
     public PaneEntete getpEntete()
     {
         return pEntete;
+    }
+
+    public PaneAdmin getpAdmin()
+    {
+        return pAdmin;
     }
 
     public void setPrixPanier(double prixTotal)

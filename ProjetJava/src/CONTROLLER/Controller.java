@@ -8,6 +8,7 @@ package CONTROLLER;
 import CONSTANT.Scenes;
 import MODEL.*;
 import VIEW.PaneProduit;
+import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import VIEW.View;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class Controller
         eventController.hover(view.getpEntete().getbBonjour());
         eventController.hover(view.getpEntete().getbPanier());
 
+        //Actions boutons de l'entete
         for (int i = 0; i < 9; ++i)
         {
             view.getpEntete().getbCategories(i).setOnAction(eventController::afficherCategorie);
@@ -77,6 +79,10 @@ public class Controller
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
 
+        //Actions boutons zone admin
+        view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
+        view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
+        
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -113,6 +119,12 @@ public class Controller
             case Scenes.SCENE_CONNEXION:
                 preparerSceneConnexion();
                 break;
+            case Scenes.SCENE_ADMIN:
+                preparerSceneProduitsAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                preparerSceneModifierProduit();
+                break;
             case Scenes.SCENE_PAIEMENT:
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
@@ -136,7 +148,7 @@ public class Controller
     public void preparerSceneProduits()
     {
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
-        ArrayList<PaneProduit> paneProduits = view.getPaneProduits();
+        ArrayList<PaneProduit> paneProduits = view.getPanesProduit();
         paneProduits.clear();
         for (int i = 0; i < produitsFiltre.size(); ++i)
         {
@@ -146,6 +158,37 @@ public class Controller
             paneProduits.add(pp);
         }
     }
+    
+    public void preparerSceneModifierProduit()
+    {
+        view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
+        view.getsModifierProduit().setSelectCategorie(model.getProduitSelectionne().getCategorie());
+        view.getsModifierProduit().gettFournisseur().setText(model.getProduitSelectionne().getFournisseur());
+        view.getsModifierProduit().gettPrixUnitaire().setText(Double.toString(model.getProduitSelectionne().getPrixUnitaire()));
+        view.getsModifierProduit().gettStock().setText(Integer.toString(model.getProduitSelectionne().getStock()));
+        view.getsModifierProduit().gettQuantiteUnLot().setText(Integer.toString(model.getProduitSelectionne().getQuantiteUnLot()));
+        view.getsModifierProduit().gettPrixUnLot().setText(Double.toString(model.getProduitSelectionne().getPrixUnLot()));
+        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion()*100));
+        view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
+        view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
+    }
+    
+    public void preparerSceneProduitsAdmin()
+    {
+        ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
+        ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
+        panesProduitAdmin.clear();
+        for (int i = 0; i < produitsFiltre.size(); ++i)
+        {
+            PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
+            eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
+            eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
+            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdmin);
+            panesProduitAdmin.add(pp);
+        }
+    }
+    
+    
 
     public void preparerScenePanier()
     {
@@ -175,7 +218,7 @@ public class Controller
         view.getsProfil().gettEmail().setText(utilisateurActif.getEmail());
         view.getsProfil().update(view);
     }
-
+    
     public Utilisateur getUtilisateur()
     {
         return model.getUtilisateur();

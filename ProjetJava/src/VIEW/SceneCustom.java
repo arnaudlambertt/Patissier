@@ -9,6 +9,7 @@ import CONSTANT.Couleurs;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
 
 /**
@@ -50,7 +51,14 @@ public abstract class SceneCustom extends Scene
             double deltaY = scrollEvent.getDeltaY() * SPEED;
             scrollPrincipal.setVvalue(scrollPrincipal.getVvalue() - deltaY);
         });
-        page.setTop(v.getpEntete());
+        
+        StackPane stack = new StackPane();
+        stack.getChildren().add(v.getpEntete());
+        v.getpAdmin().setVisible(false);
+        stack.getChildren().add(v.getpAdmin());
+         
+        page.setTop(stack);
+        //navigateur.setLeft(v.getpAdmin());
     }
 
     //methode qui met la barre de recherche

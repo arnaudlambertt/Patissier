@@ -48,7 +48,7 @@ public final class PaneProduitPanier extends GridPane
         GridPane.setValignment(image, VPos.TOP);
         add(image,0,0);
         
-        Label lNom = new Label(p.getNom() + "\n" + p.getNomFournisseur());
+        Label lNom = new Label(p.getNom() + "\n" + p.getFournisseur());
         lNom.setMinSize(200, 200);
         lNom.setWrapText(true);
         lNom.setAlignment(Pos.TOP_LEFT);

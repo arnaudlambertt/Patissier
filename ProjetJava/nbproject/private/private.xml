@@ -3,25 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneProduitPanier.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneEntete.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ConnectionMySQL.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/ScenePaiement.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Commande.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneCreationCompte.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/UtilisateurDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/View.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneProfil.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/sceneAdresse.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneProduits.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Model.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitCommandeDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/CommandeDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Produit.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneConnexion.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/PaneProduitAdmin.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/SceneProduitsAdmin.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/View.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/SceneModifierProduit.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/SceneUtilisateurAdmin.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/PaneUtilisateurAdmin.java</file>
         </group>
     </open-files>
 </project-private>

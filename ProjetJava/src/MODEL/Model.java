@@ -24,6 +24,8 @@ public class Model
     private ArrayList<Produit> tousLesProduits;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
+    private Produit produitSelectionne;
+    private Utilisateur utilisateurSelectionne;
 
     public Model()
     {
@@ -34,6 +36,8 @@ public class Model
         this.tousLesProduits = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
+        this.produitSelectionne = new Produit();
+        this.utilisateurSelectionne = new Utilisateur();
     }
 
     public void deconnecterUtilisateur()
@@ -70,6 +74,32 @@ public class Model
     {
         updateTousProduits();
     }
+
+    public Produit getProduitSelectionne()
+    {
+        return produitSelectionne;
+    }
+
+    public Utilisateur getUtilisateurSelectionne()
+    {
+        return utilisateurSelectionne;
+    }
+
+    public void setProduitSelectionne(Produit produitSelectionne)
+    {
+        this.produitSelectionne = produitSelectionne;
+    }
+
+    public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne)
+    {
+        this.utilisateurSelectionne = utilisateurSelectionne;
+    }
+
+    public ArrayList<Produit> getTousLesProduits()
+    {
+        return tousLesProduits;
+    }
+    
 
     public void ajouterAuPanier(int index)
     {
@@ -115,7 +145,7 @@ public class Model
         produitsFiltre.clear();
         tousLesProduits.stream().filter((p) -> (p.getNom().contains(recherche)
                 || p.getCategorie().contains(recherche)
-                || p.getNomFournisseur().contains(recherche))).forEachOrdered((p) ->
+                || p.getFournisseur().contains(recherche))).forEachOrdered((p) ->
         {
             produitsFiltre.add(p);
         });
@@ -192,5 +222,10 @@ public class Model
         {
             utilisateurDAO.close();
         }
+    }
+    
+    boolean utilisateurAdmin()
+    {
+        return utilisateur.getRole().equals("Administrateur");
     }
 }

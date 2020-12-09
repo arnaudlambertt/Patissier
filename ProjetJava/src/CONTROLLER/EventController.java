@@ -8,6 +8,7 @@ package CONTROLLER;
 import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
 import VIEW.PaneProduit;
+import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -47,17 +48,27 @@ public class EventController
 
     public void connexion(ActionEvent event)
     {
+        //Si identifiant incorrecte ou mot de passe indorecte alors on affiche un message sur la page
         if (!controller.getModel().connecterUtilisateur(controller.getView().getSConnexion().gettEmail().getText(), controller.getView().getSConnexion().getpMotDePasse().getText()))
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(true);
         else
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-            if (controller.redirectionCommande())
-                controller.changerScene(Scenes.SCENE_ADRESSE); //adresse livraison
-            else
+            if(controller.getUtilisateur().getRole().equals("Administrateur"))
             {
-                controller.changerScene(Scenes.SCENE_PROFIL); //profil
-                controller.setRedirectionCommande(false);
+                controller.getView().getpEntete().setVisible(false);
+                controller.getView().getpAdmin().setVisible(true);
+                controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+            }else{
+                controller.getView().getpEntete().setVisible(true);
+                controller.getView().getpAdmin().setVisible(false);
+                if (controller.redirectionCommande())
+                    controller.changerScene(Scenes.SCENE_ADRESSE); //adresse livraison
+                else
+                {
+                    controller.changerScene(Scenes.SCENE_PROFIL); //profil
+                    controller.setRedirectionCommande(false);
+                }
             }
         }
     }
@@ -168,6 +179,21 @@ public class EventController
             } else
                 controller.changerScene(Scenes.SCENE_ADRESSE);
     }
+    
+    public void GestionProduitAdmin(ActionEvent event)
+    {
+        controller.getView().getpAdmin().getbAjoutProduit().setVisible(true);
+        controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(false);
+        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+    }
+    
+    public void GestionUtilisateurAdmin(ActionEvent event)
+    {
+        
+        controller.getView().getpAdmin().getbAjoutProduit().setVisible(false);
+        controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(true);
+        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+    }
 
     public void ajouterProduitPanier(ActionEvent event)
     {
@@ -246,6 +272,14 @@ public class EventController
             controller.changerScene(Scenes.SCENE_CONNEXION);
         else
             controller.changerScene(Scenes.SCENE_PROFIL);
+    }
+    
+    public void modifierProduitAdmin(ActionEvent event)
+    {
+        Button source = ((Button) event.getSource());
+        controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
+        System.out.println(controller.getModel().getProduitSelectionne().toString());
+        controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
     }
 
     public void hoverButtonOrange(Button ceButton)

@@ -97,7 +97,7 @@ public class ScenePanier extends SceneCustom
         page.setCenter(box);
     }
 
-    public ArrayList<PaneProduitPanier> getPaneProduitPanier()
+    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
     {
         return paneProduitPanier;
     }

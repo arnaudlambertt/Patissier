@@ -39,7 +39,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                 throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getCategorie().isEmpty())
                 throw new NullPointerException("ERREUR: Categorie vide");
-            if (obj.getNomFournisseur().isEmpty())
+            if (obj.getFournisseur().isEmpty())
                 throw new NullPointerException("ERREUR: Nom Fournisseur vide");
             if (obj.getPrixUnitaire() <= 0.0)
                 throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
@@ -66,7 +66,7 @@ public class ProduitDAO extends DAO<Produit, Object>
 
             prepare.setString(1, obj.getNom());
             prepare.setString(2, obj.getCategorie());
-            prepare.setString(3, obj.getNomFournisseur());
+            prepare.setString(3, obj.getFournisseur());
             prepare.setDouble(4, obj.getPrixUnitaire());
             prepare.setInt(5, obj.getStock());
             prepare.setInt(6, obj.getQuantiteUnLot());
@@ -166,7 +166,7 @@ public class ProduitDAO extends DAO<Produit, Object>
                 throw new NullPointerException("ERREUR: Nom vide");
             if (obj.getCategorie().isEmpty())
                 throw new NullPointerException("ERREUR: Categorie vide");
-            if (obj.getNomFournisseur().isEmpty())
+            if (obj.getFournisseur().isEmpty())
                 throw new NullPointerException("ERREUR: Nom Fournisseur vide");
             if (obj.getPrixUnitaire() <= 0.0)
                 throw new NullPointerException("ERREUR: Prix Unitaire incorrect");
@@ -201,7 +201,7 @@ public class ProduitDAO extends DAO<Produit, Object>
 
             prepare.setString(1, obj.getNom());
             prepare.setString(2, obj.getCategorie());
-            prepare.setString(3, obj.getNomFournisseur());
+            prepare.setString(3, obj.getFournisseur());
             prepare.setDouble(4, obj.getPrixUnitaire());
             prepare.setInt(5, obj.getStock());
             prepare.setInt(6, obj.getQuantiteUnLot());
