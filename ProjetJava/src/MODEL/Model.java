@@ -134,7 +134,7 @@ public class Model
     }
 
 
-    public void ajouterAuPanier(int index)
+    public boolean ajouterAuPanier(int index)
     {
         Produit p = produitsFiltre.get(index);
         Map<Produit, Integer> pc = panier.getProduitsCommande();
@@ -143,6 +143,10 @@ public class Model
             panier.addProduitCommande(new Pair<>(p, 1)); //creer
         else if (p.getStock() > 0 && pc.get(p) < Integer.min(p.getStock(), 10))
             panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer
+        else
+            return false;
+        
+        return true;
     }
 
     public void modifierQuantitePanier(int index, int quantite)

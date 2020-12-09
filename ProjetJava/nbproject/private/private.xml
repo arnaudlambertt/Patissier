@@ -5,14 +5,16 @@
         <group>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneEntete.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Couleurs.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneProduit.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/ScenePaiement.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Utilisateur.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneProduit.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/UtilisateurDAO.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneCommande.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneCustom.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Model.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/DAO.java</file>
         </group>
     </open-files>
