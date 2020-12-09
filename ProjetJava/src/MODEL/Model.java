@@ -21,6 +21,7 @@ public class Model
     private final ProduitDAO produitDAO;
     private final CommandeDAO commandeDAO;
     private Utilisateur utilisateur;
+    private Utilisateur utilisateurModifie;
     private ArrayList<Produit> tousLesProduits;
     private ArrayList<Utilisateur> tousLesUtilisateurs;
     private final ArrayList<Produit> produitsFiltre;
@@ -44,6 +45,7 @@ public class Model
 
         this.produitSelectionne = new Produit();
         this.utilisateurSelectionne = new Utilisateur();
+        this.utilisateurModifie = new Utilisateur();
 
         this.commandesUtilisateur = new ArrayList<>();
     }
@@ -104,6 +106,36 @@ public class Model
     {
         utilisateur.setPrenom(prenom);
     }
+    
+    public void setRole(String role)
+    {
+        utilisateur.setRole(role);
+    }
+    
+    public Utilisateur getUtilisateurSelectionne()
+    {
+        return utilisateurSelectionne;
+    }
+
+    public void setEmailSelectionne(String email)
+    {
+        utilisateurSelectionne.setEmail(email);
+    }
+
+    public void setNomSelectionne(String nom)
+    {
+        utilisateurSelectionne.setNom(nom);
+    }
+
+    public void setPrenomSelectionne(String prenom)
+    {
+        utilisateurSelectionne.setPrenom(prenom);
+    }
+    
+    public void setRoleSelectionne(String role)
+    {
+        utilisateurSelectionne.setRole(role);
+    }
 
     public void init()
     {
@@ -114,11 +146,6 @@ public class Model
     public Produit getProduitSelectionne()
     {
         return produitSelectionne;
-    }
-
-    public Utilisateur getUtilisateurSelectionne()
-    {
-        return utilisateurSelectionne;
     }
 
     public void setProduitSelectionne(Produit produitSelectionne)
@@ -210,6 +237,14 @@ public class Model
         utilisateurDAO.close();
         return utilisateurConnecte();
     }
+    
+    public boolean creerUtilisateurAdmin(String motDePasse)
+    {
+        if (!utilisateurDAO.emailExistant(utilisateurSelectionne.getEmail()))
+            this.utilisateurSelectionne = this.utilisateurDAO.create(utilisateurSelectionne, motDePasse);
+        utilisateurDAO.close();
+        return utilisateurAdminConnecte();
+    }
 
     public boolean connecterUtilisateur(String email, String motDePasse)
     {
@@ -221,6 +256,11 @@ public class Model
     public boolean utilisateurConnecte()
     {
         return utilisateur.getId() != 0;
+    }
+    
+    public boolean utilisateurAdminConnecte()
+    {
+        return utilisateurSelectionne.getId() != 0;
     }
 
     public boolean stockSuffisantPanier()

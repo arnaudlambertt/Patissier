@@ -123,11 +123,36 @@ public class EventController
             }
         }
     }
+    public void creerCompteAdmin(ActionEvent event)
+    {
+        controller.getModel().setNomSelectionne(controller.getView().getCreationCompteAdmin().gettNom().getText());
+        controller.getModel().setPrenomSelectionne(controller.getView().getCreationCompteAdmin().gettPrenom().getText());
+        controller.getModel().setEmailSelectionne(controller.getView().getCreationCompteAdmin().gettEmail().getText());
+        controller.getModel().setRoleSelectionne(controller.getView().getCreationCompteAdmin().gettEmail().getText());
+        
+        if (!controller.getModel().creerUtilisateurAdmin(controller.getView().getCreationCompteAdmin().getpMotDePasse().getText()))
+            controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(true);
+        else
+        {
+            controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(false);
+            
+            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //profil
+            //controller.setRedirectionCommande(false);
+            
+        }
+    }
+    
 
     public void redirectionCreerCompte(ActionEvent event)
     {
         controller.getView().getCreationCompte().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
+    }
+    
+    public void redirectionCreerCompteAdmin(ActionEvent event)
+    {
+        controller.getView().getCreationCompteAdmin().clearTextField();
+        controller.changerScene(Scenes.SCENE_CREATION_COMPTE_ADMIN);
     }
 
     public void afficherAccueil(ActionEvent event)

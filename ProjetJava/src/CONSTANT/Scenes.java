@@ -24,4 +24,5 @@ public class Scenes
     public static final int SCENE_MODIFIER_PRODUIT=9;
     public static final int SCENE_MODIFIER_UTILISATEUR=10;
     public static final int SCENE_ADMIN_Utilisateur=11;
+    public static final int SCENE_CREATION_COMPTE_ADMIN=12;
 }

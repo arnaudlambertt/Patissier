@@ -25,6 +25,7 @@ public class View
     private final SceneProduits sProduits;
     private final SceneConnexion sConnexion;
     private final SceneCreationCompte sCreationCompte;
+    private final SceneCreationCompte sCreationCompteAdmin;
     private final SceneProfil sProfil;
     private final ScenePanier sPanier;
     private final sceneAdresse sAdresse;
@@ -60,6 +61,7 @@ public class View
         //Utilisateur admin
         this.sUtilisateurAdmin = new SceneUtilisateurAdmin();
         this.sModifierUtilisateur = new SceneModifierUtilisateur();
+        this.sCreationCompteAdmin = new SceneCreationCompte();
 
         this.sCommande = new SceneCommande();
 
@@ -81,6 +83,7 @@ public class View
         sModifierProduit.init();
         sUtilisateurAdmin.init();
         sModifierUtilisateur.init();
+        sCreationCompteAdmin.init();
 
         sCommande.init();
 
@@ -122,6 +125,9 @@ public class View
                 break;
             case Scenes.SCENE_MODIFIER_UTILISATEUR:
                 changerScene(sModifierUtilisateur);
+                break;
+            case Scenes.SCENE_CREATION_COMPTE_ADMIN:
+                changerScene(sCreationCompteAdmin);
                 break;
             case Scenes.SCENE_COMMANDES:
                 changerScene(sCommande);
@@ -180,6 +186,11 @@ public class View
     public SceneCreationCompte getCreationCompte()
     {
         return sCreationCompte;
+    }
+    
+    public SceneCreationCompte getCreationCompteAdmin()
+    {
+        return sCreationCompteAdmin;
     }
 
     public SceneProfil getsProfil()
