@@ -21,6 +21,7 @@ public class View
 
     private final Stage primaryStage;
     private final PaneEntete pEntete;
+    private final PaneAdmin pAdmin;
     private final SceneProduits sProduits;
     private final SceneConnexion sConnexion;
     private final SceneCreationCompte sCreationCompte;
@@ -29,12 +30,18 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
+
+    private final SceneProduitsAdmin sProduitAdmin;
+    private final SceneModifierProduit sModifierProduit;
+
     private final SceneCommande sCommande;
+
 
     public View(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
         this.pEntete = new PaneEntete();
+        this.pAdmin = new PaneAdmin();
         this.sProduits = new SceneProduits();
         this.sConnexion = new SceneConnexion();
         this.sCreationCompte = new SceneCreationCompte();
@@ -43,7 +50,12 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
+
+        this.sProduitAdmin = new SceneProduitsAdmin();
+        this.sModifierProduit = new SceneModifierProduit();
+
         this.sCommande = new SceneCommande();
+
     }
 
     public void init()
@@ -57,7 +69,12 @@ public class View
         sAdresse.init();
         sPaiement.init();
         sErreur404.init();
+
+        sProduitAdmin.init();
+        sModifierProduit.init();
+
         sCommande.init();
+
     }
 
     public void changerScene(int SceneConstant)
@@ -85,8 +102,16 @@ public class View
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
                 break;
+
+            case Scenes.SCENE_ADMIN:
+                changerScene(sProduitAdmin);
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                changerScene(sModifierProduit);
+                break;
             case Scenes.SCENE_COMMANDES:
                 changerScene(sCommande);
+
                 break;
             default:
                 changerScene(sErreur404);
@@ -97,7 +122,7 @@ public class View
     {
         //double width = primaryStage.getWidth();
         //double height = primaryStage.getHeight();
-        
+
         scene.update(this);
         scene.updateFenetre(this);
 
@@ -132,6 +157,7 @@ public class View
         return primaryStage;
     }
 
+    /// GETTER SCENES
     public SceneConnexion getSConnexion()
     {
         return sConnexion;
@@ -147,26 +173,36 @@ public class View
         return sProfil;
     }
 
-    public ArrayList<PaneProduit> getPaneProduits()
-    {
-        return sProduits.getPaneProduits();
-    }
-
     public SceneProduits getsProduits()
     {
         return sProduits;
-    }
-
-    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
-    {
-        return sPanier.getPaneProduitPanier();
     }
 
     public ScenePanier getsPanier()
     {
         return sPanier;
     }
-    
+
+    public SceneModifierProduit getsModifierProduit()
+    {
+        return sModifierProduit;
+    }
+
+    public ArrayList<PaneProduit> getPanesProduit()
+    {
+        return sProduits.getPanesProduit();
+    }
+
+     public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
+    {
+        return sProduitAdmin.getPanesProduitAdmin();
+    }
+
+    public ArrayList<PaneProduitPanier> getPanesProduitPanier()
+    {
+        return sPanier.getPanesProduitPanier();
+    }
+
     public ArrayList<PaneCommande> getPanesCommandes()
     {
         return sCommande.getPaneProduit();
@@ -176,10 +212,15 @@ public class View
     {
         return sCommande;
     }
-    
+
     public PaneEntete getpEntete()
     {
         return pEntete;
+    }
+
+    public PaneAdmin getpAdmin()
+    {
+        return pAdmin;
     }
 
     public void setPrixPanier(double prixTotal)
@@ -192,37 +233,37 @@ public class View
     {
         return sPanier.gebtValiderPanier();
     }
-    
+
     public Button getbValiderAdresse()
     {
         return sAdresse.getbValiderAdresse();
     }
-    
+
     public TextField gettCodePostal()
     {
         return sAdresse.gettCodePostal();
     }
-    
+
     public TextField gettVille()
     {
         return sAdresse.gettVille();
     }
-    
+
     public TextField gettRue()
     {
         return sAdresse.gettRue();
     }
-    
+
     public TextField gettNumero()
     {
         return sAdresse.gettNumero();
     }
-    
+
     public void setAdresseIncompleteVisible()
     {
         sAdresse.setAdresseIncompleteVisible();
     }
-    
+
     public Button getbConfirmerCommande()
     {
         return sPaiement.getbConfirmer();
@@ -232,7 +273,7 @@ public class View
     {
         sPaiement.setAdresse(adresse);
     }
-    
+
     public void setProgressionVisible(boolean visible)
     {
         sConnexion.setProgressionVisible(visible);

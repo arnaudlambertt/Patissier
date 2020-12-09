@@ -9,6 +9,7 @@ import CONSTANT.Scenes;
 import MODEL.*;
 import VIEW.PaneCommande;
 import VIEW.PaneProduit;
+import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import VIEW.View;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class Controller
         eventController.hover(view.getpEntete().getbBonjour());
         eventController.hover(view.getpEntete().getbPanier());
 
+        //Actions boutons de l'entete
         for (int i = 0; i < 9; ++i)
         {
             view.getpEntete().getbCategories(i).setOnAction(eventController::afficherCategorie);
@@ -77,9 +79,14 @@ public class Controller
 
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
+
+
+        //Actions boutons zone admin
+        view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
+        view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
-        
+
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -87,11 +94,11 @@ public class Controller
         //Actions bouton validerLivraison
         view.getbValiderAdresse().setOnAction(eventController::validerAdresse);//
         eventController.hover(view.getbValiderAdresse());
-       
+
         //Actions bouton confirmerCommande
         view.getbConfirmerCommande().setOnAction(eventController::commander);
-        eventController.hover(view.getbConfirmerCommande());        
-        
+        eventController.hover(view.getbConfirmerCommande());
+
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
         //view.getPrimaryStage().setMaximized(true);
@@ -116,11 +123,17 @@ public class Controller
             case Scenes.SCENE_CONNEXION:
                 preparerSceneConnexion();
                 break;
+            case Scenes.SCENE_ADMIN:
+                preparerSceneProduitsAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                preparerSceneModifierProduit();
+                break;
             case Scenes.SCENE_PAIEMENT:
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
             case Scenes.SCENE_COMMANDES:
-                preparerSceneCommande();                
+                preparerSceneCommande();
                 break;
             default:;
         }
@@ -136,25 +149,25 @@ public class Controller
             model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
         if(!view.getsProfil().gettNom().getText().isEmpty())
             model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
-            
+
     }
-    
+
     public void preparerSceneCommande()
     {
         model.updateCommandesUtilisateurs();
         ArrayList<Commande> commandeUtilisateur = model.getCommandesUtilisateur();
         ArrayList<PaneCommande> paneCommande = view.getPanesCommandes();
-        
+
         paneCommande.clear();
-        
+
         for (int i = 0; i < commandeUtilisateur.size(); ++i)
         {
             PaneCommande pp = new PaneCommande(i, commandeUtilisateur.get(i));
             paneCommande.add(pp);
         }
     }
-    
-    
+
+
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
@@ -169,7 +182,7 @@ public class Controller
     public void preparerSceneProduits()
     {
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
-        ArrayList<PaneProduit> paneProduits = view.getPaneProduits();
+        ArrayList<PaneProduit> paneProduits = view.getPanesProduit();
         paneProduits.clear();
         for (int i = 0; i < produitsFiltre.size(); ++i)
         {
@@ -179,6 +192,37 @@ public class Controller
             paneProduits.add(pp);
         }
     }
+
+    public void preparerSceneModifierProduit()
+    {
+        view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
+        view.getsModifierProduit().setSelectCategorie(model.getProduitSelectionne().getCategorie());
+        view.getsModifierProduit().gettFournisseur().setText(model.getProduitSelectionne().getFournisseur());
+        view.getsModifierProduit().gettPrixUnitaire().setText(Double.toString(model.getProduitSelectionne().getPrixUnitaire()));
+        view.getsModifierProduit().gettStock().setText(Integer.toString(model.getProduitSelectionne().getStock()));
+        view.getsModifierProduit().gettQuantiteUnLot().setText(Integer.toString(model.getProduitSelectionne().getQuantiteUnLot()));
+        view.getsModifierProduit().gettPrixUnLot().setText(Double.toString(model.getProduitSelectionne().getPrixUnLot()));
+        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion()*100));
+        view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
+        view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
+    }
+
+    public void preparerSceneProduitsAdmin()
+    {
+        ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
+        ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
+        panesProduitAdmin.clear();
+        for (int i = 0; i < produitsFiltre.size(); ++i)
+        {
+            PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
+            eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
+            eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
+            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdmin);
+            panesProduitAdmin.add(pp);
+        }
+    }
+
+
 
     public void preparerScenePanier()
     {
@@ -247,7 +291,7 @@ public class Controller
         this.redirectionCommande = redirige;
         view.setProgressionVisible(redirige);
     }
- 
+
     public boolean redirectionCommande()
     {
         return redirectionCommande;

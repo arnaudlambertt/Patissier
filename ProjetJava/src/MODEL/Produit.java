@@ -123,7 +123,7 @@ public class Produit
         this.categorie = categorie;
     }
 
-    public String getNomFournisseur()
+    public String getFournisseur()
     {
         return nomFournisseur;
     }
@@ -206,7 +206,7 @@ public class Produit
         String str = "ID : " + this.getId() + "\n";
         str += "NOM : " + this.getNom() + "\n";
         str += "CATEGORIE : " + this.getCategorie() + "\n";
-        str += "NOM FOURNISSEUR : " + this.getNomFournisseur() + "\n";
+        str += "NOM FOURNISSEUR : " + this.getFournisseur() + "\n";
         str += "PRIX UNITAIRE : " + this.getPrixUnitaire() + "\n";
         str += "STOCK : " + this.getStock() + "\n";
         str += "QUANTITE DANS UN LOT : " + this.getQuantiteUnLot() + "\n";
