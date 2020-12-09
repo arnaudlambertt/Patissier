@@ -258,7 +258,8 @@ public class EventController
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
-        controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex());
+        if(controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex()))
+            afficherPanier(event);
     }
 
     public void changementQuantitePanier(ActionEvent event)

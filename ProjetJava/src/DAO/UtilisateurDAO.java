@@ -48,19 +48,22 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                 throw new NullPointerException("ERREUR: Email vide");
             if (motDePasse.isEmpty())
                 throw new NullPointerException("ERREUR: Mot de passe vide");
+            if (obj.getRole().isEmpty())
+                throw new NullPointerException("ERREUR: Role vide");
 
             this.open();
 
             prepare = this.connect
                     .prepareStatement(
-                            "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe) "
-                            + "VALUES( ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
+                            "INSERT INTO utilisateur (nom, prenom, email, mot_de_passe, role) "
+                            + "VALUES( ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS
                     );
 
             prepare.setString(1, obj.getNom());
             prepare.setString(2, obj.getPrenom());
             prepare.setString(3, obj.getEmail());
             prepare.setString(4, motDePasse);
+            prepare.setString(5, obj.getRole());
 
             prepare.executeUpdate();
 
@@ -144,7 +147,9 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                 throw new NullPointerException("ERREUR: Prenom vide");
             if (obj.getEmail().isEmpty())
                 throw new NullPointerException("ERREUR: Mail vide");
-
+            if(obj.getRole().isEmpty())
+                throw new NullPointerException("ERREUR: Role vide");
+            
             this.open();
 
             prepare = this.connect
@@ -152,14 +157,16 @@ public class UtilisateurDAO extends DAO<Utilisateur, String>
                             "UPDATE utilisateur "
                             + "SET nom = ? , "
                             + "prenom = ? , "
-                            + "email = ? "
+                            + "email = ? ,"
+                            + "role = ?"       
                             + "WHERE id = ?"
                     );
 
             prepare.setString(1, obj.getNom());
             prepare.setString(2, obj.getPrenom());
             prepare.setString(3, obj.getEmail());
-            prepare.setInt(4, obj.getId());
+            prepare.setString(4, obj.getRole());
+            prepare.setInt(5, obj.getId());
 
             prepare.executeUpdate();
 
