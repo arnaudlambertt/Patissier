@@ -84,16 +84,22 @@ public class Controller
         //Actions boutons zone admin
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
         view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
-        view.getpAdmin().getbBonjour().setOnAction(eventController::deconnecterUtilisateur);
+        view.getpAdmin().getbDeconnexion().setOnAction(eventController::deconnecterUtilisateur);
         view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerCompteAdmin);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //Elles sont au bon endroit ? c'est bien en zone admin ?
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         //Actions boutons cree compte administrateur
         view.getCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
         eventController.hoverButtonOrangeClair(view.getCreationCompteAdmin().getbCreeMonCompte());
+        
+        //Actions boutons modifier compte utilisateur (zone administrateur)
+        
+        view.getsModifierUtilisateur().getbValiderModificationProduit().setOnAction(eventController::modifierUtilisateurSelectionne);
+        eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
 
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
@@ -240,7 +246,7 @@ public class Controller
             PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
             eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
             eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
-            pp.getbModifierProduit().setOnAction(eventController::modifierUtilisateurAdmin);
+            pp.getbModifierProduit().setOnAction(eventController::modifierUtilisateurAdminRedirection);
             panesProduitAdmin.add(pp);
         }
     }
@@ -256,7 +262,7 @@ public class Controller
             PaneUtilisateurAdmin uu = new PaneUtilisateurAdmin(i, utilisateurs.get(i));
             eventController.hoverButtonOrangeClair(uu.getbModifierUtilisateur());
             eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
-            uu.getbModifierUtilisateur().setOnAction(eventController::modifierUtilisateurAdmin);
+            uu.getbModifierUtilisateur().setOnAction(eventController::modifierUtilisateurAdminRedirection);
             panesUtilisateursAdmin.add(uu);
         }
     }

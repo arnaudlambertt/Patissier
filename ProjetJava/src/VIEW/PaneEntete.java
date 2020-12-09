@@ -106,14 +106,14 @@ public class PaneEntete extends VBox
         bLogo.setGraphic(viewLogo);
 
         // Button Panier
-        Image imgPanier = new Image("http://93.3.238.99/uploads/icon-panier.jpg");
+        Image imgPanier = new Image("http://93.3.238.99/uploads/icon-panier.png");
         ImageView viewPanier = new ImageView(imgPanier);
         viewPanier.setPreserveRatio(true);
         bPanier.setStyle("-fx-background-color: " + Couleurs.BLANC + ";");
         bPanier.setGraphic(viewPanier);
 
         // Button Bonjour
-        Image imgBonjour = new Image("http://93.3.238.99/uploads/icon-bonjour.jpg");
+        Image imgBonjour = new Image("http://93.3.238.99/uploads/icon-bonjour.png");
         ImageView viewBonjour = new ImageView(imgBonjour);
         viewBonjour.setPreserveRatio(true);
         bBonjour.setStyle("-fx-background-color: " + Couleurs.BLANC + ";");

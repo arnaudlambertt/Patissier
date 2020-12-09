@@ -3,19 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneEntete.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Couleurs.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/ScenePaiement.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Utilisateur.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneProduit.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/UtilisateurDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/ProduitDAO.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/PaneCommande.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneCustom.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Model.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/DAO/DAO.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/SceneCreationCompte.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/CONSTANT/Scenes.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/VIEW/View.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
+            <file>file:/D:/document/GitHub/Patissier/ProjetJava/src/MODEL/Model.java</file>
         </group>
     </open-files>
 </project-private>

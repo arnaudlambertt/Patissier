@@ -29,8 +29,8 @@ public class PaneUtilisateurAdmin extends GridPane
     public PaneUtilisateurAdmin(int index, Utilisateur u)
     {
         this.index = index;
-        this.bModifierUtilisateur = new Button("MODIFIER PRODUIT");
-        this.bSupprimerUtilisateur = new Button("SUPPRIMER PRODUIT");
+        this.bModifierUtilisateur = new Button("MODIFIER UTILISATEUR");
+        this.bSupprimerUtilisateur = new Button("SUPPRIMER UTILISATEUR");
         
         //this.setHgap(2000);
         
@@ -64,7 +64,7 @@ public class PaneUtilisateurAdmin extends GridPane
         paneBouton.setAlignment(Pos.TOP_CENTER);
         add(paneBouton,1,0);
         
-        bModifierUtilisateur.setMinSize(150, 20);
+        bModifierUtilisateur.setMinSize(150, 25);
         bModifierUtilisateur.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
         + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;");
@@ -72,7 +72,7 @@ public class PaneUtilisateurAdmin extends GridPane
         paneBouton.add(bModifierUtilisateur,0,0);
         paneBouton.setVgap(10);
         
-        bSupprimerUtilisateur.setMinSize(150, 20);
+        bSupprimerUtilisateur.setMinSize(150, 25);
         bSupprimerUtilisateur.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
         + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;");

@@ -59,10 +59,11 @@ public class PaneAdmin extends VBox
         bGestionAdministrateur = new Button();
         bGestionProduit.setText("Gestion Produit");
         bGestionProduit.setStyle("-fx-font: 22 arial; -fx-background-color: #ffffff;-fx-text-fill: #000000");
-        bGestionAdministrateur.setText("Gestion Administrateur");
-        bGestionAdministrateur.setStyle("-fx-font: 22 arial; -fx-background-color: #ffffff;-fx-text-fill: #000000");
         bAjoutProduit.setText("AJOUT PRODUIT");
         bAjoutProduit.setStyle("-fx-font: 22 arial; -fx-background-color: #ffffff;-fx-text-fill: #000000");
+        
+        bGestionAdministrateur.setText("Gestion Utilisateurs");
+        bGestionAdministrateur.setStyle("-fx-font: 22 arial; -fx-background-color: #ffffff;-fx-text-fill: #000000");
         bAjoutUtilisateur.setText("AJOUT UTILISATEUR");
         bAjoutUtilisateur.setStyle("-fx-font: 22 arial; -fx-background-color: #ffffff;-fx-text-fill: #000000");
         
@@ -79,12 +80,12 @@ public class PaneAdmin extends VBox
         bLogo.setStyle("-fx-background-color: " + Couleurs.BLANC + ";");
         bLogo.setGraphic(viewLogo);
 
-        // Button Bonjour
-        Image imgBonjour = new Image("http://93.3.238.99/uploads/icon-bonjour.jpg");
-        ImageView viewBonjour = new ImageView(imgBonjour);
-        viewBonjour.setPreserveRatio(true);
+        // Button deconnexion
+        Image imageDeconnexion = new Image("http://93.3.238.99/uploads/icon-deconnexion.png");
+        ImageView viexDeconnexion = new ImageView(imageDeconnexion);
+        viexDeconnexion.setPreserveRatio(true);
         bDeconnexion.setStyle("-fx-background-color: " + Couleurs.BLANC + ";");
-        bDeconnexion.setGraphic(viewBonjour);
+        bDeconnexion.setGraphic(viexDeconnexion);
 
         // STACKPANE
         StackPane stack = new StackPane();
@@ -145,7 +146,7 @@ public class PaneAdmin extends VBox
         return bAjoutProduit;
     }
 
-    public Button getbBonjour()
+    public Button getbDeconnexion()
     {
         return bDeconnexion;
     }

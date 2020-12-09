@@ -128,7 +128,8 @@ public class EventController
         controller.getModel().setNomSelectionne(controller.getView().getCreationCompteAdmin().gettNom().getText());
         controller.getModel().setPrenomSelectionne(controller.getView().getCreationCompteAdmin().gettPrenom().getText());
         controller.getModel().setEmailSelectionne(controller.getView().getCreationCompteAdmin().gettEmail().getText());
-        controller.getModel().setRoleSelectionne(controller.getView().getCreationCompteAdmin().gettEmail().getText());
+        controller.getModel().setRoleSelectionne("Administrateur");
+        
         
         if (!controller.getModel().creerUtilisateurAdmin(controller.getView().getCreationCompteAdmin().getpMotDePasse().getText()))
             controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(true);
@@ -136,8 +137,7 @@ public class EventController
         {
             controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(false);
             
-            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //profil
-            //controller.setRedirectionCommande(false);
+            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //page admin utilisateur
             
         }
     }
@@ -335,17 +335,35 @@ public class EventController
             controller.changerScene(Scenes.SCENE_PROFIL);
     }
     
-    public void modifierProduitAdmin(ActionEvent event)
+    public void modifierProduitAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
         controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
     }
-    public void modifierUtilisateurAdmin(ActionEvent event)
+    public void modifierUtilisateurAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
         controller.changerScene(Scenes.SCENE_MODIFIER_UTILISATEUR);
+    }
+    
+    public void modifierUtilisateurSelectionne(ActionEvent event)
+    {
+        controller.getModel().setNomSelectionne(controller.getView().getsModifierUtilisateur().gettNom().getText());
+        controller.getModel().setPrenomSelectionne(controller.getView().getsModifierUtilisateur().gettPrenom().getText());
+        controller.getModel().setEmailSelectionne(controller.getView().getsModifierUtilisateur().gettEmail().getText());
+        controller.getModel().setRoleSelectionne(controller.getView().getsModifierUtilisateur().getSelectRole());
+        
+        
+        if (!controller.getModel().updateUtilisateurSelectionne())
+            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
+        else
+        {
+            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteInvisible();
+            
+            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //zone admin utilisateur
+        }
     }
     
 

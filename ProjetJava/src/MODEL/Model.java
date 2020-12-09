@@ -65,6 +65,11 @@ public class Model
     {
         return utilisateurDAO.update(utilisateur);
     }
+    
+    public boolean updateUtilisateurSelectionne()
+    {
+        return utilisateurDAO.update(utilisateurSelectionne);
+    }
 
     public boolean modifierMotDePasse(String ancien, String nouveau)
     {

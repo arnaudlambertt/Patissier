@@ -26,13 +26,12 @@ public class SceneModifierUtilisateur extends SceneCustom
 {
     private final VBox box;
     private final Button bValiderModificationProduit;
-    private final Label lProduitIncomplete;    
+    private final Label lUtilisateurIncomplet;    
 
     
     private final TextField tNom;
     private final TextField tPrenom;
     private final TextField tEmail;
-    private final TextField tRole;
     
     
     private final ComboBox<String> listRole;
@@ -44,10 +43,9 @@ public class SceneModifierUtilisateur extends SceneCustom
         this.tNom = new TextField();
         this.tPrenom = new TextField();
         this.tEmail = new TextField();
-        this.tRole = new TextField();
         
         this.bValiderModificationProduit = new Button();
-        this.lProduitIncomplete = new Label();
+        this.lUtilisateurIncomplet = new Label();
         this.listRole = new ComboBox<>();
         
     }
@@ -87,16 +85,15 @@ public class SceneModifierUtilisateur extends SceneCustom
         this.tNom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrenom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tEmail.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tRole.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
-        bValiderModificationProduit.setText("VALIDER");
+        bValiderModificationProduit.setText("Mettre à jour");
         bValiderModificationProduit.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
                 + ";-fx-font-weight: bold;");
         bValiderModificationProduit.setMinSize(240, 40);
         
-        lProduitIncomplete.setText("Produit incomplèt.");
-        lProduitIncomplete.setStyle("-fx-text-fill : ff0000");
-        lProduitIncomplete.setVisible(false);
+        lUtilisateurIncomplet.setText("Information utilisateur incomplètes.");
+        lUtilisateurIncomplet.setStyle("-fx-text-fill : ff0000");
+        lUtilisateurIncomplet.setVisible(false);
         
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
@@ -124,13 +121,13 @@ public class SceneModifierUtilisateur extends SceneCustom
         box.getChildren().add(FlowPaneEmail);
         box.getChildren().add(FlowPaneRole);
         box.getChildren().add(bValiderModificationProduit);
-        box.getChildren().add(lProduitIncomplete);
+        box.getChildren().add(lUtilisateurIncomplet);
     }
 
     @Override
     public void update(View v)
     {
-         lProduitIncomplete.setVisible(false);
+         lUtilisateurIncomplet.setVisible(false);
         page.setCenter(box);
     }
 
@@ -154,19 +151,23 @@ public class SceneModifierUtilisateur extends SceneCustom
         return tEmail;
     }
 
-    public TextField gettRole()
+    public void setUtiliisateurIncompleteVisible()
     {
-        return tRole;
+        lUtilisateurIncomplet.setVisible(true);
     }
     
-    
-    public void setProduitIncompleteVisible()
+    public void setUtiliisateurIncompleteInvisible()
     {
-        lProduitIncomplete.setVisible(true);
+        lUtilisateurIncomplet.setVisible(false);
     }
 
     public void setSelectRole(String role)
     {
         listRole.getSelectionModel().select(role);
+    } 
+    
+    public String getSelectRole()
+    {
+        return listRole.getSelectionModel().getSelectedItem();
     } 
 }

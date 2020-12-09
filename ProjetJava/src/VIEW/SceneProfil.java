@@ -51,7 +51,7 @@ public class SceneProfil extends SceneCustom
         
         donneeProfil.setVgap(15);
         donneeProfil.setHgap(15);
-        donneeProfil.setAlignment(Pos.CENTER);
+        donneeProfil.setAlignment(Pos.TOP_CENTER);
         
         Label lTitre = new Label("Mes informations personelles");
         lTitre.setStyle("-fx-font-weight: bold");
