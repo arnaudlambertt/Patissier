@@ -31,33 +31,29 @@ public class SceneModifierProduit extends SceneCustom
 
     
     private final TextField tNom;
-    private final TextField tCategorie;
     private final TextField tFournisseur;
     private final TextField tPrixUnitaire;
     private final TextField tStock;
     private final TextField tQuantiteUnLot;
     private final TextField tPrixUnLot;
     private final TextField tPromotion;
-    private final TextField tPromotionActive;
     private final TextField tImage;
     
     
     private final ComboBox<String> listCategorie;
-    private final ComboBox<String> listPromotionActive;
+    private final ComboBox<Boolean> listPromotionActive;
                 
     public SceneModifierProduit()
     {
         this.box = new VBox(13);
         
         this.tNom = new TextField();
-        this.tCategorie = new TextField();
         this.tFournisseur = new TextField();
         this.tPrixUnitaire = new TextField();
         this.tStock = new TextField();
         this.tQuantiteUnLot = new TextField();
         this.tPrixUnLot = new TextField();
         this.tPromotion = new TextField();
-        this.tPromotionActive = new TextField();
         this.tImage = new TextField();
         
         this.bValiderModificationProduit = new Button();
@@ -136,14 +132,12 @@ public class SceneModifierProduit extends SceneCustom
         lImage.setAlignment(Pos.CENTER_RIGHT);
         
         this.tNom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tCategorie.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tFournisseur.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrixUnitaire.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tStock.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tQuantiteUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrixUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPromotion.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tPromotionActive.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tImage.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bValiderModificationProduit.setText("VALIDER");
@@ -194,8 +188,9 @@ public class SceneModifierProduit extends SceneCustom
         FlowPanePromotion.setAlignment(Pos.CENTER);
         
         //Promotion active
-        ObservableList<String> listPromo = FXCollections.observableArrayList("true", "false");
+        ObservableList<Boolean> listPromo = FXCollections.observableArrayList(true, false);
         listPromotionActive.setItems(listPromo);
+        listPromotionActive.getSelectionModel().select(1);
         FlowPanePromotionActive.getChildren().addAll(lPromotionActive, listPromotionActive);
         FlowPanePromotionActive.setAlignment(Pos.CENTER);
         
@@ -223,18 +218,13 @@ public class SceneModifierProduit extends SceneCustom
     @Override
     public void update(View v)
     {
-         lProduitIncomplete.setVisible(false);
+        lProduitIncomplete.setVisible(false);
         page.setCenter(box);
     }
 
     public TextField gettNom()
     {
         return tNom;
-    }
-
-    public TextField gettCategorie()
-    {
-        return tCategorie;
     }
 
     public TextField gettFournisseur()
@@ -267,20 +257,9 @@ public class SceneModifierProduit extends SceneCustom
         return tPromotion;
     }
 
-    public TextField gettPromotionActive()
-    {
-        return tPromotionActive;
-    }
-
     public TextField gettImage()
     {
         return tImage;
-    }
-    
-    
-    public Button getbValiderAdresse()
-    {
-        return bValiderModificationProduit;
     }
     
     public void setProduitIncompleteVisible()
@@ -288,11 +267,6 @@ public class SceneModifierProduit extends SceneCustom
         lProduitIncomplete.setVisible(true);
     }
     
-    public void setProduitIncompleteInvisible()
-    {
-        lProduitIncomplete.setVisible(false);
-    }
-
     public Button getbValiderModificationProduit()
     {
         return bValiderModificationProduit;
@@ -310,15 +284,25 @@ public class SceneModifierProduit extends SceneCustom
     
     public boolean getSelectPromotion()
     {
-        if(listPromotionActive.getSelectionModel().getSelectedItem().equals("true"))
-                return true;
-        else return false;
+        return listPromotionActive.getSelectionModel().getSelectedItem();
     }
     
     public void setSelectPromotion(boolean promotion)
     {
-        if(promotion)
-            listPromotionActive.getSelectionModel().select("true");
-        else listPromotionActive.getSelectionModel().select("false");
+        listPromotionActive.getSelectionModel().select(promotion);
+    }
+    
+    public void clearTextField()
+    {
+        this.tNom.clear();
+        this.tFournisseur.clear();
+        this.tPrixUnitaire.clear();
+        this.tStock.clear();
+        this.tPrixUnLot.clear();
+        this.tQuantiteUnLot.clear();
+        this.tPromotion.clear();
+        this.tImage.clear();
+        //this.listCategorie.getSelectionModel().clearSelection();
+        //this.listPromotionActive.getSelectionModel().clearSelection();
     }
 }

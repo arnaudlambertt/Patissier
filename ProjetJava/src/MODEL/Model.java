@@ -50,6 +50,12 @@ public class Model
         this.commandesUtilisateur = new ArrayList<>();
     }
 
+    public void init()
+    {
+        updateTousProduits();
+        updateTousUtilisateurs();
+    }
+    
     public void updateCommandesUtilisateurs()
     {
         commandesUtilisateur = commandeDAO.getCommandes(utilisateur.getId());
@@ -63,12 +69,38 @@ public class Model
 
     public boolean updateUtilisateur()
     {
-        return utilisateurDAO.update(utilisateur);
+        try
+        {
+            if (utilisateurDAO.update(utilisateur))
+                throw new Exception("Echec modification utilisateur");
+            utilisateur = new Utilisateur();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            utilisateurDAO.close();
+        }
     }
     
     public boolean updateUtilisateurSelectionne()
     {
-        return utilisateurDAO.update(utilisateurSelectionne);
+        try
+        {
+            if (!utilisateurDAO.update(utilisateurSelectionne))
+                throw new Exception("Echec modification utilisateur selectionné");
+            utilisateurSelectionne = new Utilisateur();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            utilisateurDAO.close();
+        }
     }
 
     public boolean modifierMotDePasse(String ancien, String nouveau)
@@ -122,32 +154,6 @@ public class Model
         return utilisateurSelectionne;
     }
 
-    public void setEmailSelectionne(String email)
-    {
-        utilisateurSelectionne.setEmail(email);
-    }
-
-    public void setNomSelectionne(String nom)
-    {
-        utilisateurSelectionne.setNom(nom);
-    }
-
-    public void setPrenomSelectionne(String prenom)
-    {
-        utilisateurSelectionne.setPrenom(prenom);
-    }
-    
-    public void setRoleSelectionne(String role)
-    {
-        utilisateurSelectionne.setRole(role);
-    }
-
-    public void init()
-    {
-        updateTousProduits();
-        updateTousUtilisateurs();
-    }
-
     public Produit getProduitSelectionne()
     {
         return produitSelectionne;
@@ -160,7 +166,20 @@ public class Model
     
     public boolean updateProduitSelectionne()
     {
-        return produitDAO.update(produitSelectionne);
+        try
+        {
+            if (!produitDAO.update(produitSelectionne))
+                throw new Exception("Echec modification produit");
+            produitSelectionne = new Produit();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            produitDAO.close();
+        }
     }
 
     public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne)
@@ -304,6 +323,24 @@ public class Model
         } finally
         {
             commandeDAO.close();
+        }
+    }
+    
+    public boolean validerCreationProduit()
+    {
+        try
+        {
+            if (produitDAO.create(produitSelectionne).getId() == 0)
+                throw new Exception("Echec création produit");
+            produitSelectionne = new Produit();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            produitDAO.close();
         }
     }
 

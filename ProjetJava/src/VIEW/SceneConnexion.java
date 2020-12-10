@@ -63,7 +63,7 @@ public class SceneConnexion extends SceneCustom
         Label lDejaClient = new Label("Déjà client ?");
 
         lEmailOuMdpIncorrect = new Label("Email ou mot de passe incorrect !");
-        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : "+Couleurs.RED);
+        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : "+Couleurs.ROUGE);
         lEmailOuMdpIncorrect.setVisible(false);
 
         tEmail = new TextField();

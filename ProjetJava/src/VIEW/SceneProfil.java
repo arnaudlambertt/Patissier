@@ -88,7 +88,7 @@ public class SceneProfil extends SceneCustom
         donneeProfil.add(gMdp, 1, 6);
         
         lEmailDejaExistant.setVisible(false);
-        lEmailDejaExistant.setStyle("-fx-text-fill : "+Couleurs.RED);
+        lEmailDejaExistant.setStyle("-fx-text-fill : "+Couleurs.ROUGE);
         donneeProfil.add(lEmailDejaExistant, 1, 7);
         
         donneeProfil.add(bEnregisterModifs, 1, 9);

@@ -85,16 +85,16 @@ public class Controller
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
         view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
         view.getpAdmin().getbDeconnexion().setOnAction(eventController::deconnecterUtilisateur);
-        view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerCompteAdmin);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //Elles sont au bon endroit ? c'est bien en zone admin ?
-        view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
-        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerUtilisateurAdmin);
+        view.getpAdmin().getbAjoutProduit().setOnAction(eventController::redirectionCreerProduitAdmin);
         
         //Actions boutons cree compte administrateur
-        view.getCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
-        eventController.hoverButtonOrangeClair(view.getCreationCompteAdmin().getbCreeMonCompte());
+        view.getSCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
+        eventController.hoverButtonOrangeClair(view.getSCreationCompteAdmin().getbCreeMonCompte());
+        
+        //Actions boutons cree Produit
+        view.getsCreationProduit().getbValiderModificationProduit().setOnAction(eventController::creerProduit);
+        eventController.hoverButtonOrangeClair(view.getsCreationProduit().getbValiderModificationProduit());
         
         //Actions boutons modifier compte utilisateur (zone administrateur)
         view.getsModifierUtilisateur().getbValiderModificationProduit().setOnAction(eventController::modifierUtilisateurSelectionne);
@@ -102,8 +102,12 @@ public class Controller
         
         //Actions boutons modifier produit (zone administrateur)
         view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
-        eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
-
+        eventController.hoverButtonOrangeClair(view.getsModifierProduit().getbValiderModificationProduit());
+        
+        //Profils
+        view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
+        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
+        
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -140,14 +144,18 @@ public class Controller
             case Scenes.SCENE_CONNEXION:
                 preparerSceneConnexion();
                 break;
-            case Scenes.SCENE_ADMIN_Produit:
+            case Scenes.SCENE_ADMIN_PRODUIT:
                 preparerSceneProduitsAdmin();
                 break;
-            case Scenes.SCENE_ADMIN_Utilisateur:
+            case Scenes.SCENE_ADMIN_UTILISATEUR:
                 preparerSceneUtilisateursAdmin();
                 break;
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 preparerSceneModifierProduit();
+                break;
+            case Scenes.SCENE_CREATION_PRODUIT:
+                view.getsCreationProduit().setSelectPromotion(true);
+                view.getsCreationProduit().setSelectCategorie("Gros électroménager");
                 break;
             case Scenes.SCENE_MODIFIER_UTILISATEUR:
                 preparerSceneModifierUtilisateur();

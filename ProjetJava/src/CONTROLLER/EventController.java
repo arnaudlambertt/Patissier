@@ -7,6 +7,8 @@ package CONTROLLER;
 
 import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
+import MODEL.Produit;
+import MODEL.Utilisateur;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
@@ -65,13 +67,10 @@ public class EventController
             {
                 controller.mettreAJourUtilisateur();
                 controller.getModel().updateUtilisateur();
-            } 
-        }
-        else
-            {
-                controller.getView().getsProfil().getlEmailDejaExistant().setVisible(true);
             }
-        
+        } else
+            controller.getView().getsProfil().getlEmailDejaExistant().setVisible(true);
+
         controller.changerScene(Scenes.SCENE_PROFIL);
 
     }
@@ -84,12 +83,13 @@ public class EventController
         else
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-            if(controller.getUtilisateur().getRole().equals("Administrateur"))
+            if (controller.getUtilisateur().getRole().equals("Administrateur"))
             {
                 controller.getView().getpEntete().setVisible(false);
                 controller.getView().getpAdmin().setVisible(true);
-                controller.changerScene(Scenes.SCENE_ADMIN_Produit); // ZONE ADMIN
-            }else{
+                controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT); // ZONE ADMIN
+            } else
+            {
                 controller.getView().getpEntete().setVisible(true);
                 controller.getView().getpAdmin().setVisible(false);
                 if (controller.redirectionCommande())
@@ -123,36 +123,86 @@ public class EventController
             }
         }
     }
+
     public void creerCompteAdmin(ActionEvent event)
     {
-        controller.getModel().setNomSelectionne(controller.getView().getCreationCompteAdmin().gettNom().getText());
-        controller.getModel().setPrenomSelectionne(controller.getView().getCreationCompteAdmin().gettPrenom().getText());
-        controller.getModel().setEmailSelectionne(controller.getView().getCreationCompteAdmin().gettEmail().getText());
-        controller.getModel().setRoleSelectionne("Administrateur");
-        
-        
-        if (!controller.getModel().creerUtilisateurAdmin(controller.getView().getCreationCompteAdmin().getpMotDePasse().getText()))
-            controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(true);
-        else
+        String nom = controller.getView().getSCreationCompteAdmin().gettNom().getText();
+        String prenom = controller.getView().getSCreationCompteAdmin().gettPrenom().getText();
+        String email = controller.getView().getSCreationCompteAdmin().gettEmail().getText();
+        String role = "Administrateur";
+        String motDePasse = controller.getView().getSCreationCompteAdmin().getpMotDePasse().getText();
+
+        if (!nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !motDePasse.isEmpty())
         {
-            controller.getView().getCreationCompteAdmin().getlEmailOuMdpIncorrect().setVisible(false);
-            
-            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //page admin utilisateur
-            
-        }
+            Utilisateur u = controller.getModel().getUtilisateurSelectionne();
+            u.setNom(nom);
+            u.setPrenom(prenom);
+            u.setEmail(email);
+            u.setRole(role);
+
+            if (controller.getModel().creerUtilisateurAdmin(motDePasse))
+                controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
+        } else
+            controller.getView().getSCreationCompteAdmin().setInformationsIncorrectesVisible();
     }
-    
+
+    public void creerProduit(ActionEvent event)
+    {
+
+        String nom = controller.getView().getsCreationProduit().gettNom().getText();
+        String categorie = controller.getView().getsCreationProduit().getSelectCategorie();
+        String fournisseur = controller.getView().getsCreationProduit().gettFournisseur().getText();
+        String prixUnitaire = controller.getView().getsCreationProduit().gettPrixUnitaire().getText();
+        String stock = controller.getView().getsCreationProduit().gettStock().getText();
+        String quantiteUnLot = controller.getView().getsCreationProduit().gettQuantiteUnLot().getText();
+        String prixUnLot = controller.getView().getsCreationProduit().gettPrixUnLot().getText();
+        String promotion = controller.getView().getsCreationProduit().gettPromotion().getText();
+        boolean promotionActive = controller.getView().getsCreationProduit().getSelectPromotion();
+        String image = controller.getView().getsCreationProduit().gettImage().getText();
+
+        if (!nom.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
+                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
+        {
+            Produit p = controller.getModel().getProduitSelectionne();
+            try
+            {
+                p.setNom(nom);
+                p.setCategorie(categorie);
+                p.setNomFournisseur(fournisseur);
+                p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
+                p.setStock(Integer.parseInt(stock));
+                p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
+                p.setPrixUnLot(Double.parseDouble(prixUnLot));
+                p.setPromotion(Double.parseDouble(promotion));
+                p.setPromotionActive(promotionActive);
+                p.setLienImage(image);
+
+                if (controller.getModel().validerCreationProduit())
+                    controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
+            } catch (NumberFormatException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        } else
+            controller.getView().getsCreationProduit().setProduitIncompleteVisible();
+    }
 
     public void redirectionCreerCompte(ActionEvent event)
     {
         controller.getView().getCreationCompte().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
     }
-    
-    public void redirectionCreerCompteAdmin(ActionEvent event)
+
+    public void redirectionCreerUtilisateurAdmin(ActionEvent event)
     {
-        controller.getView().getCreationCompteAdmin().clearTextField();
+        controller.getView().getSCreationCompteAdmin().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE_ADMIN);
+    }
+
+    public void redirectionCreerProduitAdmin(ActionEvent event)
+    {
+        controller.getView().getsCreationProduit().clearTextField();
+        controller.changerScene(Scenes.SCENE_CREATION_PRODUIT);
     }
 
     public void afficherAccueil(ActionEvent event)
@@ -234,20 +284,20 @@ public class EventController
             } else
                 controller.changerScene(Scenes.SCENE_ADRESSE);
     }
-    
+
     public void GestionProduitAdmin(ActionEvent event)
     {
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(true);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(false);
-        controller.changerScene(Scenes.SCENE_ADMIN_Produit); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT); // ZONE ADMIN
     }
-    
+
     public void GestionUtilisateurAdmin(ActionEvent event)
     {
-        
+
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(false);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(true);
-        controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); // ZONE ADMIN
     }
 
     public void afficherCommandesUtilisateur(ActionEvent event)
@@ -258,7 +308,7 @@ public class EventController
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
-        if(controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex()))
+        if (controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex()))
             afficherPanier(event);
     }
 
@@ -299,7 +349,6 @@ public class EventController
     {
         if (!controller.getModel().stockSuffisantPanier())
             controller.changerScene(Scenes.SCENE_PANIER);
-
         else if (controller.getModel().validerCommande())
         {
             controller.setRedirectionCommande(false);
@@ -334,60 +383,74 @@ public class EventController
         else
             controller.changerScene(Scenes.SCENE_PROFIL);
     }
-    
+
     public void modifierProduitAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
         controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
     }
+
     public void modifierUtilisateurAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
         controller.changerScene(Scenes.SCENE_MODIFIER_UTILISATEUR);
     }
-    
+
     public void modifierUtilisateurSelectionne(ActionEvent event)
     {
-        controller.getModel().setNomSelectionne(controller.getView().getsModifierUtilisateur().gettNom().getText());
-        controller.getModel().setPrenomSelectionne(controller.getView().getsModifierUtilisateur().gettPrenom().getText());
-        controller.getModel().setEmailSelectionne(controller.getView().getsModifierUtilisateur().gettEmail().getText());
-        controller.getModel().setRoleSelectionne(controller.getView().getsModifierUtilisateur().getSelectRole());
-        
-        
+        controller.getModel().getUtilisateurSelectionne().setNom(controller.getView().getsModifierUtilisateur().gettNom().getText());
+        controller.getModel().getUtilisateurSelectionne().setPrenom(controller.getView().getsModifierUtilisateur().gettPrenom().getText());
+        controller.getModel().getUtilisateurSelectionne().setEmail(controller.getView().getsModifierUtilisateur().gettEmail().getText());
+        controller.getModel().getUtilisateurSelectionne().setRole(controller.getView().getsModifierUtilisateur().getSelectRole());
+
         if (!controller.getModel().updateUtilisateurSelectionne())
             controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
         else
         {
             controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteInvisible();
-            
-            controller.changerScene(Scenes.SCENE_ADMIN_Utilisateur); //zone admin utilisateur
+
+            controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); //zone admin utilisateur
         }
     }
-    
+
     public void modifierProduitSelectionne(ActionEvent event)
     {
-        controller.getModel().getProduitSelectionne().setNom(controller.getView().getsModifierProduit().gettNom().getText());
-        controller.getModel().getProduitSelectionne().setCategorie(controller.getView().getsModifierProduit().getSelectCategorie());
-        controller.getModel().getProduitSelectionne().setNomFournisseur(controller.getView().getsModifierProduit().gettFournisseur().getText());
-        controller.getModel().getProduitSelectionne().setPrixUnitaire(Double.parseDouble(controller.getView().getsModifierProduit().gettPrixUnitaire().getText()));
-        controller.getModel().getProduitSelectionne().setStock(Integer.parseInt(controller.getView().getsModifierProduit().gettStock().getText()));
-        controller.getModel().getProduitSelectionne().setQuantiteUnLot(Integer.parseInt(controller.getView().getsModifierProduit().gettQuantiteUnLot().getText()));
-        controller.getModel().getProduitSelectionne().setPrixUnLot(Double.parseDouble(controller.getView().getsModifierProduit().gettPrixUnLot().getText()));
-        controller.getModel().getProduitSelectionne().setPromotion(Double.parseDouble(controller.getView().getsModifierProduit().gettPromotion().getText()));
-        controller.getModel().getProduitSelectionne().setPromotionActive(controller.getView().getsModifierProduit().getSelectPromotion());
-        controller.getModel().getProduitSelectionne().setLienImage(controller.getView().getsModifierProduit().gettImage().getText());
+
+        String nom = controller.getView().getsModifierProduit().gettNom().getText();
+        String categorie = controller.getView().getsModifierProduit().getSelectCategorie();
+        String fournisseur = controller.getView().getsModifierProduit().gettFournisseur().getText();
+        String prixUnitaire = controller.getView().getsModifierProduit().gettPrixUnitaire().getText();
+        String stock = controller.getView().getsModifierProduit().gettStock().getText();
+        String quantiteUnLot = controller.getView().getsModifierProduit().gettQuantiteUnLot().getText();
+        String prixUnLot = controller.getView().getsModifierProduit().gettPrixUnLot().getText();
+        String promotion = controller.getView().getsModifierProduit().gettPromotion().getText();
+        boolean promotionActive = controller.getView().getsModifierProduit().getSelectPromotion();
+        String image = controller.getView().getsModifierProduit().gettImage().getText();
         
-        if (!controller.getModel().updateProduitSelectionne())
-            controller.getView().getsModifierProduit().setProduitIncompleteVisible();
-        else
+        if (!nom.isEmpty() && !categorie.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
+                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
         {
-            controller.getView().getsModifierProduit().setProduitIncompleteInvisible();
-            controller.changerScene(Scenes.SCENE_ADMIN_Produit); //zone admin utilisateur
-        }
+            Produit p = controller.getModel().getProduitSelectionne();
+
+            p.setNom(nom);
+            p.setCategorie(categorie);
+            p.setNomFournisseur(fournisseur);
+            p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
+            p.setStock(Integer.parseInt(stock));
+            p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
+            p.setPrixUnLot(Double.parseDouble(prixUnLot));
+            p.setPromotion(Double.parseDouble(promotion));
+            p.setPromotionActive(promotionActive);
+            p.setLienImage(image);
+
+            if (controller.getModel().updateProduitSelectionne())
+                controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
+
+        } else
+            controller.getView().getsModifierProduit().setProduitIncompleteVisible();
     }
-    
 
     public void hoverButtonOrange(Button ceButton)
     {
