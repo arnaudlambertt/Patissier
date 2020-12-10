@@ -7,7 +7,10 @@ package MODEL;
 
 import DAO.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 /**
@@ -21,13 +24,13 @@ public class Model
     private final ProduitDAO produitDAO;
     private final CommandeDAO commandeDAO;
     private Utilisateur utilisateur;
-    private Utilisateur utilisateurModifie;
     private ArrayList<Produit> tousLesProduits;
     private ArrayList<Utilisateur> tousLesUtilisateurs;
     private final ArrayList<Produit> produitsFiltre;
     private Commande panier;
 
     private Produit produitSelectionne;
+    private final HashMap<String,ImageView> imagesProduit;
     private Utilisateur utilisateurSelectionne;
 
     private ArrayList<Commande> commandesUtilisateur;
@@ -42,11 +45,10 @@ public class Model
         this.tousLesUtilisateurs = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
-
+        
         this.produitSelectionne = new Produit();
+        this.imagesProduit = new HashMap<>();
         this.utilisateurSelectionne = new Utilisateur();
-        this.utilisateurModifie = new Utilisateur();
-
         this.commandesUtilisateur = new ArrayList<>();
     }
 
@@ -54,6 +56,13 @@ public class Model
     {
         updateTousProduits();
         updateTousUtilisateurs();
+        Requests.scandir().forEach((i) ->
+        {
+            ImageView image = new ImageView(new Image("http://93.3.238.99/uploads/" + i));
+            image.setPreserveRatio(true);
+            image.setFitWidth(100);
+            imagesProduit.put(i,image);
+        });
     }
     
     public void updateCommandesUtilisateurs()
@@ -111,7 +120,6 @@ public class Model
     public ArrayList<Commande> getCommandesUtilisateur()
     {
         return commandesUtilisateur;
-
     }
 
     public void deconnecterUtilisateur()
@@ -180,6 +188,11 @@ public class Model
         {
             produitDAO.close();
         }
+    }
+    
+    public HashMap<String,ImageView> getImagesProduit()
+    {
+        return imagesProduit;
     }
 
     public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne)
@@ -365,5 +378,10 @@ public class Model
     boolean utilisateurAdmin()
     {
         return utilisateur.getRole().equals("Administrateur");
+    }
+
+    public void resetProduitSelectionne()
+    {
+        produitSelectionne = new Produit();
     }
 }

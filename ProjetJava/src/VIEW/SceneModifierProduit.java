@@ -13,8 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
@@ -37,11 +35,10 @@ public class SceneModifierProduit extends SceneCustom
     private final TextField tQuantiteUnLot;
     private final TextField tPrixUnLot;
     private final TextField tPromotion;
-    private final TextField tImage;
-    
-    
+
     private final ComboBox<String> listCategorie;
     private final ComboBox<Boolean> listPromotionActive;
+    private final ComboBox<String> listImages;
                 
     public SceneModifierProduit()
     {
@@ -54,13 +51,11 @@ public class SceneModifierProduit extends SceneCustom
         this.tQuantiteUnLot = new TextField();
         this.tPrixUnLot = new TextField();
         this.tPromotion = new TextField();
-        this.tImage = new TextField();
-        
         this.bValiderModificationProduit = new Button();
         this.lProduitIncomplete = new Label();
         this.listCategorie = new ComboBox<>();
         this.listPromotionActive = new ComboBox<>();
-        
+        this.listImages = new ComboBox<>();
     }
     
 
@@ -138,7 +133,6 @@ public class SceneModifierProduit extends SceneCustom
         this.tQuantiteUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrixUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPromotion.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tImage.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bValiderModificationProduit.setText("VALIDER");
         bValiderModificationProduit.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
@@ -195,7 +189,7 @@ public class SceneModifierProduit extends SceneCustom
         FlowPanePromotionActive.setAlignment(Pos.CENTER);
         
         //Image
-        FlowPaneImage.getChildren().addAll(lImage, tImage);
+        FlowPaneImage.getChildren().addAll(lImage, listImages);
         FlowPaneImage.setAlignment(Pos.CENTER);
 
         //Box
@@ -256,10 +250,10 @@ public class SceneModifierProduit extends SceneCustom
     {
         return tPromotion;
     }
-
-    public TextField gettImage()
+    
+    public Button getbValiderAdresse()
     {
-        return tImage;
+        return bValiderModificationProduit;
     }
     
     public void setProduitIncompleteVisible()
@@ -276,10 +270,15 @@ public class SceneModifierProduit extends SceneCustom
     {
         listCategorie.getSelectionModel().select(categorie);
     }
-    
+
     public String getSelectCategorie()
     {
         return listCategorie.getSelectionModel().getSelectedItem();
+    }
+
+    public ComboBox<String> getcbListImages()
+    {
+        return listImages;
     }
     
     public boolean getSelectPromotion()
@@ -301,8 +300,7 @@ public class SceneModifierProduit extends SceneCustom
         this.tPrixUnLot.clear();
         this.tQuantiteUnLot.clear();
         this.tPromotion.clear();
-        this.tImage.clear();
-        //this.listCategorie.getSelectionModel().clearSelection();
-        //this.listPromotionActive.getSelectionModel().clearSelection();
+        this.listCategorie.getSelectionModel().clearSelection();
+        this.listPromotionActive.getSelectionModel().clearSelection();
     }
 }

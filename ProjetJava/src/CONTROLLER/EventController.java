@@ -87,7 +87,7 @@ public class EventController
             {
                 controller.getView().getpEntete().setVisible(false);
                 controller.getView().getpAdmin().setVisible(true);
-                controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT); // ZONE ADMIN
+                GestionProduitAdmin(event);
             } else
             {
                 controller.getView().getpEntete().setVisible(true);
@@ -146,47 +146,6 @@ public class EventController
             controller.getView().getSCreationCompteAdmin().setInformationsIncorrectesVisible();
     }
 
-    public void creerProduit(ActionEvent event)
-    {
-
-        String nom = controller.getView().getsCreationProduit().gettNom().getText();
-        String categorie = controller.getView().getsCreationProduit().getSelectCategorie();
-        String fournisseur = controller.getView().getsCreationProduit().gettFournisseur().getText();
-        String prixUnitaire = controller.getView().getsCreationProduit().gettPrixUnitaire().getText();
-        String stock = controller.getView().getsCreationProduit().gettStock().getText();
-        String quantiteUnLot = controller.getView().getsCreationProduit().gettQuantiteUnLot().getText();
-        String prixUnLot = controller.getView().getsCreationProduit().gettPrixUnLot().getText();
-        String promotion = controller.getView().getsCreationProduit().gettPromotion().getText();
-        boolean promotionActive = controller.getView().getsCreationProduit().getSelectPromotion();
-        String image = controller.getView().getsCreationProduit().gettImage().getText();
-
-        if (!nom.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
-                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
-        {
-            Produit p = controller.getModel().getProduitSelectionne();
-            try
-            {
-                p.setNom(nom);
-                p.setCategorie(categorie);
-                p.setNomFournisseur(fournisseur);
-                p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
-                p.setStock(Integer.parseInt(stock));
-                p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
-                p.setPrixUnLot(Double.parseDouble(prixUnLot));
-                p.setPromotion(Double.parseDouble(promotion));
-                p.setPromotionActive(promotionActive);
-                p.setLienImage(image);
-
-                if (controller.getModel().validerCreationProduit())
-                    controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
-            } catch (NumberFormatException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        } else
-            controller.getView().getsCreationProduit().setProduitIncompleteVisible();
-    }
-
     public void redirectionCreerCompte(ActionEvent event)
     {
         controller.getView().getCreationCompte().clearTextField();
@@ -201,7 +160,8 @@ public class EventController
 
     public void redirectionCreerProduitAdmin(ActionEvent event)
     {
-        controller.getView().getsCreationProduit().clearTextField();
+        controller.getView().getsModifierProduit().clearTextField();
+        controller.getModel().resetProduitSelectionne();
         controller.changerScene(Scenes.SCENE_CREATION_PRODUIT);
     }
 
@@ -417,7 +377,6 @@ public class EventController
 
     public void modifierProduitSelectionne(ActionEvent event)
     {
-
         String nom = controller.getView().getsModifierProduit().gettNom().getText();
         String categorie = controller.getView().getsModifierProduit().getSelectCategorie();
         String fournisseur = controller.getView().getsModifierProduit().gettFournisseur().getText();
@@ -427,10 +386,10 @@ public class EventController
         String prixUnLot = controller.getView().getsModifierProduit().gettPrixUnLot().getText();
         String promotion = controller.getView().getsModifierProduit().gettPromotion().getText();
         boolean promotionActive = controller.getView().getsModifierProduit().getSelectPromotion();
-        String image = controller.getView().getsModifierProduit().gettImage().getText();
-        
-        if (!nom.isEmpty() && !categorie.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
-                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
+        String image = controller.getView().getsModifierProduit().getcbListImages().getSelectionModel().getSelectedItem();
+
+        if (!nom.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
+                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty())
         {
             Produit p = controller.getModel().getProduitSelectionne();
 
@@ -444,8 +403,8 @@ public class EventController
             p.setPromotion(Double.parseDouble(promotion));
             p.setPromotionActive(promotionActive);
             p.setLienImage(image);
-
-            if (controller.getModel().updateProduitSelectionne())
+            if ((p.getId() == 0 && controller.getModel().validerCreationProduit())
+                    || (p.getId() != 0 && controller.getModel().updateProduitSelectionne()))
                 controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
 
         } else
