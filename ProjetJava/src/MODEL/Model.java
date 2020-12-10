@@ -379,6 +379,24 @@ public class Model
             utilisateurDAO.close();
         }
     }
+    
+    public boolean supprimerProduitSelectionnee()
+    {
+        try
+        {
+            if (!produitDAO.delete(this.produitSelectionne))
+                throw new Exception("Echec suppression utilisateur");
+            produitSelectionne = new Produit();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            produitDAO.close();
+        }
+    }
 
     boolean utilisateurAdmin()
     {

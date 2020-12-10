@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -27,7 +28,8 @@ public class SceneModifierProduit extends SceneCustom
 {
     private final VBox box;
     private final Button bValiderModificationProduit;
-    private final Label lProduitIncomplete;    
+    private final Label lProduitIncomplete;
+    private final Label lProduitPrixzero;  
 
     
     private final TextField tNom;
@@ -58,6 +60,7 @@ public class SceneModifierProduit extends SceneCustom
         
         this.bValiderModificationProduit = new Button();
         this.lProduitIncomplete = new Label();
+        this.lProduitPrixzero = new Label();
         this.listCategorie = new ComboBox<>();
         this.listPromotionActive = new ComboBox<>();
         
@@ -149,6 +152,10 @@ public class SceneModifierProduit extends SceneCustom
         lProduitIncomplete.setStyle("-fx-text-fill : ff0000");
         lProduitIncomplete.setVisible(false);
         
+        lProduitPrixzero.setText("Prix unitaire doit être supérieur 0 .");
+        lProduitPrixzero.setStyle("-fx-text-fill : ff0000");
+        lProduitPrixzero.setVisible(false);
+        
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
         FlowPaneNom.setAlignment(Pos.CENTER);
@@ -212,13 +219,19 @@ public class SceneModifierProduit extends SceneCustom
         box.getChildren().add(FlowPanePromotionActive);
         box.getChildren().add(FlowPaneImage);
         box.getChildren().add(bValiderModificationProduit);
-        box.getChildren().add(lProduitIncomplete);
+        
+        StackPane stack = new StackPane();
+        stack.setAlignment(Pos.CENTER);
+        stack.getChildren().addAll(lProduitIncomplete, lProduitPrixzero);
+        
+        box.getChildren().add(stack);
     }
 
     @Override
     public void update(View v)
     {
         lProduitIncomplete.setVisible(false);
+        lProduitPrixzero.setVisible(false);
         page.setCenter(box);
     }
 
@@ -265,6 +278,11 @@ public class SceneModifierProduit extends SceneCustom
     public void setProduitIncompleteVisible()
     {
         lProduitIncomplete.setVisible(true);
+    }
+    
+    public void setProduitPrixVisible()
+    {
+        lProduitPrixzero.setVisible(true);
     }
     
     public Button getbValiderModificationProduit()

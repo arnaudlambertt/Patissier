@@ -163,26 +163,31 @@ public class EventController
         if (!nom.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
                 && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
         {
-            Produit p = controller.getModel().getProduitSelectionne();
-            try
+            if(Double.parseDouble(prixUnitaire)>0)
             {
-                p.setNom(nom);
-                p.setCategorie(categorie);
-                p.setNomFournisseur(fournisseur);
-                p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
-                p.setStock(Integer.parseInt(stock));
-                p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
-                p.setPrixUnLot(Double.parseDouble(prixUnLot));
-                p.setPromotion(Double.parseDouble(promotion));
-                p.setPromotionActive(promotionActive);
-                p.setLienImage(image);
+                Produit p = controller.getModel().getProduitSelectionne();
+                try
+                {
+                    p.setNom(nom);
+                    p.setCategorie(categorie);
+                    p.setNomFournisseur(fournisseur);
+                    p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
+                    p.setStock(Integer.parseInt(stock));
+                    p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
+                    p.setPrixUnLot(Double.parseDouble(prixUnLot));
+                    p.setPromotion(Double.parseDouble(promotion)/100);
+                    p.setPromotionActive(promotionActive);
+                    p.setLienImage(image);
 
-                if (controller.getModel().validerCreationProduit())
-                    controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
-            } catch (NumberFormatException e)
-            {
-                System.out.println(e.getMessage());
+                    if (controller.getModel().validerCreationProduit())
+                        controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
+                } catch (NumberFormatException e)
+                {
+                    System.out.println(e.getMessage());
+                }
             }
+            else
+                controller.getView().getsCreationProduit().setProduitPrixVisible();
         } else
             controller.getView().getsCreationProduit().setProduitIncompleteVisible();
     }
@@ -419,22 +424,25 @@ public class EventController
             controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
     }
 
-    
-
     public void supprimerUtilisateurAdministrateur(ActionEvent event)
     {
-        
+
         Button source = ((Button) event.getSource());
         controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
-        
-        System.out.println(controller.getModel().getUtilisateurSelectionne().toString());
-        
-        
-        
-        
-        
+
+       
         if (controller.getModel().supprimerUtilisateurSelectionnee())
             controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
+    }
+    
+    public void supprimerProduitAdministrateur(ActionEvent event)
+    {
+
+        Button source = ((Button) event.getSource());
+        controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
+        System.out.println(controller.getModel().getProduitSelectionne().toString());
+        if (controller.getModel().supprimerProduitSelectionnee())
+            controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
     }
 
     public void modifierProduitSelectionne(ActionEvent event)
@@ -463,7 +471,7 @@ public class EventController
             p.setStock(Integer.parseInt(stock));
             p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
             p.setPrixUnLot(Double.parseDouble(prixUnLot));
-            p.setPromotion(Double.parseDouble(promotion));
+            p.setPromotion(Double.parseDouble(promotion)/100);
             p.setPromotionActive(promotionActive);
             p.setLienImage(image);
 

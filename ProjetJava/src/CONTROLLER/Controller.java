@@ -260,6 +260,7 @@ public class Controller
             pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdminRedirection);
             //Boutons supprimer
             eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
+            pp.getbSupprimerProduit().setOnAction(eventController::supprimerProduitAdministrateur);
             panesProduitAdmin.add(pp);
         }
     }
