@@ -156,10 +156,6 @@ public class SceneModifierUtilisateur extends SceneCustom
         lUtilisateurIncomplet.setVisible(true);
     }
     
-    public void setUtiliisateurIncompleteInvisible()
-    {
-        lUtilisateurIncomplet.setVisible(false);
-    }
 
     public void setSelectRole(String role)
     {

@@ -255,9 +255,11 @@ public class Controller
         for (int i = 0; i < produitsFiltre.size(); ++i)
         {
             PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
+            //Boutons modifier
             eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
-            eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
             pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdminRedirection);
+            //Boutons supprimer
+            eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
             panesProduitAdmin.add(pp);
         }
     }
@@ -271,9 +273,13 @@ public class Controller
         for (int i = 0; i < utilisateurs.size(); ++i) 
         {
             PaneUtilisateurAdmin uu = new PaneUtilisateurAdmin(i, utilisateurs.get(i));
+            //Boutons modifier
             eventController.hoverButtonOrangeClair(uu.getbModifierUtilisateur());
-            eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
             uu.getbModifierUtilisateur().setOnAction(eventController::modifierUtilisateurAdminRedirection);
+            //Boutons supprimer
+            eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
+            uu.getbSupprimerUtilisateur().setOnAction(eventController::supprimerUtilisateurAdministrateur);
+            
             panesUtilisateursAdmin.add(uu);
         }
     }

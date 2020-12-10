@@ -361,6 +361,24 @@ public class Model
             utilisateurDAO.close();
         }
     }
+    
+    public boolean supprimerUtilisateurSelectionnee()
+    {
+        try
+        {
+            if (!utilisateurDAO.delete(this.utilisateurSelectionne))
+                throw new Exception("Echec suppression utilisateur");
+            utilisateurSelectionne = new Utilisateur();
+            return true;
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return false;
+        } finally
+        {
+            utilisateurDAO.close();
+        }
+    }
 
     boolean utilisateurAdmin()
     {

@@ -400,19 +400,41 @@ public class EventController
 
     public void modifierUtilisateurSelectionne(ActionEvent event)
     {
-        controller.getModel().getUtilisateurSelectionne().setNom(controller.getView().getsModifierUtilisateur().gettNom().getText());
-        controller.getModel().getUtilisateurSelectionne().setPrenom(controller.getView().getsModifierUtilisateur().gettPrenom().getText());
-        controller.getModel().getUtilisateurSelectionne().setEmail(controller.getView().getsModifierUtilisateur().gettEmail().getText());
-        controller.getModel().getUtilisateurSelectionne().setRole(controller.getView().getsModifierUtilisateur().getSelectRole());
+        String nom = controller.getView().getsModifierUtilisateur().gettNom().getText();
+        String prenom = controller.getView().getsModifierUtilisateur().gettPrenom().getText();
+        String email = controller.getView().getsModifierUtilisateur().gettEmail().getText();
+        String role = controller.getView().getsModifierUtilisateur().getSelectRole();
 
-        if (!controller.getModel().updateUtilisateurSelectionne())
-            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
-        else
+        if (!nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !role.isEmpty())
         {
-            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteInvisible();
+            Utilisateur u = controller.getModel().getUtilisateurSelectionne();
+            u.setNom(nom);
+            u.setPrenom(prenom);
+            u.setEmail(email);
+            u.setRole(role);
 
-            controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); //zone admin utilisateur
-        }
+            if (controller.getModel().updateUtilisateurSelectionne())
+                controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); //zone admin utilisateur
+        } else
+            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
+    }
+
+    
+
+    public void supprimerUtilisateurAdministrateur(ActionEvent event)
+    {
+        
+        Button source = ((Button) event.getSource());
+        controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
+        
+        System.out.println(controller.getModel().getUtilisateurSelectionne().toString());
+        
+        
+        
+        
+        
+        if (controller.getModel().supprimerUtilisateurSelectionnee())
+            controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
     }
 
     public void modifierProduitSelectionne(ActionEvent event)
@@ -428,7 +450,7 @@ public class EventController
         String promotion = controller.getView().getsModifierProduit().gettPromotion().getText();
         boolean promotionActive = controller.getView().getsModifierProduit().getSelectPromotion();
         String image = controller.getView().getsModifierProduit().gettImage().getText();
-        
+
         if (!nom.isEmpty() && !categorie.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
                 && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty() && !image.isEmpty())
         {
