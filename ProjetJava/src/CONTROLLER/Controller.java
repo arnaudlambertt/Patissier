@@ -15,11 +15,14 @@ import VIEW.PaneUtilisateurAdmin;
 import VIEW.View;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.application.Platform;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -107,7 +110,7 @@ public class Controller
         view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
         eventController.hoverButtonOrangeClair(view.getsModifierProduit().getbValiderModificationProduit());
         initListImages();
-        
+  
         //Profils
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
@@ -135,7 +138,7 @@ public class Controller
     public void initListImages()
     {
         ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
-        HashMap<String, ImageView> listItems = model.getImagesProduit();
+        HashMap<String, Image> listItems = model.getImagesProduit();
         cb.getItems().addAll(listItems.keySet());
         Callback<ListView<String>, ListCell<String>> cellFactory
                 = param -> new ListCell<String>()
@@ -145,7 +148,9 @@ public class Controller
             {
                 super.updateItem(item, empty);
                 if (listItems.containsKey(item))
-                    setGraphic(listItems.get(item));
+                {
+                    setGraphic(new ImageView(listItems.get(item)));
+                }
             }
         };
         cb.setButtonCell(cellFactory.call(null));

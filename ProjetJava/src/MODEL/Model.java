@@ -30,7 +30,7 @@ public class Model
     private Commande panier;
 
     private Produit produitSelectionne;
-    private final HashMap<String,ImageView> imagesProduit;
+    private final HashMap<String,Image> imagesProduit;
     private Utilisateur utilisateurSelectionne;
 
     private ArrayList<Commande> commandesUtilisateur;
@@ -58,10 +58,7 @@ public class Model
         updateTousUtilisateurs();
         Requests.scandir().forEach((i) ->
         {
-            ImageView image = new ImageView(new Image("http://93.3.238.99/uploads/" + i));
-            image.setPreserveRatio(true);
-            image.setFitWidth(100);
-            imagesProduit.put(i,image);
+            imagesProduit.put(i,new Image("http://93.3.238.99/uploads/" + i, 100, 100, true, true));
         });
     }
     
@@ -190,7 +187,7 @@ public class Model
         }
     }
     
-    public HashMap<String,ImageView> getImagesProduit()
+    public HashMap<String,Image> getImagesProduit()
     {
         return imagesProduit;
     }
