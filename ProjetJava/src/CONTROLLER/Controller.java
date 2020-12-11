@@ -14,7 +14,14 @@ import VIEW.PaneProduitPanier;
 import VIEW.PaneUtilisateurAdmin;
 import VIEW.View;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -87,27 +94,24 @@ public class Controller
         view.getpAdmin().getbDeconnexion().setOnAction(eventController::deconnecterUtilisateur);
         view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerUtilisateurAdmin);
         view.getpAdmin().getbAjoutProduit().setOnAction(eventController::redirectionCreerProduitAdmin);
-        
+
         //Actions boutons cree compte administrateur
         view.getSCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
         eventController.hoverButtonOrangeClair(view.getSCreationCompteAdmin().getbCreeMonCompte());
-        
-        //Actions boutons cree Produit
-        view.getsCreationProduit().getbValiderModificationProduit().setOnAction(eventController::creerProduit);
-        eventController.hoverButtonOrangeClair(view.getsCreationProduit().getbValiderModificationProduit());
-        
+
         //Actions boutons modifier compte utilisateur (zone administrateur)
         view.getsModifierUtilisateur().getbValiderModificationProduit().setOnAction(eventController::modifierUtilisateurSelectionne);
         eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
-        
-        //Actions boutons modifier produit (zone administrateur)
+
+        //Actions boutons modifier / crer produit (zone administrateur)
         view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
         eventController.hoverButtonOrangeClair(view.getsModifierProduit().getbValiderModificationProduit());
+        initListImages();
         
         //Profils
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
-        
+
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
@@ -128,6 +132,26 @@ public class Controller
         view.getpEntete().format();
     }
 
+    public void initListImages()
+    {
+        ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
+        HashMap<String, ImageView> listItems = model.getImagesProduit();
+        cb.getItems().addAll(listItems.keySet());
+        Callback<ListView<String>, ListCell<String>> cellFactory
+                = param -> new ListCell<String>()
+        {
+            @Override
+            protected void updateItem(String item, boolean empty)
+            {
+                super.updateItem(item, empty);
+                if (listItems.containsKey(item))
+                    setGraphic(listItems.get(item));
+            }
+        };
+        cb.setButtonCell(cellFactory.call(null));
+        cb.setCellFactory(cellFactory);
+    }
+    
     public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //prepare scenes si besoin
@@ -150,12 +174,13 @@ public class Controller
             case Scenes.SCENE_ADMIN_UTILISATEUR:
                 preparerSceneUtilisateursAdmin();
                 break;
+            case Scenes.SCENE_CREATION_PRODUIT:
+                model.getProduitSelectionne().setCategorie("Gros électroménager");
+                model.getProduitSelectionne().setLienImage("shuriken.png");
+                model.getProduitSelectionne().setPromotionActive(true);
+            //PAS DE BREAK
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 preparerSceneModifierProduit();
-                break;
-            case Scenes.SCENE_CREATION_PRODUIT:
-                view.getsCreationProduit().setSelectPromotion(true);
-                view.getsCreationProduit().setSelectCategorie("Gros électroménager");
                 break;
             case Scenes.SCENE_MODIFIER_UTILISATEUR:
                 preparerSceneModifierUtilisateur();
@@ -174,11 +199,11 @@ public class Controller
 
     public void mettreAJourUtilisateur()
     {
-        if(!view.getsProfil().gettEmail().getText().isEmpty())
+        if (!view.getsProfil().gettEmail().getText().isEmpty())
             model.getUtilisateur().setEmail(view.getsProfil().gettEmail().getText());
-        if(!view.getsProfil().gettPrenom().getText().isEmpty())
+        if (!view.getsProfil().gettPrenom().getText().isEmpty())
             model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
-        if(view.getsProfil().gettNom().getText().isEmpty())
+        if (view.getsProfil().gettNom().getText().isEmpty())
             model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
 
     }
@@ -198,7 +223,6 @@ public class Controller
         }
     }
 
-
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
@@ -208,7 +232,6 @@ public class Controller
     {
         view.getCreationCompte().clearTextField();
     }
-
 
     public void preparerSceneProduits()
     {
@@ -233,11 +256,11 @@ public class Controller
         view.getsModifierProduit().gettStock().setText(Integer.toString(model.getProduitSelectionne().getStock()));
         view.getsModifierProduit().gettQuantiteUnLot().setText(Integer.toString(model.getProduitSelectionne().getQuantiteUnLot()));
         view.getsModifierProduit().gettPrixUnLot().setText(Double.toString(model.getProduitSelectionne().getPrixUnLot()));
-        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion()*100));
+        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion() * 100));
+        view.getsModifierProduit().getcbListImages().getSelectionModel().select(model.getProduitSelectionne().getLienImage());
         view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
-        view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
     }
-    
+
     public void preparerSceneModifierUtilisateur()
     {
         view.getsModifierUtilisateur().gettNom().setText(model.getUtilisateurSelectionne().getNom());
@@ -264,14 +287,14 @@ public class Controller
             panesProduitAdmin.add(pp);
         }
     }
-    
+
     public void preparerSceneUtilisateursAdmin()
     {
         model.updateTousUtilisateurs();
         ArrayList<Utilisateur> utilisateurs = model.getTousLesUtilisateurs();
         ArrayList<PaneUtilisateurAdmin> panesUtilisateursAdmin = view.getPanesUtilisateurAdmin();
         panesUtilisateursAdmin.clear();
-        for (int i = 0; i < utilisateurs.size(); ++i) 
+        for (int i = 0; i < utilisateurs.size(); ++i)
         {
             PaneUtilisateurAdmin uu = new PaneUtilisateurAdmin(i, utilisateurs.get(i));
             //Boutons modifier
@@ -295,7 +318,7 @@ public class Controller
 
         for (int i = 0; i < keys.size(); ++i)
         {
-            PaneProduitPanier pp = new PaneProduitPanier(i,(Produit)keys.get(i),panier.getProduitsCommande().get((Produit)keys.get(i)));
+            PaneProduitPanier pp = new PaneProduitPanier(i, (Produit) keys.get(i), panier.getProduitsCommande().get((Produit) keys.get(i)));
             pp.getCbNombreProduit().setOnAction(eventController::changementQuantitePanier);
             pp.getbSupprimer().setOnAction(eventController::supprimerProduitPanier);
             eventController.hover(pp.getbSupprimer());

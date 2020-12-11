@@ -33,15 +33,11 @@ public class View
 
     //Zone admin
     
-    private final SceneCreationCompte sCreationCompteAdmin;
-    private final SceneModifierProduit sCreeProduit;
-    
+    private final SceneCreationCompte sCreationCompteAdmin;    
     private final SceneProduitsAdmin sProduitAdmin;
     private final SceneModifierProduit sModifierProduit;
-    
     private final SceneUtilisateurAdmin sUtilisateurAdmin;
     private final SceneModifierUtilisateur sModifierUtilisateur;
-
     private final SceneCommande sCommande;
 
 
@@ -62,7 +58,6 @@ public class View
         //Produit admin
         this.sProduitAdmin = new SceneProduitsAdmin();
         this.sModifierProduit = new SceneModifierProduit();
-        this.sCreeProduit = new SceneModifierProduit();
         //Utilisateur admin
         this.sUtilisateurAdmin = new SceneUtilisateurAdmin();
         this.sModifierUtilisateur = new SceneModifierUtilisateur();
@@ -89,7 +84,6 @@ public class View
         sUtilisateurAdmin.init();
         sModifierUtilisateur.init();
         sCreationCompteAdmin.init();
-        sCreeProduit.init();
 
         sCommande.init();
 
@@ -126,11 +120,10 @@ public class View
             case Scenes.SCENE_ADMIN_UTILISATEUR:
                 changerScene(sUtilisateurAdmin);
                 break;
+            case Scenes.SCENE_CREATION_PRODUIT: 
+            //pas de break
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 changerScene(sModifierProduit);
-                break;
-            case Scenes.SCENE_CREATION_PRODUIT:
-                changerScene(sCreeProduit);
                 break;
             case Scenes.SCENE_MODIFIER_UTILISATEUR:
                 changerScene(sModifierUtilisateur);
@@ -220,11 +213,6 @@ public class View
     public SceneModifierProduit getsModifierProduit()
     {
         return sModifierProduit;
-    }
-
-    public SceneModifierProduit getsCreationProduit()
-    {
-        return sCreeProduit;
     }
 
     public SceneModifierUtilisateur getsModifierUtilisateur()
