@@ -3,12 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Couleurs.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Scenes.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/Controller.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/View.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Requests.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONTROLLER/EventController.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Commande.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/VIEW/SceneModifierProduit.java</file>
             <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Model.java</file>
-            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/MODEL/Produit.java</file>
+            <file>file:/C:/Users/Arnaud/OneDrive/Patissier/ProjetJava/src/CONSTANT/Panes.java</file>
         </group>
     </open-files>
 </project-private>

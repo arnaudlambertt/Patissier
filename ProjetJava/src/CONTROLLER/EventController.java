@@ -14,6 +14,7 @@ import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import VIEW.PaneUtilisateurAdmin;
 import java.io.File;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
@@ -164,6 +165,10 @@ public class EventController
         controller.getView().getsModifierProduit().clearTextField();
         controller.getModel().resetProduitSelectionne();
         controller.changerScene(Scenes.SCENE_CREATION_PRODUIT);
+        Platform.runLater(() ->
+        {
+            controller.getModel().updateImagesProduit();
+        });
     }
 
     public void afficherAccueil(ActionEvent event)
@@ -350,6 +355,10 @@ public class EventController
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
         controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
+        Platform.runLater(() ->
+        {
+            controller.getModel().updateImagesProduit();
+        });
     }
 
     public void modifierUtilisateurAdminRedirection(ActionEvent event)
@@ -385,7 +394,6 @@ public class EventController
 
         Button source = ((Button) event.getSource());
         controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
-
 
         if (controller.getModel().supprimerUtilisateurSelectionnee())
             controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
@@ -426,7 +434,7 @@ public class EventController
             p.setStock(Integer.parseInt(stock));
             p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
             p.setPrixUnLot(Double.parseDouble(prixUnLot));
-            p.setPromotion(Double.parseDouble(promotion)/100);
+            p.setPromotion(Double.parseDouble(promotion) / 100);
             p.setPromotionActive(promotionActive);
             p.setLienImage(image);
             if ((p.getId() == 0 && controller.getModel().validerCreationProduit())
@@ -441,15 +449,13 @@ public class EventController
     {
         File temp = controller.getFileChooser().showOpenDialog(null);
         if (temp != null)
-        {
-            if(controller.getModel().uploadImageProduit(temp))
-            {   
+            if (controller.getModel().uploadImageProduit(temp))
+            {
                 controller.getView().getsModifierProduit().getcbListImages().getItems().add(temp.getName());
                 controller.getView().getsModifierProduit().getcbListImages().getSelectionModel().select(temp.getName());
             }
-        }
     }
-    
+
     public void hoverButtonOrange(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->

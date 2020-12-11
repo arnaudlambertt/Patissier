@@ -287,10 +287,6 @@ public class Controller
 
     public void preparerSceneProduitsAdmin()
     {
-        Platform.runLater(() ->
-        {
-            model.updateImagesProduit();
-        });
         model.updateTousProduits();
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
         ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
