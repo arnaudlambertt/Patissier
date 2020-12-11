@@ -26,6 +26,8 @@ public class SceneModifierProduit extends SceneCustom
 {
     private final VBox box;
     private final Button bValiderModificationProduit;
+    private final Button bUpload;
+            
     private final Label lProduitIncomplete;
     private final Label lProduitPrixzero;  
 
@@ -59,6 +61,7 @@ public class SceneModifierProduit extends SceneCustom
         this.listCategorie = new ComboBox<>();
         this.listPromotionActive = new ComboBox<>();
         this.listImages = new ComboBox<>();
+        this.bUpload = new Button();
     }
     
 
@@ -125,9 +128,10 @@ public class SceneModifierProduit extends SceneCustom
         lPromotionActive.setAlignment(Pos.CENTER_RIGHT);
         
         //Image
-        Label lImage = new Label("lien Image : ");
+        Label lImage = new Label("Image : ");
         lImage.setMinWidth(Panes.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lImage.setAlignment(Pos.CENTER_RIGHT);
+        bUpload.setText("Uploader une image");
         
         this.tNom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tFournisseur.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
@@ -196,7 +200,7 @@ public class SceneModifierProduit extends SceneCustom
         FlowPanePromotionActive.setAlignment(Pos.CENTER);
         
         //Image
-        FlowPaneImage.getChildren().addAll(lImage, listImages);
+        FlowPaneImage.getChildren().addAll(lImage, listImages, bUpload);
         FlowPaneImage.setAlignment(Pos.CENTER);
 
         //Box
@@ -298,6 +302,11 @@ public class SceneModifierProduit extends SceneCustom
     {
         return listImages;
     }
+
+    public Button getbUpload()
+    {
+        return bUpload;
+    }    
     
     public boolean getSelectPromotion()
     {

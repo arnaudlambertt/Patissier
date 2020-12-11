@@ -13,6 +13,7 @@ import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import VIEW.PaneUtilisateurAdmin;
+import java.io.File;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
@@ -436,6 +437,19 @@ public class EventController
             controller.getView().getsModifierProduit().setProduitIncompleteVisible();
     }
 
+    public void uploadImage(ActionEvent event)
+    {
+        File temp = controller.getFileChooser().showOpenDialog(null);
+        if (temp != null)
+        {
+            if(controller.getModel().uploadImageProduit(temp))
+            {   
+                controller.getView().getsModifierProduit().getcbListImages().getItems().add(temp.getName());
+                controller.getView().getsModifierProduit().getcbListImages().getSelectionModel().select(temp.getName());
+            }
+        }
+    }
+    
     public void hoverButtonOrange(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->

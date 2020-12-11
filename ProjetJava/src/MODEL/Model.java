@@ -6,11 +6,11 @@
 package MODEL;
 
 import DAO.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Pair;
 
 /**
@@ -30,7 +30,7 @@ public class Model
     private Commande panier;
 
     private Produit produitSelectionne;
-    private final HashMap<String,Image> imagesProduit;
+    private final HashMap<String, Image> imagesProduit;
     private Utilisateur utilisateurSelectionne;
 
     private ArrayList<Commande> commandesUtilisateur;
@@ -45,7 +45,7 @@ public class Model
         this.tousLesUtilisateurs = new ArrayList<>();
         this.produitsFiltre = new ArrayList<>();
         this.panier = new Commande();
-        
+
         this.produitSelectionne = new Produit();
         this.imagesProduit = new HashMap<>();
         this.utilisateurSelectionne = new Utilisateur();
@@ -58,10 +58,29 @@ public class Model
         updateTousUtilisateurs();
         Requests.scandir().forEach((i) ->
         {
-            imagesProduit.put(i,new Image("http://93.3.238.99/uploads/" + i, 100, 100, true, true));
+            imagesProduit.put(i, new Image("http://93.3.238.99/uploads/" + i, 100, 100, true, true));
+        });
+    }
+
+    public void updateImagesProduit()
+    {
+        imagesProduit.clear();
+
+        Requests.scandir().forEach((i) ->
+        {
+            imagesProduit.put(i, new Image("http://93.3.238.99/uploads/" + i, 100, 100, true, true));
         });
     }
     
+    public boolean uploadImageProduit(File fichier)
+    {
+        if(Requests.upload(fichier))
+            imagesProduit.put(fichier.getName(), new Image("http://93.3.238.99/uploads/" + fichier.getName(), 100, 100, true, true));
+        else
+            return false;
+        return true;
+    }
+
     public void updateCommandesUtilisateurs()
     {
         commandesUtilisateur = commandeDAO.getCommandes(utilisateur.getId());
@@ -70,7 +89,7 @@ public class Model
 
     public boolean verifierEmail(String nouvelEmail)
     {
-        return ((!(utilisateurDAO.emailExistant(nouvelEmail))||nouvelEmail.equals(utilisateur.getEmail())));
+        return ((!(utilisateurDAO.emailExistant(nouvelEmail)) || nouvelEmail.equals(utilisateur.getEmail())));
     }
 
     public boolean updateUtilisateur()
@@ -90,7 +109,7 @@ public class Model
             utilisateurDAO.close();
         }
     }
-    
+
     public boolean updateUtilisateurSelectionne()
     {
         try
@@ -111,7 +130,7 @@ public class Model
 
     public boolean modifierMotDePasse(String ancien, String nouveau)
     {
-        return utilisateurDAO.modifierMotDePasse(utilisateur,ancien,nouveau);
+        return utilisateurDAO.modifierMotDePasse(utilisateur, ancien, nouveau);
     }
 
     public ArrayList<Commande> getCommandesUtilisateur()
@@ -148,12 +167,12 @@ public class Model
     {
         utilisateur.setPrenom(prenom);
     }
-    
+
     public void setRole(String role)
     {
         utilisateur.setRole(role);
     }
-    
+
     public Utilisateur getUtilisateurSelectionne()
     {
         return utilisateurSelectionne;
@@ -168,7 +187,7 @@ public class Model
     {
         this.produitSelectionne = produitSelectionne;
     }
-    
+
     public boolean updateProduitSelectionne()
     {
         try
@@ -186,8 +205,8 @@ public class Model
             produitDAO.close();
         }
     }
-    
-    public HashMap<String,Image> getImagesProduit()
+
+    public HashMap<String, Image> getImagesProduit()
     {
         return imagesProduit;
     }
@@ -201,12 +220,11 @@ public class Model
     {
         return tousLesProduits;
     }
-    
+
     public ArrayList<Utilisateur> getTousLesUtilisateurs()
     {
         return tousLesUtilisateurs;
     }
-
 
     public boolean ajouterAuPanier(int index)
     {
@@ -219,7 +237,7 @@ public class Model
             panier.addProduitCommande(new Pair<>(p, pc.get(p) + 1)); //incrementer
         else
             return false;
-        
+
         return true;
     }
 
@@ -243,7 +261,7 @@ public class Model
         produitsFiltre.clear();
         produitsFiltre.addAll(tousLesProduits);
     }
-    
+
     public void updateTousUtilisateurs()
     {
         tousLesUtilisateurs = utilisateurDAO.getUtilisateurs();
@@ -280,7 +298,7 @@ public class Model
         utilisateurDAO.close();
         return utilisateurConnecte();
     }
-    
+
     public boolean creerUtilisateurAdmin(String motDePasse)
     {
         if (!utilisateurDAO.emailExistant(utilisateurSelectionne.getEmail()))
@@ -300,7 +318,7 @@ public class Model
     {
         return utilisateur.getId() != 0;
     }
-    
+
     public boolean utilisateurAdminConnecte()
     {
         return utilisateurSelectionne.getId() != 0;
@@ -311,8 +329,7 @@ public class Model
         try
         {
             return commandeDAO.verificationStockPanier(panier);
-        }
-        finally
+        } finally
         {
             commandeDAO.close();
         }
@@ -335,7 +352,7 @@ public class Model
             commandeDAO.close();
         }
     }
-    
+
     public boolean validerCreationProduit()
     {
         try
@@ -371,7 +388,7 @@ public class Model
             utilisateurDAO.close();
         }
     }
-    
+
     public boolean supprimerUtilisateurSelectionnee()
     {
         try
@@ -389,7 +406,7 @@ public class Model
             utilisateurDAO.close();
         }
     }
-    
+
     public boolean supprimerProduitSelectionnee()
     {
         try

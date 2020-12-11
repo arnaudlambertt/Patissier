@@ -13,6 +13,7 @@ import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
 import VIEW.PaneUtilisateurAdmin;
 import VIEW.View;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
@@ -21,8 +22,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -37,6 +37,7 @@ public class Controller
     private final View view;
     private final EventController eventController;
     private boolean redirectionCommande;
+    private final FileChooser fileChooser;
 
     public Controller(Stage primaryStage)
     {
@@ -44,6 +45,7 @@ public class Controller
         this.view = new View(primaryStage);
         this.eventController = new EventController(this);
         this.redirectionCommande = false;
+        this.fileChooser = new FileChooser();
     }
 
     public void init()
@@ -109,8 +111,11 @@ public class Controller
         //Actions boutons modifier / crer produit (zone administrateur)
         view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
         eventController.hoverButtonOrangeClair(view.getsModifierProduit().getbValiderModificationProduit());
+        view.getsModifierProduit().getbUpload().setOnAction(eventController::uploadImage);
+        eventController.hover(view.getsModifierProduit().getbUpload());
+        initFileChooser();
         initListImages();
-  
+
         //Profils
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
@@ -135,6 +140,14 @@ public class Controller
         view.getpEntete().format();
     }
 
+    public void initFileChooser()
+    {
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\pictures"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+    }
+    
     public void initListImages()
     {
         ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
@@ -148,15 +161,13 @@ public class Controller
             {
                 super.updateItem(item, empty);
                 if (listItems.containsKey(item))
-                {
                     setGraphic(new ImageView(listItems.get(item)));
-                }
             }
         };
         cb.setButtonCell(cellFactory.call(null));
         cb.setCellFactory(cellFactory);
     }
-    
+
     public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //prepare scenes si besoin
@@ -276,6 +287,10 @@ public class Controller
 
     public void preparerSceneProduitsAdmin()
     {
+        Platform.runLater(() ->
+        {
+            model.updateImagesProduit();
+        });
         model.updateTousProduits();
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
         ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
@@ -308,7 +323,7 @@ public class Controller
             //Boutons supprimer
             eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
             uu.getbSupprimerUtilisateur().setOnAction(eventController::supprimerUtilisateurAdministrateur);
-            
+
             panesUtilisateursAdmin.add(uu);
         }
     }
@@ -385,4 +400,10 @@ public class Controller
     {
         return redirectionCommande;
     }
+
+    public FileChooser getFileChooser()
+    {
+        return fileChooser;
+    }
+    
 }

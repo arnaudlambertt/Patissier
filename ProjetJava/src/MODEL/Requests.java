@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -19,8 +17,7 @@ import org.apache.http.util.EntityUtils;
 
 public class Requests
 {
-
-    public static void upload(File file)
+    public static boolean upload(File file)
     {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
@@ -36,16 +33,21 @@ public class Requests
         try (CloseableHttpResponse response = httpclient.execute(httppost))
         {
             //System.out.println(response.getStatusLine());
+            int code = response.getStatusLine().getStatusCode();
             HttpEntity resEntity = response.getEntity();
-//            if (resEntity != null)
+            if (resEntity == null)
+                return false;
+            String contenu = EntityUtils.toString(resEntity);
 //                System.out.println("Response content a la ligne : \n" + EntityUtils.toString(resEntity));
             EntityUtils.consume(resEntity);
+            return code == 200 && contenu.contains("has been uploaded.");
         } catch (IOException e)
         {
             System.err.println(e.getMessage());
+            return false;
         }
     }
-    
+
     public static ArrayList<String> scandir()
     {
         CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -54,15 +56,16 @@ public class Requests
         {
             //System.out.println(response.getStatusLine());
             HttpEntity resEntity = response.getEntity();
-            
+
             ArrayList<String> filenames = new ArrayList<>();
             if (resEntity != null)
             {
                 Scanner scanner = new Scanner(EntityUtils.toString(resEntity));
-                while(scanner.hasNext())
+                while (scanner.hasNext())
+                {
                     filenames.add(scanner.nextLine());
+                }
             }
-            EntityUtils.consume(resEntity);
             return filenames;
         } catch (IOException e)
         {
