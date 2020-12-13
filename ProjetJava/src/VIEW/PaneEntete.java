@@ -9,7 +9,6 @@ import CONSTANT.Couleurs;
 import CONSTANT.Panes;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;

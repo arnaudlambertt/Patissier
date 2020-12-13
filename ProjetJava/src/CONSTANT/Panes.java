@@ -12,10 +12,10 @@ package CONSTANT;
 public class Panes
 {
     // PANE ENTETE
-    public static final double SPACING_VBOX_PANE_ENTETE=35;
+    public static final double SPACING_VBOX_PANE_ENTETE=20;
     public static final int HGAP_LIGNE_HAUT_PANE_ENTETE=25;
     public static final int HGAP_LIGNE_BAS_PANE_ENTETE=10;
-    public static final int SEPARATOR_HORIZONTAL_WIDTH_PANE_ENTETE=850;
+    public static final int SEPARATOR_HORIZONTAL_WIDTH_PANE_ENTETE=870;
     public static final int BARRE_RECHERCHE_WIDTH_PANE_ENTETE=400;
     public static final int BARRE_RECHERCHE_HEIGHT_PANE_ENTETE=50;
     public static final int GRID_PANE_BUTTON_HGAP_PANE_ENTETE=20;

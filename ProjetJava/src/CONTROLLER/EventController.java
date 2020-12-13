@@ -186,39 +186,49 @@ public class EventController
             case "Gros\nélectroménager":
                 controller.getModel().filtreCategorie("Gros électroménager");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/gros-electromenager");
                 break;
             case "Cuisine\nCuisson":
                 controller.getModel().filtreCategorie("Cuisine Cuisson");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/cuisine-cuisson");
                 break;
             case "Maison\nEntretien":
                 controller.getModel().filtreCategorie("Maison Entretien");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/maison-entretien");
                 break;
             case "Beauté\nSanté":
                 controller.getModel().filtreCategorie("Beauté Santé");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/beaute-sante");
                 break;
             case "Objets\nconnectés":
                 controller.getModel().filtreCategorie("Objets connectés");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/objets-connectes");
                 break;
             case "Smartphone\nTéléphonie":
                 controller.getModel().filtreCategorie("Smartphone Téléphonie");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/produits/categorie/smartphone-telephonie");
                 break;
             case "Informatique\nTablette":
                 controller.getModel().filtreCategorie("Informatique Tablette");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/informatique-tablette");
                 break;
             case "TV Image\nSon":
                 controller.getModel().filtreCategorie("TV, Image Son");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/tv-image-son");
                 break;
             case "Console\nGaming":
                 controller.getModel().filtreCategorie("Console Gaming");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/console-gaming");
         }
+        
     }
 
     public void afficherRecherche(ActionEvent event)
@@ -229,7 +239,7 @@ public class EventController
             controller.setRedirectionCommande(false);
             controller.getModel().filtreRecherche(recherche);
             controller.changerScene(Scenes.SCENE_PRODUITS);
-            controller.getView().getpEntete().requestFocus();
+            controller.setUrl("produits/recherche="+recherche);
         }
     }
 

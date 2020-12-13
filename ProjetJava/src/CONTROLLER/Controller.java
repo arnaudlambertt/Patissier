@@ -86,6 +86,7 @@ public class Controller
         eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
 
         //Actions boutons entete
+        initUrl();
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
@@ -95,10 +96,15 @@ public class Controller
 
         //Actions boutons zone admin
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
-        view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
+        view.getpAdmin().getbGestionUtilisateur().setOnAction(eventController::GestionUtilisateurAdmin);
         view.getpAdmin().getbDeconnexion().setOnAction(eventController::deconnecterUtilisateur);
         view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerUtilisateurAdmin);
         view.getpAdmin().getbAjoutProduit().setOnAction(eventController::redirectionCreerProduitAdmin);
+        eventController.hover(view.getpAdmin().getbDeconnexion());
+        eventController.hover(view.getpAdmin().getbGestionProduit());
+        eventController.hover(view.getpAdmin().getbAjoutProduit());
+        eventController.hover(view.getpAdmin().getbGestionUtilisateur());
+        eventController.hover(view.getpAdmin().getbAjoutUtilisateur());
 
         //Actions boutons cree compte administrateur
         view.getSCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
@@ -135,7 +141,6 @@ public class Controller
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
         //view.getPrimaryStage().setMaximized(true);
-
         //APRES LE SHOW
         view.getpEntete().format();
     }
@@ -147,7 +152,7 @@ public class Controller
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
     }
-    
+
     public void initListImages()
     {
         ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
@@ -168,48 +173,86 @@ public class Controller
         cb.setCellFactory(cellFactory);
     }
 
+    private void initUrl()
+    {
+        view.gettUrl().focusedProperty().addListener((o, oldValue, newValue) ->
+        {
+            if (newValue)
+                Platform.runLater(() ->
+                {
+                    int carretPosition = view.gettUrl().getCaretPosition();
+                    if (view.gettUrl().getAnchor() != carretPosition)
+                    {
+                        view.gettUrl().selectRange(carretPosition, carretPosition);
+                        view.getpEntete().requestFocus();
+                    }
+                });
+        });
+    }
+
     public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //prepare scenes si besoin
         {
             case Scenes.SCENE_PRODUITS:
+                setUrl("");
                 preparerSceneProduits();
                 break;
-            case Scenes.SCENE_PANIER:
-                preparerScenePanier();
-                break;
-            case Scenes.SCENE_PROFIL:
-                preparerSceneUtilisateur();
-                break;
             case Scenes.SCENE_CONNEXION:
+                setUrl("connexion");
                 preparerSceneConnexion();
                 break;
-            case Scenes.SCENE_ADMIN_PRODUIT:
-                preparerSceneProduitsAdmin();
+            case Scenes.SCENE_CREATION_COMPTE:
+                setUrl("creer-mon-compte");
                 break;
-            case Scenes.SCENE_ADMIN_UTILISATEUR:
-                preparerSceneUtilisateursAdmin();
+            case Scenes.SCENE_PROFIL:
+                setUrl("profil/mes-informations");
+                preparerSceneUtilisateur();
                 break;
-            case Scenes.SCENE_CREATION_PRODUIT:
-                model.getProduitSelectionne().setCategorie("Gros électroménager");
-                model.getProduitSelectionne().setLienImage("shuriken.png");
-                model.getProduitSelectionne().setPromotionActive(true);
-            //PAS DE BREAK
-            case Scenes.SCENE_MODIFIER_PRODUIT:
-                preparerSceneModifierProduit();
+            case Scenes.SCENE_PANIER:
+                setUrl("panier");
+                preparerScenePanier();
                 break;
-            case Scenes.SCENE_MODIFIER_UTILISATEUR:
-                preparerSceneModifierUtilisateur();
+            case Scenes.SCENE_ADRESSE:
+                setUrl("panier/livraison");
                 break;
             case Scenes.SCENE_PAIEMENT:
+                setUrl("panier/paiement");
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
             case Scenes.SCENE_COMMANDES:
+                setUrl("profil/mes-commandes");
                 preparerSceneCommande();
                 break;
+            case Scenes.SCENE_ADMIN_PRODUIT:
+                setUrl("admin/produits");
+                preparerSceneProduitsAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                setUrl("admin/produits/modifier-produit");
+                preparerSceneModifierCreerProduit();
+                break;
+            case Scenes.SCENE_CREATION_PRODUIT:
+                setUrl("admin/utilisateurs/creation-produit");
+                model.getProduitSelectionne().setCategorie("Gros électroménager");
+                model.getProduitSelectionne().setLienImage("segado.jpg");
+                model.getProduitSelectionne().setPromotionActive(true);
+                preparerSceneModifierCreerProduit();
+                break;
+            case Scenes.SCENE_ADMIN_UTILISATEUR:
+                setUrl("admin/utilisateurs");
+                preparerSceneUtilisateursAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_UTILISATEUR:
+                setUrl("admin/utilisateurs/modifier-utilisateur");
+                preparerSceneModifierUtilisateur();
+                break;
+            case Scenes.SCENE_CREATION_COMPTE_ADMIN:
+                setUrl("admin/utilisateurs/creation-compte-admin");
+                break;
             default:;
+                setUrl("page-introuvable");
         }
-
         view.changerScene(SceneConstant);
     }
 
@@ -263,7 +306,7 @@ public class Controller
         }
     }
 
-    public void preparerSceneModifierProduit()
+    public void preparerSceneModifierCreerProduit()
     {
         view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
         view.getsModifierProduit().setSelectCategorie(model.getProduitSelectionne().getCategorie());
@@ -401,5 +444,15 @@ public class Controller
     {
         return fileChooser;
     }
-    
+
+    public void setUrl(String url)
+    {
+        view.setUrl(url);
+    }
+
+    public String getUrl()
+    {
+        return view.getUrl();
+    }
+
 }

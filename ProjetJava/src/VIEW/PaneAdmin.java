@@ -131,7 +131,7 @@ public class PaneAdmin extends VBox
         return bGestionProduit;
     }
 
-    public Button getbGestionAdministrateur()
+    public Button getbGestionUtilisateur()
     {
         return bGestionAdministrateur;
     }

@@ -20,6 +20,7 @@ public class View
 {
 
     private final Stage primaryStage;
+    private final TextField tUrl;
     private final PaneEntete pEntete;
     private final PaneAdmin pAdmin;
     private final SceneProduits sProduits;
@@ -30,7 +31,7 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
-
+    
     //Zone admin
     
     private final SceneCreationCompte sCreationCompteAdmin;    
@@ -44,6 +45,7 @@ public class View
     public View(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
+        this.tUrl = new TextField();
         this.pEntete = new PaneEntete();
         this.pAdmin = new PaneAdmin();
         this.sProduits = new SceneProduits();
@@ -258,6 +260,24 @@ public class View
     public PaneAdmin getpAdmin()
     {
         return pAdmin;
+    }
+
+    public TextField gettUrl()
+    {
+        return tUrl;
+    }
+    
+    public void setUrl(String url)
+    {
+        if(!url.isEmpty())
+            tUrl.setText("patissier.com/" + url);
+        else
+            tUrl.setText("patissier.com");
+    }
+    
+    public String getUrl()
+    {
+        return tUrl.getText().substring(14);
     }
 
     public void setPrixPanier(double prixTotal)
