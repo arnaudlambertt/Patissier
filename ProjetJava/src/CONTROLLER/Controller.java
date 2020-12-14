@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -181,7 +182,7 @@ public class Controller
 
     private void initUrl()
     {
-        view.gettUrl().focusedProperty().addListener((o, oldValue, newValue) ->
+        view.gettUrl().focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldValue, Boolean newValue) ->
         {
             if (newValue)
                 Platform.runLater(() ->

@@ -7,7 +7,6 @@ package VIEW;
 
 import CONSTANT.Scenes;
 import java.util.ArrayList;
-import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;

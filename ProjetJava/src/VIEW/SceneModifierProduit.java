@@ -88,9 +88,9 @@ public class SceneModifierProduit extends SceneCustom
         lNom.setAlignment(Pos.CENTER_RIGHT);
         
         // Catégorie
-        Label lCatégorie = new Label("Catégorie : "); 
-        lCatégorie.setMinWidth(Panes.LABEL_WIDTH_SCENE_CREATION_COMPTE);
-        lCatégorie.setAlignment(Pos.CENTER_RIGHT);
+        Label lCategorie = new Label("Catégorie : "); 
+        lCategorie.setMinWidth(Panes.LABEL_WIDTH_SCENE_CREATION_COMPTE);
+        lCategorie.setAlignment(Pos.CENTER_RIGHT);
         
         //fournisseur
         Label lFournisseur= new Label("Nom du Fournisseur : ");
@@ -164,7 +164,7 @@ public class SceneModifierProduit extends SceneCustom
         
         listCategorie.setItems(Cat);
         
-        FlowPaneCategorie.getChildren().addAll(lCatégorie, listCategorie);
+        FlowPaneCategorie.getChildren().addAll(lCategorie, listCategorie);
         FlowPaneCategorie.setAlignment(Pos.CENTER);
         
         //fournisseur
