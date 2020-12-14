@@ -33,18 +33,28 @@ public class EventController
 {
 
     private final Controller controller;
-
+    
     public EventController(Controller c)
     {
         controller = c;
     }
-
+    
+    /**
+     * Change de scene si on arrive à supprimer l'utilisateur.
+     * @param event 
+     */
     public void supprimerUtilisateur(ActionEvent event)
     {
         if (controller.getModel().supprimerUtilisateur())
             controller.changerScene(Scenes.SCENE_CONNEXION);
     }
 
+    /**
+     * Déconnecte l'utilisateur
+     * Place l'entete visible et l'entete Admin invisible
+     * Change de scene
+     * @param event 
+     */
     public void deconnecterUtilisateur(ActionEvent event)
     {
         controller.getModel().deconnecterUtilisateur();
@@ -52,7 +62,12 @@ public class EventController
         controller.getView().getpEntete().setVisible(true);
         afficherAccueil(event);
     }
-
+    
+    /**
+     * Met a jour les informations de l'utilisateur
+     * Puis change de scene
+     * @param event 
+     */
     public void mettreAJourUtilisateur(ActionEvent event)
     {
         if (controller.getModel().verifierEmail(controller.getView().getsProfil().gettEmail().getText()))
@@ -77,6 +92,11 @@ public class EventController
 
     }
 
+    /**
+     * Connecte un utilisateur
+     * Puis change de scene
+     * @param event 
+     */
     public void connexion(ActionEvent event)
     {
         //Si identifiant incorrecte ou mot de passe indorecte alors on affiche un message sur la page
@@ -105,6 +125,12 @@ public class EventController
         }
     }
 
+    
+    /**
+     * Crée un compte
+     * Puis change de scene
+     * @param event 
+     */
     public void creerCompte(ActionEvent event)
     {
         controller.getModel().setNom(controller.getView().getCreationCompte().gettNom().getText());
@@ -126,6 +152,11 @@ public class EventController
         }
     }
 
+    /**
+     * Crée un compte admin
+     * Puis change de scene
+     * @param event 
+     */
     public void creerCompteAdmin(ActionEvent event)
     {
         String nom = controller.getView().getSCreationCompteAdmin().gettNom().getText();
@@ -148,18 +179,33 @@ public class EventController
             controller.getView().getSCreationCompteAdmin().setInformationsIncorrectesVisible();
     }
 
+    /**
+     * clear les textfields de la scene création compte
+     * Puis change de scene
+     * @param event 
+     */
     public void redirectionCreerCompte(ActionEvent event)
     {
         controller.getView().getCreationCompte().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
     }
-
+    
+    /**
+     * clear les textfields de la scene création compte Admin
+     * Puis change de scene
+     * @param event 
+     */
     public void redirectionCreerUtilisateurAdmin(ActionEvent event)
     {
         controller.getView().getSCreationCompteAdmin().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE_ADMIN);
     }
 
+    /**
+     * clear les textfields de la scene création produit
+     * Puis change de scene
+     * @param event 
+     */
     public void redirectionCreerProduitAdmin(ActionEvent event)
     {
         controller.getView().getsModifierProduit().clearTextField();
@@ -171,6 +217,11 @@ public class EventController
         });
     }
 
+    /**
+     * Met a jour la liste des produits
+     * puis change de scène
+     * @param event 
+     */
     public void afficherAccueil(ActionEvent event)
     {
         controller.setRedirectionCommande(false);
@@ -178,6 +229,10 @@ public class EventController
         controller.changerScene(Scenes.SCENE_PRODUITS);
     }
 
+    /**
+     * Prepare la scene produit avec les bon produits
+     * @param event 
+     */
     public void afficherCategorie(ActionEvent event)
     {
         controller.setRedirectionCommande(false);
@@ -231,12 +286,20 @@ public class EventController
 
     }
 
+    /**
+     * arnaud
+     * @param event 
+     */
     public void entrerUrl(KeyEvent event)
     {
         if (event.getCode() == KeyCode.ENTER && (!controller.getUrl().isEmpty()))
             afficherUrl(new ActionEvent());
     }
 
+    /**
+     * arnaud
+     * @param event 
+     */
     public void afficherUrl(ActionEvent event)
     {
         String url = controller.getUrl();
@@ -368,12 +431,20 @@ public class EventController
             controller.changerScene(Scenes.SCENE_ERREUR_404);
     }
 
+    /**
+     * arnaud
+     * @param event 
+     */
     public void entrerRecherche(KeyEvent event)
     {
         if (event.getCode() == KeyCode.ENTER && !controller.getView().getpEntete().gettBarreRecherche().getText().isEmpty())
             afficherRecherche(new ActionEvent());
     }
 
+    /**
+     * arnaud
+     * @param event 
+     */
     public void afficherRecherche(ActionEvent event)
     {
         String recherche = controller.getView().getpEntete().gettBarreRecherche().getText();
@@ -386,6 +457,10 @@ public class EventController
         }
     }
 
+    /**
+     * change de scene après avoir vérifié les stocks
+     * @param event 
+     */
     public void afficherPanier(ActionEvent event)
     {
         controller.setRedirectionCommande(false);
@@ -393,6 +468,10 @@ public class EventController
         controller.changerScene(Scenes.SCENE_PANIER);
     }
 
+    /**
+     * change de scene pour valider la commande
+     * @param event 
+     */
     public void validerPanier(ActionEvent event)
     {
         if (!controller.getModel().getPanier().getProduitsCommande().isEmpty())
@@ -404,6 +483,11 @@ public class EventController
                 controller.changerScene(Scenes.SCENE_ADRESSE);
     }
 
+    /**
+     * bouton d'ajout de produit devient visible et utilisable
+     * puis change de scene
+     * @param event 
+     */
     public void GestionProduitAdmin(ActionEvent event)
     {
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(true);
@@ -411,6 +495,11 @@ public class EventController
         controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT); // ZONE ADMIN
     }
 
+    /**
+     * bouton d'ajout d'utilisateur devient visible et utilisable
+     * puis change de scene
+     * @param event 
+     */
     public void GestionUtilisateurAdmin(ActionEvent event)
     {
 
@@ -419,11 +508,19 @@ public class EventController
         controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); // ZONE ADMIN
     }
 
+    /**
+     * change de scene
+     * @param event 
+     */
     public void afficherCommandesUtilisateur(ActionEvent event)
     {
         controller.changerScene(Scenes.SCENE_COMMANDES);
     }
 
+    /**
+     * ajoute un produit au panier
+     * @param event 
+     */
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -431,6 +528,11 @@ public class EventController
             afficherPanier(event);
     }
 
+    /**
+     * met a jour la quantité de produits différents dans le panier et
+     * le prix total du panier
+     * @param event 
+     */
     public void changementQuantitePanier(ActionEvent event)
     {
         ComboBox source = ((ComboBox) event.getSource());
@@ -440,6 +542,10 @@ public class EventController
         controller.getView().getpEntete().requestFocus();
     }
 
+    /**
+     * supprime un produit du panier
+     * @param event 
+     */
     public void supprimerProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -449,6 +555,11 @@ public class EventController
         controller.changerScene(Scenes.SCENE_PANIER);
     }
 
+    /**
+     * vérifie le blindage de l'adresse saisie 
+     * puis change de scène
+     * @param event 
+     */
     public void validerAdresse(ActionEvent event)
     {
         String codePostal = controller.getView().gettCodePostal().getText();
@@ -464,6 +575,10 @@ public class EventController
             controller.getView().setAdresseIncompleteVisible();
     }
 
+    /**
+     * change de scene
+     * @param event 
+     */
     public void commander(ActionEvent event)
     {
         if (!controller.getModel().stockSuffisantPanier())
@@ -475,6 +590,10 @@ public class EventController
         }
     }
 
+    /**
+     * action quand on clic sur le textField en paramètre
+     * @param element 
+     */
     public void focusBarreRecherche(TextField element)
     {
         element.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) ->
@@ -488,6 +607,10 @@ public class EventController
         });
     }
 
+    /**
+     * change de scene
+     * @param event 
+     */
     public void bonjour(ActionEvent event)
     {
         controller.setRedirectionCommande(false);
@@ -497,6 +620,10 @@ public class EventController
             controller.changerScene(Scenes.SCENE_PROFIL);
     }
 
+    /**
+     * change de scene
+     * @param event 
+     */
     public void modifierProduitAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -508,6 +635,10 @@ public class EventController
         });
     }
 
+    /**
+     * change de scene
+     * @param event 
+     */
     public void modifierUtilisateurAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -515,6 +646,11 @@ public class EventController
         controller.changerScene(Scenes.SCENE_MODIFIER_UTILISATEUR);
     }
 
+    /**
+     * vérifie le blindage des informations lors de la modifications d'un utilisateur
+     * puis met a jour les information de l'utilisateur choisit
+     * @param event 
+     */
     public void modifierUtilisateurSelectionne(ActionEvent event)
     {
         String nom = controller.getView().getsModifierUtilisateur().gettNom().getText();
@@ -536,6 +672,10 @@ public class EventController
             controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
     }
 
+    /**
+     * supprime l'utilisateur choisit
+     * @param event 
+     */
     public void supprimerUtilisateurAdministrateur(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -545,6 +685,10 @@ public class EventController
             controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
     }
 
+    /**
+     * supprime le produit choisit
+     * @param event 
+     */
     public void supprimerProduitAdministrateur(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
@@ -554,6 +698,11 @@ public class EventController
             controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
     }
 
+    /**
+     * vérifie le blindage des informations lors de la modifications d'un produit
+     * puis met a jour les information du produit choisit
+     * @param event 
+     */
     public void modifierProduitSelectionne(ActionEvent event)
     {
         String nom = controller.getView().getsModifierProduit().gettNom().getText();
@@ -590,6 +739,10 @@ public class EventController
             controller.getView().getsModifierProduit().setProduitIncompleteVisible();
     }
 
+    /**
+     * permet d'upload les images sur le server
+     * @param event 
+     */
     public void uploadImage(ActionEvent event)
     {
         File temp = controller.getFileChooser().showOpenDialog(null);
@@ -601,6 +754,10 @@ public class EventController
             }
     }
 
+    /**
+     * change le style quand on passe sur un bouton
+     * @param ceButton 
+     */
     public void hoverButtonOrange(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
@@ -616,6 +773,10 @@ public class EventController
         });
     }
 
+    /**
+     * change le style quand on passe sur un bouton
+     * @param ceButton 
+     */
     public void hoverButtonOrangeClair(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
@@ -633,6 +794,10 @@ public class EventController
         });
     }
 
+    /**
+     * change le style du curseur quand on passe sur le bouton en paramètre
+     * @param ceButton 
+     */
     public void hover(Button ceButton)
     {
         ceButton.setOnMouseEntered((MouseEvent event) ->
