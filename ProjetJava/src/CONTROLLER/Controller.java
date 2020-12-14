@@ -49,6 +49,9 @@ public class Controller
         this.fileChooser = new FileChooser();
     }
 
+    /**
+     *  initialise le model et le view, et ajoute les différentes actions
+     */
     public void init()
     {
         model.init();
@@ -152,6 +155,9 @@ public class Controller
         view.getpEntete().format();
     }
 
+    /** 
+     * initialiser le selectionneur de fichier pour l'upload
+     */
     public void initFileChooser()
     {
         fileChooser.setTitle("Choisir une image");
@@ -160,6 +166,9 @@ public class Controller
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
     }
 
+    /**
+     *  initialise le combobox d'images pour la scene modifier produit
+     */
     public void initListImages()
     {
         ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
@@ -180,6 +189,9 @@ public class Controller
         cb.setCellFactory(cellFactory);
     }
 
+    /**
+     * corrige en partie une contrainte de javafx avec windows quand on set un textfield
+     */
     private void initUrl()
     {
         view.gettUrl().focusedProperty().addListener((ObservableValue<? extends Boolean> o, Boolean oldValue, Boolean newValue) ->
@@ -197,6 +209,10 @@ public class Controller
         });
     }
 
+    /**
+     * prépare si besoin la scène avant de la changer via le view, set l'url
+     * @param SceneConstant numero de la scène
+     */
     public void changerScene(int SceneConstant)
     {
         String urlTemporaire = "";
@@ -264,6 +280,9 @@ public class Controller
         setUrl(urlTemporaire);
     }
 
+    /**
+     *  met à jour les données de l'utilisateur en base de donnée avec les textField de la scene profil
+     */
     public void mettreAJourUtilisateur()
     {
         if (!view.getsProfil().gettEmail().getText().isEmpty())
@@ -272,9 +291,11 @@ public class Controller
             model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
         if(!view.getsProfil().gettNom().getText().isEmpty())
             model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
-
     }
 
+    /**
+     *  prépare les panes des différentes commandes de l'utilisateur pour la scene historique de commande
+     */
     public void preparerSceneCommande()
     {
         model.updateCommandesUtilisateurs();
@@ -290,16 +311,25 @@ public class Controller
         }
     }
 
+    /**
+     *  clear les TextField de la scene connexion
+     */
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
     }
 
+    /**
+     *  clear les TextField de la scene creation compte
+     */
     public void preparerSceneCreationCompte()
     {
         view.getCreationCompte().clearTextField();
     }
 
+    /**
+     *  prépare les panes des différents produits de la scene produits
+     */
     public void preparerSceneProduits()
     {
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
@@ -314,6 +344,9 @@ public class Controller
         }
     }
 
+    /**
+     *  set les différents éléments visuels de la scene modifier produit avec les données du produit selectionné
+     */
     public void preparerSceneModifierCreerProduit()
     {
         view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
@@ -327,7 +360,10 @@ public class Controller
         view.getsModifierProduit().getcbListImages().getSelectionModel().select(model.getProduitSelectionne().getLienImage());
         view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
     }
-
+    
+    /**
+     *  set les différents TextField des la scene modifier utilisateur avec les données de l'utilisateur selectionné
+     */
     public void preparerSceneModifierUtilisateur()
     {
         view.getsModifierUtilisateur().gettNom().setText(model.getUtilisateurSelectionne().getNom());
@@ -335,7 +371,10 @@ public class Controller
         view.getsModifierUtilisateur().gettEmail().setText(model.getUtilisateurSelectionne().getEmail());
         view.getsModifierUtilisateur().setSelectRole(model.getUtilisateurSelectionne().getRole());
     }
-
+    
+    /**
+     *  prépare les panes des différents produits de la scene admin produits
+     */
     public void preparerSceneProduitsAdmin()
     {
         model.updateTousProduits();
@@ -355,6 +394,9 @@ public class Controller
         }
     }
 
+    /**
+     *  prépare les panes des différents utilisateurs de la scene admin utilisateurs
+     */
     public void preparerSceneUtilisateursAdmin()
     {
         model.updateTousUtilisateurs();
@@ -375,6 +417,9 @@ public class Controller
         }
     }
 
+    /**
+     *  prépare les panes des différents produits dans le panier
+     */
     public void preparerScenePanier()
     {
         Commande panier = model.getPanier();
@@ -394,6 +439,9 @@ public class Controller
         view.setPrixPanier(panier.getPrix());
     }
 
+    /**
+     *  prépare les élements de la scene profil
+     */
     public void preparerSceneUtilisateur()
     {
         Utilisateur utilisateurActif = model.getUtilisateur();
