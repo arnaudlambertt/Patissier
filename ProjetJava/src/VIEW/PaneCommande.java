@@ -16,6 +16,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -38,21 +39,33 @@ public final class PaneCommande extends GridPane
         Label lHorodateur = new Label("Date et heure : "+ c.getHorodateur().toString());
         Label lAdresse = new Label("Adresse : "+ c.getAdresse());
         Label lPrix = new Label("Prix : "+c.getPrix()+"€");
+        lPrix.setStyle("-fx-font-weight: bold");
         Label lIsLivre = new Label();
         Label lNumCommande = new Label("Commande numero "+(index+1));
+        lNumCommande.setStyle("-fx-font-weight: bold");
+        Label lNbrProduitCommande = new Label("Vous avez commandé les produits suivants : ");
         
         if(c.isLivre())
+        {
             lIsLivre.setText("La commande a été livrée");
+            lIsLivre.setStyle("-fx-text-inner-color: #fd5300");
+        }
         else
+        {
             lIsLivre.setText("La Commande est en cours de livraison");
-        
+            lIsLivre.setStyle("-fx-text-fill: #ff0000;");
+        }
 
         add(lNumCommande, 0, 0);
         add(lHorodateur, 0, 1);
         add(lAdresse, 0, 2);
         add(lPrix, 0, 3);
         add(lIsLivre, 0, 4);
-        add(new Label("Vous avez commandé les produits suivants : "), 0, 5);
+        
+        if(c.getProduitsCommande().size()==1)
+            lNbrProduitCommande.setText("Vous avez commandé le produit suivant : ");
+        
+        add(lNbrProduitCommande, 0, 5);
         
         for (Map.Entry<Produit, Integer> entry : c.getProduitsCommande().entrySet())
         {

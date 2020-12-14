@@ -44,6 +44,26 @@ public class SceneProfil extends SceneCustom
     @Override
     public void update(View v)
     {
+        bEnregisterModifs.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
+        bEnregisterModifs.setMinSize(200, 40);
+        
+        bDeconnectionUtilisateur.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
+        bDeconnectionUtilisateur.setMinSize(200, 40);
+        
+        bSupprimerCompte.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
+        bSupprimerCompte.setMinSize(200, 40);
+        
+        bMesAchats.setStyle("-fx-background-color : "+Couleurs.ORANGE_PATISSIER+"; -fx-text-fill: "+Couleurs.BLANC
+        + ";-fx-font-weight: bold;");
+        bMesAchats.setMinSize(200, 40);
+        
+        
+        
+        
+        
         GridPane donneeProfil = new GridPane();
         GridPane gNom = new GridPane();
         GridPane gPrenom = new GridPane();

@@ -84,6 +84,11 @@ public class Controller
         //Actions bouton rechercher
         view.getpEntete().getbRecherche().setOnAction(eventController::afficherRecherche);
         eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
+        
+        eventController.hoverButtonOrangeClair(view.getsProfil().getbDeconnectionUtilisateur());
+        eventController.hoverButtonOrangeClair(view.getsProfil().getbEnregisterModifs());
+        eventController.hoverButtonOrangeClair(view.getsProfil().getbMesAchats());
+        eventController.hoverButtonOrangeClair(view.getsProfil().getbSupprimerCompte());
 
         //Actions boutons entete
         initUrl();
@@ -124,8 +129,8 @@ public class Controller
 
         //Profils
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
-        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
-
+        view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);        
+        
         //Actions bouton valider Panier
         view.getbValiderPanier().setOnAction(eventController::validerPanier);
         eventController.hover(view.getbValiderPanier());
