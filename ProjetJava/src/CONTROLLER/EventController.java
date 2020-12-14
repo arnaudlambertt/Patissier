@@ -228,7 +228,150 @@ public class EventController
                 controller.changerScene(Scenes.SCENE_PRODUITS);
                 controller.setUrl("produits/categorie/console-gaming");
         }
-        
+
+    }
+
+    public void entrerUrl(KeyEvent event)
+    {
+        if (event.getCode() == KeyCode.ENTER && (!controller.getUrl().isEmpty()))
+            afficherUrl(new ActionEvent());
+    }
+
+    public void afficherUrl(ActionEvent event)
+    {
+        String url = controller.getUrl();
+        if (url.startsWith("patissier.com/"))
+            if (url.length() == 14) //patissier.com(/)
+
+                if (controller.getModel().getUtilisateur().getRole().equals("Utilisateur"))
+                    afficherAccueil(event);
+                else
+                    GestionProduitAdmin(event);
+            else
+            {
+                url = url.substring(14);
+                if (controller.getModel().getUtilisateur().getRole().equals("Utilisateur"))
+                    if (url.startsWith("produits/"))//recherche ou categorie
+                    {
+                        url = url.substring(9);
+                        if (url.startsWith("categorie/"))
+                        {
+                            url = url.substring(10);
+                            switch (url)
+                            {
+                                case "gros-electromenager":
+                                    controller.getView().getpEntete().getbCategories(0).fire();
+                                    break;
+                                case "cuisine-cuisson":
+                                    controller.getView().getpEntete().getbCategories(1).fire();
+                                    break;
+                                case "maison-entretien":
+                                    controller.getView().getpEntete().getbCategories(2).fire();
+                                    break;
+                                case "beaute-sante":
+                                    controller.getView().getpEntete().getbCategories(3).fire();
+                                    break;
+                                case "objets-connectes":
+                                    controller.getView().getpEntete().getbCategories(4).fire();
+                                    break;
+                                case "smartphone-telephonie":
+                                    controller.getView().getpEntete().getbCategories(5).fire();
+                                    break;
+                                case "informatique-tablette":
+                                    controller.getView().getpEntete().getbCategories(6).fire();
+                                    break;
+                                case "tv-image-son":
+                                    controller.getView().getpEntete().getbCategories(7).fire();
+                                    break;
+                                case "console-gaming":
+                                    controller.getView().getpEntete().getbCategories(8).fire();
+                                    break;
+                                default:
+                                    controller.changerScene(Scenes.SCENE_ERREUR_404);
+                            }
+                        } else if (url.startsWith("recherche=") && url.length() > 10)
+                        {
+                            url = url.substring(10);
+                            controller.getView().getpEntete().gettBarreRecherche().setText(url);
+                            afficherRecherche(event);
+                        } else
+                            controller.changerScene(Scenes.SCENE_ERREUR_404);
+                    } else if (url.equals("connexion"))
+                        bonjour(event);
+                    else if (url.equals("creer-mon-compte"))
+                        if (controller.utilisateurConnecte())
+                            bonjour(event);
+                        else
+                            redirectionCreerCompte(event);
+                    else if (url.startsWith("panier"))
+                        afficherPanier(event);
+                    else if (url.startsWith("profil"))
+                        if (url.equals("profil") || !controller.utilisateurConnecte())
+                            bonjour(event);
+                        else if (url.startsWith("profil/"))
+                        {
+                            url = url.substring(7);
+                            switch (url)
+                            {
+                                case "":
+                                case "mes-informations":
+                                    bonjour(event);
+                                    break;
+                                case "mes-commandes":
+                                    afficherCommandesUtilisateur(event);
+                                    break;
+                                default:
+                                    controller.changerScene(Scenes.SCENE_ERREUR_404);
+                            }
+                        } else
+                            controller.changerScene(Scenes.SCENE_ERREUR_404);
+                    else
+                        controller.changerScene(Scenes.SCENE_ERREUR_404);
+                else if (url.startsWith("admin"))
+                    if (url.equals("admin"))
+                        GestionProduitAdmin(event);
+                    else if (url.startsWith("admin/"))
+                    {
+                        url = url.substring(6);
+                        switch (url)
+                        {
+                            case "produits/":
+                            case "produits":
+                                GestionProduitAdmin(event);
+                                break;
+                            case "produits/modifier-produit":
+                            case "produits/creation-produit":
+                                redirectionCreerProduitAdmin(event);
+                                break;
+                            case "utilisateurs/":
+                            case "utilisateurs":
+                                GestionUtilisateurAdmin(event);
+                                break;
+                            case "utilisateurs/modifier-utilisateur":
+                            case "utilisateurs/creation-compte-admin":
+                                redirectionCreerUtilisateurAdmin(event);
+                                break;
+                            default:
+                                controller.changerScene(Scenes.SCENE_ERREUR_404);
+                        }
+                    } else
+                        controller.changerScene(Scenes.SCENE_ERREUR_404);
+                else
+                    controller.changerScene(Scenes.SCENE_ERREUR_404);
+            }
+        else if (url.equals("patissier.com"))
+            if (controller.getModel().getUtilisateur().getRole().equals("Utilisateur"))
+                afficherAccueil(event);
+            else
+                GestionProduitAdmin(event);
+        else
+            controller.changerScene(Scenes.SCENE_ERREUR_404);
+    }
+
+    public void entrerRecherche(KeyEvent event)
+    {
+        if (event.getCode() == KeyCode.ENTER && !controller.getView().getpEntete().gettBarreRecherche().getText().isEmpty())
+            afficherRecherche(new ActionEvent());
     }
 
     public void afficherRecherche(ActionEvent event)
@@ -239,7 +382,7 @@ public class EventController
             controller.setRedirectionCommande(false);
             controller.getModel().filtreRecherche(recherche);
             controller.changerScene(Scenes.SCENE_PRODUITS);
-            controller.setUrl("produits/recherche="+recherche);
+            controller.setUrl("produits/recherche=" + recherche);
         }
     }
 
@@ -345,12 +488,6 @@ public class EventController
         });
     }
 
-    public void entrerRercherche(KeyEvent event)
-    {
-        if (event.getCode() == KeyCode.ENTER && !controller.getView().getpEntete().gettBarreRecherche().getText().isEmpty())
-            afficherRecherche(new ActionEvent());
-    }
-
     public void bonjour(ActionEvent event)
     {
         controller.setRedirectionCommande(false);
@@ -401,7 +538,6 @@ public class EventController
 
     public void supprimerUtilisateurAdministrateur(ActionEvent event)
     {
-
         Button source = ((Button) event.getSource());
         controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
 
@@ -411,7 +547,6 @@ public class EventController
 
     public void supprimerProduitAdministrateur(ActionEvent event)
     {
-
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
         System.out.println(controller.getModel().getProduitSelectionne().toString());
@@ -510,5 +645,4 @@ public class EventController
             controller.getView().getPrimaryStage().getScene().setCursor(Cursor.DEFAULT);
         });
     }
-
 }
