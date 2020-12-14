@@ -143,7 +143,7 @@ public class View
     public void changerScene(SceneCustom scene)
     {
         scene.update(this);
-        scene.updateFenetre(this);
+        scene.updateFenetre();
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
     }

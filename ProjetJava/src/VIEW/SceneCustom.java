@@ -33,7 +33,6 @@ public abstract class SceneCustom extends Scene
     }
     /**
      * Permet de normaliser toutes les Scenes
-     *
      * @param v nous donne accès aux méthodes de view
      */
     public static void setup(View v)
@@ -74,15 +73,23 @@ public abstract class SceneCustom extends Scene
         stack.getChildren().add(v.getpAdmin());
 
         page.setTop(stack);
-        //navigateur.setLeft(v.getpAdmin());
     }
 
-    //methode qui met la barre de recherche
+    /**
+     * initialisation de la Scene
+     */
     public abstract void init();
 
+    /**
+     * met à jour la Scene en fonction des données de View
+     * @param v nous donne accès aux données et methodes de view
+     */
     public abstract void update(View v);
 
-    public void updateFenetre(View v)
+    /**
+     * Centre la Scene
+     */
+    public void updateFenetre()
     {
         ((BorderPane) getRoot()).setCenter(navigateur);
     }
