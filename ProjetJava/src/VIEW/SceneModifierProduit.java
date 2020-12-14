@@ -146,7 +146,7 @@ public class SceneModifierProduit extends SceneCustom
                 + ";-fx-font-weight: bold;");
         bValiderModificationProduit.setMinSize(240, 40);
         
-        lProduitIncomplete.setText("Produit incomplèt.");
+        lProduitIncomplete.setText("Produit incomplet.");
         lProduitIncomplete.setStyle("-fx-text-fill : ff0000");
         lProduitIncomplete.setVisible(false);
         
