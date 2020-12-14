@@ -287,7 +287,7 @@ public class EventController
     }
 
     /**
-     * arnaud
+       appelle l'affiche de scene lié à l'url lorsque la touche entrée est appuyée 
      * @param event 
      */
     public void entrerUrl(KeyEvent event)
@@ -297,7 +297,7 @@ public class EventController
     }
 
     /**
-     * arnaud
+     * affiche la scene en fonction de l'url rentré par l'utilisateur
      * @param event 
      */
     public void afficherUrl(ActionEvent event)
@@ -432,7 +432,7 @@ public class EventController
     }
 
     /**
-     * arnaud
+     * affiche la scene produit basée sur la recherche lorsque la touche entrée est appuyée
      * @param event 
      */
     public void entrerRecherche(KeyEvent event)
@@ -442,7 +442,7 @@ public class EventController
     }
 
     /**
-     * arnaud
+     * affiche la scene produit basée sur la recherche
      * @param event 
      */
     public void afficherRecherche(ActionEvent event)
