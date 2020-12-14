@@ -78,7 +78,7 @@ public class Controller
         eventController.hoverButtonOrangeClair(view.getCreationCompte().getbCreeMonCompte());
 
         //Actions barre de recherche
-        view.getpEntete().gettBarreRecherche().setOnKeyPressed(eventController::entrerRercherche);
+        view.getpEntete().gettBarreRecherche().setOnKeyPressed(eventController::entrerRecherche);
         eventController.focusBarreRecherche(view.getpEntete().gettBarreRecherche());
 
         //Actions bouton rechercher
@@ -87,6 +87,7 @@ public class Controller
 
         //Actions boutons entete
         initUrl();
+        view.gettUrl().setOnKeyPressed(eventController::entrerUrl);
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
@@ -192,68 +193,69 @@ public class Controller
 
     public void changerScene(int SceneConstant)
     {
+        String urlTemporaire = "";
         switch (SceneConstant) //prepare scenes si besoin
         {
             case Scenes.SCENE_PRODUITS:
-                setUrl("");
                 preparerSceneProduits();
                 break;
             case Scenes.SCENE_CONNEXION:
-                setUrl("connexion");
+                urlTemporaire = "connexion";
                 preparerSceneConnexion();
                 break;
             case Scenes.SCENE_CREATION_COMPTE:
-                setUrl("creer-mon-compte");
+                urlTemporaire = "creer-mon-compte";
                 break;
             case Scenes.SCENE_PROFIL:
-                setUrl("profil/mes-informations");
+                urlTemporaire = "profil/mes-informations";
                 preparerSceneUtilisateur();
                 break;
             case Scenes.SCENE_PANIER:
-                setUrl("panier");
+                urlTemporaire = "panier";
                 preparerScenePanier();
                 break;
             case Scenes.SCENE_ADRESSE:
-                setUrl("panier/livraison");
+                urlTemporaire = "panier/livraison";
                 break;
             case Scenes.SCENE_PAIEMENT:
-                setUrl("panier/paiement");
+                urlTemporaire = "panier/paiement";
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
             case Scenes.SCENE_COMMANDES:
-                setUrl("profil/mes-commandes");
+                urlTemporaire = "profil/mes-commandes";
                 preparerSceneCommande();
                 break;
             case Scenes.SCENE_ADMIN_PRODUIT:
-                setUrl("admin/produits");
+                urlTemporaire = "admin/produits";
                 preparerSceneProduitsAdmin();
                 break;
             case Scenes.SCENE_MODIFIER_PRODUIT:
-                setUrl("admin/produits/modifier-produit");
+                urlTemporaire = "admin/produits/modifier-produit";
                 preparerSceneModifierCreerProduit();
                 break;
             case Scenes.SCENE_CREATION_PRODUIT:
-                setUrl("admin/utilisateurs/creation-produit");
+                urlTemporaire = "admin/produits/creation-produit";
                 model.getProduitSelectionne().setCategorie("Gros électroménager");
                 model.getProduitSelectionne().setLienImage("segado.jpg");
                 model.getProduitSelectionne().setPromotionActive(true);
                 preparerSceneModifierCreerProduit();
                 break;
             case Scenes.SCENE_ADMIN_UTILISATEUR:
-                setUrl("admin/utilisateurs");
+                urlTemporaire = "admin/utilisateurs";
                 preparerSceneUtilisateursAdmin();
                 break;
             case Scenes.SCENE_MODIFIER_UTILISATEUR:
-                setUrl("admin/utilisateurs/modifier-utilisateur");
+                urlTemporaire = "admin/utilisateurs/modifier-utilisateur";
                 preparerSceneModifierUtilisateur();
                 break;
             case Scenes.SCENE_CREATION_COMPTE_ADMIN:
-                setUrl("admin/utilisateurs/creation-compte-admin");
+                urlTemporaire = "admin/utilisateurs/creation-compte-admin";
                 break;
             default:;
-                setUrl("page-introuvable");
+                urlTemporaire = "page-introuvable";
         }
         view.changerScene(SceneConstant);
+        setUrl(urlTemporaire);
     }
 
     public void mettreAJourUtilisateur()

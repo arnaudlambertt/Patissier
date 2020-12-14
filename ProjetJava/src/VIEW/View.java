@@ -7,6 +7,7 @@ package VIEW;
 
 import CONSTANT.Scenes;
 import java.util.ArrayList;
+import javafx.application.Platform;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -31,16 +32,14 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
-    
+
     //Zone admin
-    
-    private final SceneCreationCompte sCreationCompteAdmin;    
+    private final SceneCreationCompte sCreationCompteAdmin;
     private final SceneProduitsAdmin sProduitAdmin;
     private final SceneModifierProduit sModifierProduit;
     private final SceneUtilisateurAdmin sUtilisateurAdmin;
     private final SceneModifierUtilisateur sModifierUtilisateur;
     private final SceneCommande sCommande;
-
 
     public View(Stage primaryStage)
     {
@@ -56,7 +55,7 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
-        
+
         //Produit admin
         this.sProduitAdmin = new SceneProduitsAdmin();
         this.sModifierProduit = new SceneModifierProduit();
@@ -117,12 +116,12 @@ public class View
                 changerScene(sPaiement);
                 break;
             case Scenes.SCENE_ADMIN_PRODUIT:
-                changerScene(sProduitAdmin); 
+                changerScene(sProduitAdmin);
                 break;
             case Scenes.SCENE_ADMIN_UTILISATEUR:
                 changerScene(sUtilisateurAdmin);
                 break;
-            case Scenes.SCENE_CREATION_PRODUIT: 
+            case Scenes.SCENE_CREATION_PRODUIT:
             //pas de break
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 changerScene(sModifierProduit);
@@ -144,16 +143,10 @@ public class View
 
     public void changerScene(SceneCustom scene)
     {
-        //double width = primaryStage.getWidth();
-        //double height = primaryStage.getHeight();
-
         scene.update(this);
         scene.updateFenetre(this);
-
         primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
-        //primaryStage.setWidth(width);
-        //primaryStage.setHeight(height);
     }
 
     public TextField gettEmail()
@@ -191,7 +184,7 @@ public class View
     {
         return sCreationCompte;
     }
-    
+
     public SceneCreationCompte getSCreationCompteAdmin()
     {
         return sCreationCompteAdmin;
@@ -231,7 +224,7 @@ public class View
     {
         return sProduitAdmin.getPanesProduitAdmin();
     }
-    
+
     public ArrayList<PaneUtilisateurAdmin> getPanesUtilisateurAdmin()
     {
         return sUtilisateurAdmin.getPanesProduitAdmin();
@@ -266,18 +259,19 @@ public class View
     {
         return tUrl;
     }
-    
+
     public void setUrl(String url)
     {
-        if(!url.isEmpty())
+        if (!url.isEmpty())
             tUrl.setText("patissier.com/" + url);
         else
             tUrl.setText("patissier.com");
+        getpEntete().requestFocus();
     }
-    
+
     public String getUrl()
     {
-        return tUrl.getText().substring(14);
+        return tUrl.getText();
     }
 
     public void setPrixPanier(double prixTotal)

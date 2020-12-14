@@ -6,7 +6,6 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
@@ -23,7 +22,7 @@ import javafx.stage.Screen;
 public abstract class SceneCustom extends Scene
 {
 
-    protected static final BorderPane navigateur = new BorderPane(); //url nord + scroll centre 
+    private static final BorderPane navigateur = new BorderPane(); //url nord + scroll centre 
     protected static final BorderPane page = new BorderPane(); //entete nord + contenu centre
 
     public SceneCustom()
