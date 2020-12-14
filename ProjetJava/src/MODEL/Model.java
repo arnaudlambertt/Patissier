@@ -35,6 +35,9 @@ public class Model
 
     private ArrayList<Commande> commandesUtilisateur;
 
+    /**
+     *
+     */
     public Model()
     {
         this.utilisateurDAO = new UtilisateurDAO();
@@ -165,6 +168,10 @@ public class Model
         return utilisateurDAO.modifierMotDePasse(utilisateur, ancien, nouveau);
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Commande> getCommandesUtilisateur()
     {
         return commandesUtilisateur;
@@ -179,46 +186,82 @@ public class Model
         utilisateur = new Utilisateur();
     }
 
+    /**
+     *
+     * @return
+     */
     public Commande getPanier()
     {
         return panier;
     }
 
+    /**
+     *
+     * @return
+     */
     public Utilisateur getUtilisateur()
     {
         return utilisateur;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email)
     {
         utilisateur.setEmail(email);
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom)
     {
         utilisateur.setNom(nom);
     }
 
+    /**
+     *
+     * @param prenom
+     */
     public void setPrenom(String prenom)
     {
         utilisateur.setPrenom(prenom);
     }
 
+    /**
+     *
+     * @param role
+     */
     public void setRole(String role)
     {
         utilisateur.setRole(role);
     }
 
+    /**
+     *
+     * @return
+     */
     public Utilisateur getUtilisateurSelectionne()
     {
         return utilisateurSelectionne;
     }
 
+    /**
+     *
+     * @return
+     */
     public Produit getProduitSelectionne()
     {
         return produitSelectionne;
     }
 
+    /**
+     *
+     * @param produitSelectionne
+     */
     public void setProduitSelectionne(Produit produitSelectionne)
     {
         this.produitSelectionne = produitSelectionne;
@@ -246,21 +289,37 @@ public class Model
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public HashMap<String, Image> getImagesProduit()
     {
         return imagesProduit;
     }
 
+    /**
+     *
+     * @param utilisateurSelectionne
+     */
     public void setUtilisateurSelectionne(Utilisateur utilisateurSelectionne)
     {
         this.utilisateurSelectionne = utilisateurSelectionne;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Produit> getTousLesProduits()
     {
         return tousLesProduits;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Utilisateur> getTousLesUtilisateurs()
     {
         return tousLesUtilisateurs;
@@ -354,6 +413,10 @@ public class Model
         });
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Produit> getProduitsFiltre()
     {
         return produitsFiltre;
