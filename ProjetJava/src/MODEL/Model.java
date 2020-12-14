@@ -51,7 +51,9 @@ public class Model
         this.utilisateurSelectionne = new Utilisateur();
         this.commandesUtilisateur = new ArrayList<>();
     }
-
+    /**
+     * initialise le model (met à jour les produits et les utilisateurs depuis la base de donnée
+     */
     public void init()
     {
         updateTousProduits();
@@ -62,6 +64,9 @@ public class Model
         });
     }
 
+    /**
+     * mets à jour les images depuis le serveur
+     */
     public void updateImagesProduit()
     {
         imagesProduit.clear();
@@ -71,7 +76,11 @@ public class Model
             imagesProduit.put(i, new Image("http://93.3.238.99/uploads/" + i, 100, 100, true, true));
         });
     }
-    
+    /**
+     * upload une imahe en paramètre sur le serveur
+     * @param fichier fichier à upload
+     * @return true si l'upload a réussi false sinon
+     */
     public boolean uploadImageProduit(File fichier)
     {
         if(Requests.upload(fichier))
@@ -80,18 +89,30 @@ public class Model
             return false;
         return true;
     }
-
+    
+    /**
+     * mets à jour les commandes utilisateurs depuis la base de donnée
+     */
     public void updateCommandesUtilisateurs()
     {
         commandesUtilisateur = commandeDAO.getCommandes(utilisateur.getId());
         commandeDAO.close();
     }
 
+    /**
+     * Verifie que l'email reçu en paramètre correspond bien à un utilisateur de la base de donnée
+     * @param nouvelEmail email à tester
+     * @return true si l'email correspond false sinon
+     */
     public boolean verifierEmail(String nouvelEmail)
     {
         return ((!(utilisateurDAO.emailExistant(nouvelEmail)) || nouvelEmail.equals(utilisateur.getEmail())));
     }
 
+    /**
+     * mets à jour les utilisateurs de la base de donnée à partir de l'utilisateur du code
+     * @return true si l'udate a réussi, false sinon
+     */
     public boolean updateUtilisateur()
     {
         try
@@ -110,6 +131,10 @@ public class Model
         }
     }
 
+    /**
+     * mets à jour les utilisateurs selectionnés dans la base de donnée
+     * @return true si ça a réussi false sinon
+     */
     public boolean updateUtilisateurSelectionne()
     {
         try
@@ -127,7 +152,14 @@ public class Model
             utilisateurDAO.close();
         }
     }
-
+    
+    
+    /**
+     * modifie le mdp d'un utilisateur si l'ancien mot de passe correspond bien 
+     * @param ancien ancien mot de passe
+     * @param nouveau nouveau mot de passe
+     * @return true si ça réussi, false sinon
+     */
     public boolean modifierMotDePasse(String ancien, String nouveau)
     {
         return utilisateurDAO.modifierMotDePasse(utilisateur, ancien, nouveau);
@@ -138,6 +170,10 @@ public class Model
         return commandesUtilisateur;
     }
 
+    /**
+     * remet l'utilisateur à 0 (le code considère un new utilisateur comme étant
+     * un utilisateur déconnecté
+     */
     public void deconnecterUtilisateur()
     {
         utilisateur = new Utilisateur();
@@ -188,6 +224,10 @@ public class Model
         this.produitSelectionne = produitSelectionne;
     }
 
+    /**
+     * mets à jour les produits séléctionnés dans la base de donnée
+     * @return true si ça réussi false sinon
+     */
     public boolean updateProduitSelectionne()
     {
         try
@@ -226,6 +266,11 @@ public class Model
         return tousLesUtilisateurs;
     }
 
+    /**
+     * Ajout d'un Produit au panier
+     * @param index du produit
+     * @return true si ça réussi false sinon
+     */
     public boolean ajouterAuPanier(int index)
     {
         Produit p = produitsFiltre.get(index);
@@ -241,11 +286,20 @@ public class Model
         return true;
     }
 
+    /**
+     * Modifie la quantité d'un objet dans le panier
+     * @param index id de l'objet dont on veut modifier la quantité
+     * @param quantite nouvelle quantité de l'objet
+     */
     public void modifierQuantitePanier(int index, int quantite)
     {
         panier.modifierQuantite(index, quantite);
     }
 
+    /**
+     * supprime le produit du panier
+     * @param index du produit à supprimer
+     */
     public void supprimerProduitPanier(int index)
     {
         ArrayList<Produit> keys = new ArrayList<>(panier.getProduitsCommande().keySet());
@@ -253,6 +307,9 @@ public class Model
         panier.removeProduitCommande(p);
     }
 
+    /**
+     * mets à jour tous les produit depuis la base de donnée
+     */
     public void updateTousProduits()
     {
         tousLesProduits = produitDAO.getProduits();
@@ -262,18 +319,29 @@ public class Model
         produitsFiltre.addAll(tousLesProduits);
     }
 
+    /**
+     * mets à jour tous les utilisateurs depuis la base de donnée
+     */
     public void updateTousUtilisateurs()
     {
         tousLesUtilisateurs = utilisateurDAO.getUtilisateurs();
         utilisateurDAO.close();
     }
-
+    
+    /**
+     * reccupère les produits filtrés depuis la base de donnée
+     * @param categorie nom de la catégorie selon laquelle on veut filtrer
+     */
     public void filtreCategorie(String categorie)
     {
         produitsFiltre.clear();
         produitsFiltre.addAll(produitDAO.getProduits(categorie));
     }
 
+    /**
+     * reccupère les produits filtrés depuis la base de donnée
+     * @param recherche String à partir de laquelle on va effectuer la recherche
+     */
     public void filtreRecherche(String recherche)
     {
         updateTousProduits();
@@ -291,6 +359,11 @@ public class Model
         return produitsFiltre;
     }
 
+    /**
+     * créer un utilisateur
+     * @param motDePasse mot de passe de l'utilisateur
+     * @return true si ça réussi false sinon
+     */
     public boolean creerUtilisateur(String motDePasse)
     {
         if (!utilisateurDAO.emailExistant(utilisateur.getEmail()))
@@ -298,7 +371,12 @@ public class Model
         utilisateurDAO.close();
         return utilisateurConnecte();
     }
-
+    
+    /**
+     * Créer un utilisateur Administrateur
+     * @param motDePasse de l'administrateur
+     * @return true si ça réussi false sinon
+     */
     public boolean creerUtilisateurAdmin(String motDePasse)
     {
         if (!utilisateurDAO.emailExistant(utilisateurSelectionne.getEmail()))
@@ -307,6 +385,12 @@ public class Model
         return utilisateurAdminConnecte();
     }
 
+    /**
+     * tente de connecte l'utilisateur
+     * @param email email de l'utilisateur
+     * @param motDePasse mdp de l'utilisateur
+     * @return true si ça réussi false sinon
+     */
     public boolean connecterUtilisateur(String email, String motDePasse)
     {
         this.utilisateur = this.utilisateurDAO.connexion(email, motDePasse);
@@ -314,16 +398,28 @@ public class Model
         return utilisateurConnecte();
     }
 
+    /**
+     * Verifie que l'utilisateur est connecté
+     * @return true si il est connécté false sinon
+     */
     public boolean utilisateurConnecte()
     {
         return utilisateur.getId() != 0;
     }
 
+    /**
+     * Verifie que l'administrateur est connecté
+     * @return true si il est connecté false sinon
+     */
     public boolean utilisateurAdminConnecte()
     {
         return utilisateurSelectionne.getId() != 0;
     }
 
+    /**
+     * verifie que le stock est suffisant dans la base de donnée 
+     * @return true s'il est suffisant false sinon
+     */
     public boolean stockSuffisantPanier()
     {
         try
@@ -335,6 +431,10 @@ public class Model
         }
     }
 
+    /**
+     * tente de créer la commande en BDD
+     * @return true si la commande est crée false sinon
+     */
     public boolean validerCommande()
     {
         try
@@ -353,6 +453,10 @@ public class Model
         }
     }
 
+    /**
+     * tente de créer un produit en BDD
+     * @return true si le produit est crée faux sinon
+     */
     public boolean validerCreationProduit()
     {
         try
@@ -370,7 +474,11 @@ public class Model
             produitDAO.close();
         }
     }
-
+    
+    /**
+     * Supprime un utilisateur dans la base de donnée
+     * @return true si l'utilisateur est supprimé false sinon
+     */
     public boolean supprimerUtilisateur()
     {
         try
@@ -389,6 +497,10 @@ public class Model
         }
     }
 
+    /**
+     * supprime l'utilisateur selectionné dans la BDD
+     * @return true s'il est supprimé false sinon
+     */
     public boolean supprimerUtilisateurSelectionnee()
     {
         try
@@ -407,6 +519,10 @@ public class Model
         }
     }
 
+    /**
+     * Supprime le produit selectionné dans la BDD
+     * @return true si le produit est supprimé false sinon
+     */
     public boolean supprimerProduitSelectionnee()
     {
         try
@@ -425,11 +541,18 @@ public class Model
         }
     }
 
+    /**
+     * verifie si l'utilisateur est un administrateur
+     * @return true si c'est un admin false sinon
+     */
     boolean utilisateurAdmin()
     {
         return utilisateur.getRole().equals("Administrateur");
     }
 
+    /**
+     * reset le produit selectionné
+     */
     public void resetProduitSelectionne()
     {
         produitSelectionne = new Produit();

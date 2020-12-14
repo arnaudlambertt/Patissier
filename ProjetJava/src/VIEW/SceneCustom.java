@@ -31,7 +31,11 @@ public abstract class SceneCustom extends Scene
         ((BorderPane) getRoot()).setStyle("-fx-background-color: " + Couleurs.BLANC + "; "
                 + "-fx-border-color: " + Couleurs.BLANC + ";");
     }
-
+    /**
+     * Permet de normaliser toutes les Scenes
+     *
+     * @param v nous donne accès aux méthodes de view
+     */
     public static void setup(View v)
     {
         StackPane urlPane = new StackPane();
