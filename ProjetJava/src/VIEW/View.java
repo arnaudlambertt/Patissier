@@ -66,7 +66,9 @@ public class View
         this.sCommande = new SceneCommande();
 
     }
-
+    /**
+     * initialise les différentes scenes
+     */
     public void init()
     {
         SceneCustom.setup(this);
@@ -88,7 +90,11 @@ public class View
         sCommande.init();
 
     }
-
+    /**
+     * faire un changement de scène (envoie un scène à changer 
+     * scène en fonction de la constante recue en paramètre
+     * @param SceneConstant constante de la prochaine scène 
+     */
     public void changerScene(int SceneConstant)
     {
         switch (SceneConstant) //appelle changerScene correspondant
@@ -140,6 +146,10 @@ public class View
         }
     }
 
+    /**
+     * change la scène actuelle en une nouvelle scène reçue en paramètre
+     * @param scene on va remplacer la scène actuelle par cette scène
+     */
     public void changerScene(SceneCustom scene)
     {
         scene.update(this);
