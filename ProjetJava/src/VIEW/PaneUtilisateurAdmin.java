@@ -29,10 +29,10 @@ public class PaneUtilisateurAdmin extends GridPane
     public PaneUtilisateurAdmin(int index, Utilisateur u)
     {
         this.index = index;
-        this.bModifierUtilisateur = new Button("MODIFIER PRODUIT");
-        this.bSupprimerUtilisateur = new Button("SUPPRIMER PRODUIT");
+        this.bModifierUtilisateur = new Button("MODIFIER UTILISATEUR");
+        this.bSupprimerUtilisateur = new Button("SUPPRIMER UTILISATEUR");
         
-        this.setHgap(20);
+        //this.setHgap(2000);
         
         // INFO Utilisateur VBOX
         VBox box = new VBox();
@@ -43,25 +43,18 @@ public class PaneUtilisateurAdmin extends GridPane
         GridPane.setValignment(lNom, VPos.TOP);
         box.getChildren().add(lNom);
         //prenom
-        Label lPrenom = new Label("Vendeur : " + u.getPrenom());
+        Label lPrenom = new Label("Prenom : " + u.getPrenom());
         lPrenom.setWrapText(true);
         lPrenom.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lPrenom, VPos.TOP);
         box.getChildren().add(lPrenom);
         //email
-        Label lEmail = new Label("Prix unitaire : " + u.getEmail());
+        Label lEmail = new Label("Email : " + u.getEmail());
         lEmail.setWrapText(true);
         lEmail.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lEmail, VPos.TOP);
         box.getChildren().add(lEmail);
-        //role
-        Label lRole = new Label("Quantité dans un lot : " + u.getRole());
-        lRole.setWrapText(true);
-        lRole.setAlignment(Pos.TOP_LEFT);
-        GridPane.setValignment(lRole, VPos.TOP);
-        box.getChildren().add(lRole);
         
-        //box.setSpacing(10);
         
         box.setMinWidth(360);
         add(box,0,0);
@@ -71,20 +64,20 @@ public class PaneUtilisateurAdmin extends GridPane
         paneBouton.setAlignment(Pos.TOP_CENTER);
         add(paneBouton,1,0);
         
-        bModifierUtilisateur.setMinSize(240, 40);
+        bModifierUtilisateur.setMinSize(150, 25);
         bModifierUtilisateur.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
         + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;");
         GridPane.setValignment(bModifierUtilisateur, VPos.CENTER);
-        paneBouton.add(bModifierUtilisateur,0,2);
-        paneBouton.setVgap(20);
+        paneBouton.add(bModifierUtilisateur,0,0);
+        paneBouton.setVgap(10);
         
-        bSupprimerUtilisateur.setMinSize(240, 40);
+        bSupprimerUtilisateur.setMinSize(150, 25);
         bSupprimerUtilisateur.setStyle("-fx-background-color: " + Couleurs.ORANGE_PATISSIER + ";"
         + "-fx-text-fill: " + Couleurs.BLANC + ";"
                 + "-fx-font-weight: bold;");
         GridPane.setValignment(bSupprimerUtilisateur, VPos.CENTER);
-        paneBouton.add(bSupprimerUtilisateur,0,3);
+        paneBouton.add(bSupprimerUtilisateur,0,1);
     }
 
     public int getIndex()
@@ -92,12 +85,12 @@ public class PaneUtilisateurAdmin extends GridPane
         return index;
     }
 
-    public Button getbModifierProduit()
+    public Button getbModifierUtilisateur()
     {
         return bModifierUtilisateur;
     }
 
-    public Button getbSupprimerProduit()
+    public Button getbSupprimerUtilisateur()
     {
         return bSupprimerUtilisateur;
     }

@@ -11,9 +11,20 @@ import VIEW.PaneCommande;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
+import VIEW.PaneUtilisateurAdmin;
 import VIEW.View;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javafx.application.Platform;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  *
@@ -26,6 +37,7 @@ public class Controller
     private final View view;
     private final EventController eventController;
     private boolean redirectionCommande;
+    private final FileChooser fileChooser;
 
     public Controller(Stage primaryStage)
     {
@@ -33,6 +45,7 @@ public class Controller
         this.view = new View(primaryStage);
         this.eventController = new EventController(this);
         this.redirectionCommande = false;
+        this.fileChooser = new FileChooser();
     }
 
     public void init()
@@ -73,6 +86,7 @@ public class Controller
         eventController.hoverButtonOrangeClair(view.getpEntete().getbRecherche());
 
         //Actions boutons entete
+        initUrl();
         view.getpEntete().getbLogo().setOnAction(eventController::afficherAccueil);
         view.getpEntete().getbBonjour().setOnAction(eventController::bonjour);
         view.getpEntete().getbPanier().setOnAction(eventController::afficherPanier);
@@ -80,10 +94,35 @@ public class Controller
         view.getsProfil().getbDeconnectionUtilisateur().setOnAction(eventController::deconnecterUtilisateur);
         view.getsProfil().getbSupprimerCompte().setOnAction(eventController::supprimerUtilisateur);
 
-
         //Actions boutons zone admin
         view.getpAdmin().getbGestionProduit().setOnAction(eventController::GestionProduitAdmin);
-        view.getpAdmin().getbGestionAdministrateur().setOnAction(eventController::GestionUtilisateurAdmin);
+        view.getpAdmin().getbGestionUtilisateur().setOnAction(eventController::GestionUtilisateurAdmin);
+        view.getpAdmin().getbDeconnexion().setOnAction(eventController::deconnecterUtilisateur);
+        view.getpAdmin().getbAjoutUtilisateur().setOnAction(eventController::redirectionCreerUtilisateurAdmin);
+        view.getpAdmin().getbAjoutProduit().setOnAction(eventController::redirectionCreerProduitAdmin);
+        eventController.hover(view.getpAdmin().getbDeconnexion());
+        eventController.hover(view.getpAdmin().getbGestionProduit());
+        eventController.hover(view.getpAdmin().getbAjoutProduit());
+        eventController.hover(view.getpAdmin().getbGestionUtilisateur());
+        eventController.hover(view.getpAdmin().getbAjoutUtilisateur());
+
+        //Actions boutons cree compte administrateur
+        view.getSCreationCompteAdmin().getbCreeMonCompte().setOnAction(eventController::creerCompteAdmin);
+        eventController.hoverButtonOrangeClair(view.getSCreationCompteAdmin().getbCreeMonCompte());
+
+        //Actions boutons modifier compte utilisateur (zone administrateur)
+        view.getsModifierUtilisateur().getbValiderModificationProduit().setOnAction(eventController::modifierUtilisateurSelectionne);
+        eventController.hoverButtonOrangeClair(view.getsModifierUtilisateur().getbValiderModificationProduit());
+
+        //Actions boutons modifier / crer produit (zone administrateur)
+        view.getsModifierProduit().getbValiderModificationProduit().setOnAction(eventController::modifierProduitSelectionne);
+        eventController.hoverButtonOrangeClair(view.getsModifierProduit().getbValiderModificationProduit());
+        view.getsModifierProduit().getbUpload().setOnAction(eventController::uploadImage);
+        eventController.hover(view.getsModifierProduit().getbUpload());
+        initFileChooser();
+        initListImages();
+
+        //Profils
         view.getsProfil().getbMesAchats().setOnAction(eventController::afficherCommandesUtilisateur);
         view.getsProfil().getbEnregisterModifs().setOnAction(eventController::mettreAJourUtilisateur);
 
@@ -102,9 +141,53 @@ public class Controller
         changerScene(Scenes.SCENE_PRODUITS);
         view.getPrimaryStage().show();
         //view.getPrimaryStage().setMaximized(true);
-
         //APRES LE SHOW
         view.getpEntete().format();
+    }
+
+    public void initFileChooser()
+    {
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\pictures"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+    }
+
+    public void initListImages()
+    {
+        ComboBox<String> cb = view.getsModifierProduit().getcbListImages();
+        HashMap<String, Image> listItems = model.getImagesProduit();
+        cb.getItems().addAll(listItems.keySet());
+        Callback<ListView<String>, ListCell<String>> cellFactory
+                = param -> new ListCell<String>()
+        {
+            @Override
+            protected void updateItem(String item, boolean empty)
+            {
+                super.updateItem(item, empty);
+                if (listItems.containsKey(item))
+                    setGraphic(new ImageView(listItems.get(item)));
+            }
+        };
+        cb.setButtonCell(cellFactory.call(null));
+        cb.setCellFactory(cellFactory);
+    }
+
+    private void initUrl()
+    {
+        view.gettUrl().focusedProperty().addListener((o, oldValue, newValue) ->
+        {
+            if (newValue)
+                Platform.runLater(() ->
+                {
+                    int carretPosition = view.gettUrl().getCaretPosition();
+                    if (view.gettUrl().getAnchor() != carretPosition)
+                    {
+                        view.gettUrl().selectRange(carretPosition, carretPosition);
+                        view.getpEntete().requestFocus();
+                    }
+                });
+        });
     }
 
     public void changerScene(int SceneConstant)
@@ -112,40 +195,72 @@ public class Controller
         switch (SceneConstant) //prepare scenes si besoin
         {
             case Scenes.SCENE_PRODUITS:
+                setUrl("");
                 preparerSceneProduits();
                 break;
-            case Scenes.SCENE_PANIER:
-                preparerScenePanier();
-                break;
-            case Scenes.SCENE_PROFIL:
-                preparerSceneUtilisateur();
-                break;
             case Scenes.SCENE_CONNEXION:
+                setUrl("connexion");
                 preparerSceneConnexion();
                 break;
-            case Scenes.SCENE_ADMIN:
-                preparerSceneProduitsAdmin();
+            case Scenes.SCENE_CREATION_COMPTE:
+                setUrl("creer-mon-compte");
                 break;
-            case Scenes.SCENE_MODIFIER_PRODUIT:
-                preparerSceneModifierProduit();
+            case Scenes.SCENE_PROFIL:
+                setUrl("profil/mes-informations");
+                preparerSceneUtilisateur();
+                break;
+            case Scenes.SCENE_PANIER:
+                setUrl("panier");
+                preparerScenePanier();
+                break;
+            case Scenes.SCENE_ADRESSE:
+                setUrl("panier/livraison");
                 break;
             case Scenes.SCENE_PAIEMENT:
+                setUrl("panier/paiement");
                 view.setAdresse(model.getPanier().getAdresse());
                 break;
             case Scenes.SCENE_COMMANDES:
+                setUrl("profil/mes-commandes");
                 preparerSceneCommande();
                 break;
+            case Scenes.SCENE_ADMIN_PRODUIT:
+                setUrl("admin/produits");
+                preparerSceneProduitsAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_PRODUIT:
+                setUrl("admin/produits/modifier-produit");
+                preparerSceneModifierCreerProduit();
+                break;
+            case Scenes.SCENE_CREATION_PRODUIT:
+                setUrl("admin/utilisateurs/creation-produit");
+                model.getProduitSelectionne().setCategorie("Gros électroménager");
+                model.getProduitSelectionne().setLienImage("segado.jpg");
+                model.getProduitSelectionne().setPromotionActive(true);
+                preparerSceneModifierCreerProduit();
+                break;
+            case Scenes.SCENE_ADMIN_UTILISATEUR:
+                setUrl("admin/utilisateurs");
+                preparerSceneUtilisateursAdmin();
+                break;
+            case Scenes.SCENE_MODIFIER_UTILISATEUR:
+                setUrl("admin/utilisateurs/modifier-utilisateur");
+                preparerSceneModifierUtilisateur();
+                break;
+            case Scenes.SCENE_CREATION_COMPTE_ADMIN:
+                setUrl("admin/utilisateurs/creation-compte-admin");
+                break;
             default:;
+                setUrl("page-introuvable");
         }
-
         view.changerScene(SceneConstant);
     }
 
     public void mettreAJourUtilisateur()
     {
-        if(!view.getsProfil().gettEmail().getText().isEmpty())
+        if (!view.getsProfil().gettEmail().getText().isEmpty())
             model.getUtilisateur().setEmail(view.getsProfil().gettEmail().getText());
-        if(!view.getsProfil().gettPrenom().getText().isEmpty())
+        if (!view.getsProfil().gettPrenom().getText().isEmpty())
             model.getUtilisateur().setPrenom(view.getsProfil().gettPrenom().getText());
         if(!view.getsProfil().gettNom().getText().isEmpty())
             model.getUtilisateur().setNom(view.getsProfil().gettNom().getText());
@@ -167,7 +282,6 @@ public class Controller
         }
     }
 
-
     public void preparerSceneConnexion()
     {
         view.getSConnexion().clear();
@@ -177,7 +291,6 @@ public class Controller
     {
         view.getCreationCompte().clearTextField();
     }
-
 
     public void preparerSceneProduits()
     {
@@ -193,7 +306,7 @@ public class Controller
         }
     }
 
-    public void preparerSceneModifierProduit()
+    public void preparerSceneModifierCreerProduit()
     {
         view.getsModifierProduit().gettNom().setText(model.getProduitSelectionne().getNom());
         view.getsModifierProduit().setSelectCategorie(model.getProduitSelectionne().getCategorie());
@@ -202,27 +315,57 @@ public class Controller
         view.getsModifierProduit().gettStock().setText(Integer.toString(model.getProduitSelectionne().getStock()));
         view.getsModifierProduit().gettQuantiteUnLot().setText(Integer.toString(model.getProduitSelectionne().getQuantiteUnLot()));
         view.getsModifierProduit().gettPrixUnLot().setText(Double.toString(model.getProduitSelectionne().getPrixUnLot()));
-        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion()*100));
+        view.getsModifierProduit().gettPromotion().setText(Double.toString(model.getProduitSelectionne().getPromotion() * 100));
+        view.getsModifierProduit().getcbListImages().getSelectionModel().select(model.getProduitSelectionne().getLienImage());
         view.getsModifierProduit().setSelectPromotion(model.getProduitSelectionne().isPromotionActive());
-        view.getsModifierProduit().gettImage().setText(model.getProduitSelectionne().getLienImage());
+    }
+
+    public void preparerSceneModifierUtilisateur()
+    {
+        view.getsModifierUtilisateur().gettNom().setText(model.getUtilisateurSelectionne().getNom());
+        view.getsModifierUtilisateur().gettPrenom().setText(model.getUtilisateurSelectionne().getPrenom());
+        view.getsModifierUtilisateur().gettEmail().setText(model.getUtilisateurSelectionne().getEmail());
+        view.getsModifierUtilisateur().setSelectRole(model.getUtilisateurSelectionne().getRole());
     }
 
     public void preparerSceneProduitsAdmin()
     {
+        model.updateTousProduits();
         ArrayList<Produit> produitsFiltre = model.getProduitsFiltre();
         ArrayList<PaneProduitAdmin> panesProduitAdmin = view.getPanesProduitAdmin();
         panesProduitAdmin.clear();
         for (int i = 0; i < produitsFiltre.size(); ++i)
         {
             PaneProduitAdmin pp = new PaneProduitAdmin(i, produitsFiltre.get(i));
+            //Boutons modifier
             eventController.hoverButtonOrangeClair(pp.getbModifierProduit());
+            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdminRedirection);
+            //Boutons supprimer
             eventController.hoverButtonOrangeClair(pp.getbSupprimerProduit());
-            pp.getbModifierProduit().setOnAction(eventController::modifierProduitAdmin);
+            pp.getbSupprimerProduit().setOnAction(eventController::supprimerProduitAdministrateur);
             panesProduitAdmin.add(pp);
         }
     }
 
+    public void preparerSceneUtilisateursAdmin()
+    {
+        model.updateTousUtilisateurs();
+        ArrayList<Utilisateur> utilisateurs = model.getTousLesUtilisateurs();
+        ArrayList<PaneUtilisateurAdmin> panesUtilisateursAdmin = view.getPanesUtilisateurAdmin();
+        panesUtilisateursAdmin.clear();
+        for (int i = 0; i < utilisateurs.size(); ++i)
+        {
+            PaneUtilisateurAdmin uu = new PaneUtilisateurAdmin(i, utilisateurs.get(i));
+            //Boutons modifier
+            eventController.hoverButtonOrangeClair(uu.getbModifierUtilisateur());
+            uu.getbModifierUtilisateur().setOnAction(eventController::modifierUtilisateurAdminRedirection);
+            //Boutons supprimer
+            eventController.hoverButtonOrangeClair(uu.getbSupprimerUtilisateur());
+            uu.getbSupprimerUtilisateur().setOnAction(eventController::supprimerUtilisateurAdministrateur);
 
+            panesUtilisateursAdmin.add(uu);
+        }
+    }
 
     public void preparerScenePanier()
     {
@@ -234,7 +377,7 @@ public class Controller
 
         for (int i = 0; i < keys.size(); ++i)
         {
-            PaneProduitPanier pp = new PaneProduitPanier(i,(Produit)keys.get(i),panier.getProduitsCommande().get((Produit)keys.get(i)));
+            PaneProduitPanier pp = new PaneProduitPanier(i, (Produit) keys.get(i), panier.getProduitsCommande().get((Produit) keys.get(i)));
             pp.getCbNombreProduit().setOnAction(eventController::changementQuantitePanier);
             pp.getbSupprimer().setOnAction(eventController::supprimerProduitPanier);
             eventController.hover(pp.getbSupprimer());
@@ -296,4 +439,20 @@ public class Controller
     {
         return redirectionCommande;
     }
+
+    public FileChooser getFileChooser()
+    {
+        return fileChooser;
+    }
+
+    public void setUrl(String url)
+    {
+        view.setUrl(url);
+    }
+
+    public String getUrl()
+    {
+        return view.getUrl();
+    }
+
 }

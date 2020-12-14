@@ -28,7 +28,7 @@ public class SceneCreationCompte extends SceneCustom
     private final TextField tPrenom;
     private final TextField tEmail;
     private final PasswordField pMotDePasse;
-    private final Label lEmailOuMdpIncorrect;
+    private final Label lInformationsIncorrectes;
     private final Button bCreerMonCompte;
     private final ImageView progressionPanier;
 
@@ -39,7 +39,7 @@ public class SceneCreationCompte extends SceneCustom
         this.tPrenom = new TextField();
         this.tEmail = new TextField();
         this.pMotDePasse = new PasswordField();
-        this.lEmailOuMdpIncorrect = new Label();
+        this.lInformationsIncorrectes = new Label();
         this.bCreerMonCompte = new Button();
         this.progressionPanier = new ImageView();
     }
@@ -70,9 +70,9 @@ public class SceneCreationCompte extends SceneCustom
         lMotDePasse.setAlignment(Pos.CENTER_RIGHT);
         Label lChampsObligatoire = new Label("* Champs obligatoires");
 
-        lEmailOuMdpIncorrect.setText("Email déjà existant !");
-        lEmailOuMdpIncorrect.setStyle("-fx-text-fill : ff0000");
-        lEmailOuMdpIncorrect.setVisible(false);
+        lInformationsIncorrectes.setText("Informations incorrectes !");
+        lInformationsIncorrectes.setStyle("-fx-text-fill : "+Couleurs.ROUGE);
+        lInformationsIncorrectes.setVisible(false);
 
         tNom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         tPrenom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
@@ -110,20 +110,20 @@ public class SceneCreationCompte extends SceneCustom
         box.getChildren().add(FlowPaneMotDePasse);
         box.getChildren().add(bCreerMonCompte);
         box.getChildren().add(lChampsObligatoire);
-        box.getChildren().add(lEmailOuMdpIncorrect);
+        box.getChildren().add(lInformationsIncorrectes);
     }
     
 
     @Override
     public void update(View v)
     {
-        lEmailOuMdpIncorrect.setVisible(false);
+        lInformationsIncorrectes.setVisible(false);
         page.setCenter(box);
     }
 
     public Label getlEmailOuMdpIncorrect()
     {
-        return lEmailOuMdpIncorrect;
+        return lInformationsIncorrectes;
     }
 
     public TextField gettNom()
@@ -163,6 +163,9 @@ public class SceneCreationCompte extends SceneCustom
     {
         progressionPanier.setVisible(visible);
     }
+    public void setInformationsIncorrectesVisible()
+    {
+        lInformationsIncorrectes.setVisible(true);
+    }
 
 }
-//nom/prenom/email/mdp

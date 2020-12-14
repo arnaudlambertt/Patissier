@@ -37,30 +37,61 @@ public final class PaneProduit extends GridPane
         this.index = index;
         this.bAjouterPanier = new Button("AJOUTER AU PANIER");
         setHgap(20);
+        setVgap(10);
+        StackPane imageStockPane = new StackPane();
+        imageStockPane.setAlignment(Pos.TOP_LEFT);
+        add(imageStockPane, 0, 0);
 
         ImageView image = new ImageView(new Image("http://93.3.238.99/uploads/" + p.getLienImage()));
         image.setPreserveRatio(true);
-        image.setFitWidth(300);
-        add(image, 0, 0);
-       
-        DecimalFormat df2 = new DecimalFormat("#.00");
+        image.setFitWidth(200);
 
-        Label llot;
-        if (!p.isPromotionActive())
-            llot = new Label(p.getQuantiteUnLot() + " pour " + df2.format(Math.round(p.getPrixUnLot() * 100) / 100.0) + "€");
+        imageStockPane.getChildren().add(image);
+
+        ImageView imageStock;
+
+        if (p.getStock() > 0)
+            imageStock = new ImageView(new Image("http://93.3.238.99/uploads/en-stock.png"));
         else
-            llot = new Label(p.getQuantiteUnLot() + " pour " + df2.format(Math.round(p.getPrixUnLot() *(1.0 - p.getPromotion())* 100) / 100.0) + "€");
-        
-        add(llot, 0, 1);
-        GridPane.setHalignment(llot, HPos.CENTER);
-        
-        Label lNom = new Label(p.getNom() + "\n" + p.getFournisseur());
-        lNom.setMinSize(300, 300);
+            imageStock = new ImageView(new Image("http://93.3.238.99/uploads/rupture-de-stock.png"));
+
+        imageStock.setPreserveRatio(true);
+        imageStock.setFitWidth(80);
+        imageStockPane.getChildren().add(imageStock);
+
+        DecimalFormat df2 = new DecimalFormat("0.00");
+
+        if (p.getQuantiteUnLot() > 0)
+        {
+            Label llot;
+            if (!p.isPromotionActive())
+                llot = new Label(p.getQuantiteUnLot() + " pour " + df2.format(Math.round(p.getPrixUnLot() * 100) / 100.0) + "€ !");
+            else
+                llot = new Label(p.getQuantiteUnLot() + " pour " + df2.format(Math.round(p.getPrixUnLot() * (1.0 - p.getPromotion()) * 100) / 100.0) + "€ !");
+            llot.setStyle("-fx-border-color: " + Couleurs.ORANGE_PATISSIER
+                    + ";-fx-border-width: 1px"
+                    + ";-fx-font-weight: bold"
+                    + ";-fx-font-family: Arial"
+                    + ";-fx-font-size: 16"
+                    + ";-fx-text-fill: " + Couleurs.ORANGE_PATISSIER
+                    + ";-fx-border-radius : 3%"
+                    + ";-fx-padding: 3px"
+            );
+            add(llot, 0, 1);
+            GridPane.setHalignment(llot, HPos.CENTER);
+        }
+
+        Label lNom = new Label(p.getFournisseur() + " " + p.getNom());
+        lNom.setStyle("-fx-text-fill: " + Couleurs.GRIS_FONCE
+                + ";-fx-font-family: Arial; -fx-font-size: 24"
+        );
+        lNom.setMinWidth(300);
+        lNom.setMaxWidth(300);
         lNom.setWrapText(true);
         lNom.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lNom, VPos.TOP);
         add(lNom, 1, 0);
-        
+
         GridPane panePrixBouton = new GridPane();
         panePrixBouton.setVgap(10);
         add(panePrixBouton, 2, 0);
@@ -91,8 +122,8 @@ public final class PaneProduit extends GridPane
                     + ";-fx-border-width: 1px"
                     + ";-fx-font-weight: bold"
                     + ";-fx-font-family: Arial"
-                    + ";-fx-font-size: 14"       
-                    + ";-fx-text-fill: " + Couleurs.ORANGE_PATISSIER        
+                    + ";-fx-font-size: 14"
+                    + ";-fx-text-fill: " + Couleurs.ORANGE_PATISSIER
                     + ";-fx-border-radius : 7%"
                     + ";-fx-padding: 3px"
             );

@@ -14,6 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 
 /**
  *
@@ -21,10 +22,10 @@ import javafx.scene.layout.GridPane;
  */
 public class SceneProfil extends SceneCustom
 {
-    private final Button bEnregisterModifs= new Button("ENREGISTER MODIFICATIONS");
+    private final Button bEnregisterModifs= new Button("ENREGISTER LES MODIFICATIONS");
     private final Button bDeconnectionUtilisateur= new Button("ME DECONNECTER");
-    private final Button bSupprimerCompte= new Button("SUPPRIMER COMPTE");
-    private final Button bMesAchats= new Button("MES ACHATS");
+    private final Button bSupprimerCompte= new Button("SUPPRIMER MON COMPTE");
+    private final Button bMesAchats= new Button("MES COMMANDES");
     private final TextField tNom = new TextField();
     private final TextField tPrenom = new TextField();
     private final TextField tEmail = new TextField();
@@ -51,7 +52,7 @@ public class SceneProfil extends SceneCustom
         
         donneeProfil.setVgap(15);
         donneeProfil.setHgap(15);
-        donneeProfil.setAlignment(Pos.CENTER);
+        donneeProfil.setAlignment(Pos.TOP_CENTER);
         
         Label lTitre = new Label("Mes informations personelles");
         lTitre.setStyle("-fx-font-weight: bold");
@@ -65,7 +66,11 @@ public class SceneProfil extends SceneCustom
         Label lAncienMotDePasse= new Label("Ancien Mot de passe");
         Label lNouveauMotDePasse= new Label("Nouveau Mot de passe");
         
-        donneeProfil.add(lTitre, 1, 0);
+        Region r = new Region();
+        r.setMinHeight(100);
+        
+        donneeProfil.add(r,1,0);
+        donneeProfil.add(lTitre, 1, 2);
         gNom.add(lNom, 1, 0);
         gNom.add(tNom, 1, 1);
         gPrenom.add(lPrenom, 1, 0);
@@ -77,20 +82,20 @@ public class SceneProfil extends SceneCustom
         gMdp.add(lNouveauMotDePasse, 1, 2);
         gMdp.add(tNouveauMotDePasse, 1, 3);
         
-        donneeProfil.add(gNom, 1, 1);
-        donneeProfil.add(gPrenom, 1, 2);
-        donneeProfil.add(gEmail, 1, 3);
-        donneeProfil.add(gMdp, 1, 4);
+        donneeProfil.add(gNom, 1, 3);
+        donneeProfil.add(gPrenom, 1, 4);
+        donneeProfil.add(gEmail, 1, 5);
+        donneeProfil.add(gMdp, 1, 6);
         
         lEmailDejaExistant.setVisible(false);
-        lEmailDejaExistant.setStyle("-fx-text-fill : "+Couleurs.RED);
-        donneeProfil.add(lEmailDejaExistant, 1, 5);
+        lEmailDejaExistant.setStyle("-fx-text-fill : "+Couleurs.ROUGE);
+        donneeProfil.add(lEmailDejaExistant, 1, 7);
         
         donneeProfil.add(bEnregisterModifs, 1, 9);
-        donneeProfil.add(bDeconnectionUtilisateur, 0, 0);
-        donneeProfil.add(bSupprimerCompte, 0, 1);
-        donneeProfil.add(bMesAchats, 0, 2);
-        donneeProfil.add(lProfil, 2, 0);
+        donneeProfil.add(bDeconnectionUtilisateur, 0, 3);
+        donneeProfil.add(bSupprimerCompte, 0, 4);
+        donneeProfil.add(bMesAchats, 0, 5);
+        donneeProfil.add(lProfil, 1, 1);
         
         page.setCenter(donneeProfil);
     }

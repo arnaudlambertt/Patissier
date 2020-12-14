@@ -6,8 +6,12 @@
 package VIEW;
 
 import CONSTANT.Couleurs;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Screen;
@@ -31,8 +35,17 @@ public abstract class SceneCustom extends Scene
 
     public static void setup(View v)
     {
-        //Top URL       
-
+        StackPane urlPane = new StackPane();
+        ImageView chrome = new ImageView(new Image("http://93.3.238.99/uploads/barre-URL.png"));
+        chrome.setFitWidth(Screen.getPrimary().getVisualBounds().getWidth());
+        urlPane.getChildren().add(chrome);
+        v.gettUrl().setStyle("-fx-background-color: #202124;"
+                + "-fx-text-fill: #FFFFFF;"
+        );
+        v.gettUrl().setMaxWidth(Screen.getPrimary().getVisualBounds().getWidth() - 140);
+        urlPane.getChildren().add(v.gettUrl());
+        StackPane.setAlignment(v.gettUrl(), Pos.CENTER);
+        navigateur.setTop(urlPane);
         ScrollPane scrollPrincipal = new ScrollPane();
         navigateur.setCenter(scrollPrincipal);
         scrollPrincipal.setFitToWidth(true);
@@ -51,12 +64,12 @@ public abstract class SceneCustom extends Scene
             double deltaY = scrollEvent.getDeltaY() * SPEED;
             scrollPrincipal.setVvalue(scrollPrincipal.getVvalue() - deltaY);
         });
-        
+
         StackPane stack = new StackPane();
         stack.getChildren().add(v.getpEntete());
         v.getpAdmin().setVisible(false);
         stack.getChildren().add(v.getpAdmin());
-         
+
         page.setTop(stack);
         //navigateur.setLeft(v.getpAdmin());
     }

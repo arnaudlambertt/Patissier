@@ -80,13 +80,13 @@ public final class PaneProduitAdmin extends GridPane
         GridPane.setValignment(lQuantiteUnLot, VPos.TOP);
         box.getChildren().add(lQuantiteUnLot);
         //prix un lot
-        Label lPrixUnLot = new Label("Stock : " + p.getPrixUnLot());
+        Label lPrixUnLot = new Label("Prix un lot : " + p.getPrixUnLot());
         lPrixUnLot.setWrapText(true);
         lPrixUnLot.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lPrixUnLot, VPos.TOP);
         box.getChildren().add(lPrixUnLot);
         //promotion
-        Label lPromotion = new Label("Promotion : " + p.getPromotion());
+        Label lPromotion = new Label("Promotion : " + p.getPromotion()*100 + " %");
         lPromotion.setWrapText(true);
         lPromotion.setAlignment(Pos.TOP_LEFT);
         GridPane.setValignment(lPromotion, VPos.TOP);

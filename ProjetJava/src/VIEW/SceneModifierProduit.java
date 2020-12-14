@@ -13,11 +13,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.collections.FXCollections;
+import javafx.scene.layout.StackPane;
 
 /**
  *
@@ -27,44 +26,42 @@ public class SceneModifierProduit extends SceneCustom
 {
     private final VBox box;
     private final Button bValiderModificationProduit;
-    private final Label lProduitIncomplete;    
+    private final Button bUpload;
+            
+    private final Label lProduitIncomplete;
+    private final Label lProduitPrixzero;  
 
     
     private final TextField tNom;
-    private final TextField tCategorie;
     private final TextField tFournisseur;
     private final TextField tPrixUnitaire;
     private final TextField tStock;
     private final TextField tQuantiteUnLot;
     private final TextField tPrixUnLot;
     private final TextField tPromotion;
-    private final TextField tPromotionActive;
-    private final TextField tImage;
-    
-    
+
     private final ComboBox<String> listCategorie;
-    private final ComboBox<String> listPromotionActive;
+    private final ComboBox<Boolean> listPromotionActive;
+    private final ComboBox<String> listImages;
                 
     public SceneModifierProduit()
     {
         this.box = new VBox(13);
         
         this.tNom = new TextField();
-        this.tCategorie = new TextField();
         this.tFournisseur = new TextField();
         this.tPrixUnitaire = new TextField();
         this.tStock = new TextField();
         this.tQuantiteUnLot = new TextField();
         this.tPrixUnLot = new TextField();
         this.tPromotion = new TextField();
-        this.tPromotionActive = new TextField();
-        this.tImage = new TextField();
-        
         this.bValiderModificationProduit = new Button();
         this.lProduitIncomplete = new Label();
+        this.lProduitPrixzero = new Label();
         this.listCategorie = new ComboBox<>();
         this.listPromotionActive = new ComboBox<>();
-        
+        this.listImages = new ComboBox<>();
+        this.bUpload = new Button();
     }
     
 
@@ -131,20 +128,18 @@ public class SceneModifierProduit extends SceneCustom
         lPromotionActive.setAlignment(Pos.CENTER_RIGHT);
         
         //Image
-        Label lImage = new Label("lien Image : ");
+        Label lImage = new Label("Image : ");
         lImage.setMinWidth(Panes.LABEL_WIDTH_SCENE_CREATION_COMPTE);
         lImage.setAlignment(Pos.CENTER_RIGHT);
+        bUpload.setText("Uploader une image");
         
         this.tNom.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tCategorie.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tFournisseur.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrixUnitaire.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tStock.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tQuantiteUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPrixUnLot.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
         this.tPromotion.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tPromotionActive.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
-        this.tImage.setMaxWidth(Panes.TEXTFIELD_WIDTH_SCENE_CREATION_COMPTE);
 
         bValiderModificationProduit.setText("VALIDER");
         bValiderModificationProduit.setStyle("-fx-background-color : " + Couleurs.ORANGE_PATISSIER + "; -fx-text-fill: " + Couleurs.BLANC
@@ -154,6 +149,10 @@ public class SceneModifierProduit extends SceneCustom
         lProduitIncomplete.setText("Produit incomplèt.");
         lProduitIncomplete.setStyle("-fx-text-fill : ff0000");
         lProduitIncomplete.setVisible(false);
+        
+        lProduitPrixzero.setText("Prix unitaire doit être supérieur 0 .");
+        lProduitPrixzero.setStyle("-fx-text-fill : ff0000");
+        lProduitPrixzero.setVisible(false);
         
         //FlowPaneNom
         FlowPaneNom.getChildren().addAll(lNom, tNom);
@@ -194,13 +193,14 @@ public class SceneModifierProduit extends SceneCustom
         FlowPanePromotion.setAlignment(Pos.CENTER);
         
         //Promotion active
-        ObservableList<String> listPromo = FXCollections.observableArrayList("true", "false");
+        ObservableList<Boolean> listPromo = FXCollections.observableArrayList(true, false);
         listPromotionActive.setItems(listPromo);
+        listPromotionActive.getSelectionModel().select(1);
         FlowPanePromotionActive.getChildren().addAll(lPromotionActive, listPromotionActive);
         FlowPanePromotionActive.setAlignment(Pos.CENTER);
         
         //Image
-        FlowPaneImage.getChildren().addAll(lImage, tImage);
+        FlowPaneImage.getChildren().addAll(lImage, listImages, bUpload);
         FlowPaneImage.setAlignment(Pos.CENTER);
 
         //Box
@@ -217,24 +217,25 @@ public class SceneModifierProduit extends SceneCustom
         box.getChildren().add(FlowPanePromotionActive);
         box.getChildren().add(FlowPaneImage);
         box.getChildren().add(bValiderModificationProduit);
-        box.getChildren().add(lProduitIncomplete);
+        
+        StackPane stack = new StackPane();
+        stack.setAlignment(Pos.CENTER);
+        stack.getChildren().addAll(lProduitIncomplete, lProduitPrixzero);
+        
+        box.getChildren().add(stack);
     }
 
     @Override
     public void update(View v)
     {
-         lProduitIncomplete.setVisible(false);
+        lProduitIncomplete.setVisible(false);
+        lProduitPrixzero.setVisible(false);
         page.setCenter(box);
     }
 
     public TextField gettNom()
     {
         return tNom;
-    }
-
-    public TextField gettCategorie()
-    {
-        return tCategorie;
     }
 
     public TextField gettFournisseur()
@@ -266,17 +267,6 @@ public class SceneModifierProduit extends SceneCustom
     {
         return tPromotion;
     }
-
-    public TextField gettPromotionActive()
-    {
-        return tPromotionActive;
-    }
-
-    public TextField gettImage()
-    {
-        return tImage;
-    }
-    
     
     public Button getbValiderAdresse()
     {
@@ -287,7 +277,12 @@ public class SceneModifierProduit extends SceneCustom
     {
         lProduitIncomplete.setVisible(true);
     }
-
+    
+    public void setProduitPrixVisible()
+    {
+        lProduitPrixzero.setVisible(true);
+    }
+    
     public Button getbValiderModificationProduit()
     {
         return bValiderModificationProduit;
@@ -297,11 +292,42 @@ public class SceneModifierProduit extends SceneCustom
     {
         listCategorie.getSelectionModel().select(categorie);
     }
+
+    public String getSelectCategorie()
+    {
+        return listCategorie.getSelectionModel().getSelectedItem();
+    }
+
+    public ComboBox<String> getcbListImages()
+    {
+        return listImages;
+    }
+
+    public Button getbUpload()
+    {
+        return bUpload;
+    }    
+    
+    public boolean getSelectPromotion()
+    {
+        return listPromotionActive.getSelectionModel().getSelectedItem();
+    }
     
     public void setSelectPromotion(boolean promotion)
     {
-        if(promotion)
-            listPromotionActive.getSelectionModel().select("true");
-        else listPromotionActive.getSelectionModel().select("false");
+        listPromotionActive.getSelectionModel().select(promotion);
+    }
+    
+    public void clearTextField()
+    {
+        this.tNom.clear();
+        this.tFournisseur.clear();
+        this.tPrixUnitaire.clear();
+        this.tStock.clear();
+        this.tPrixUnLot.clear();
+        this.tQuantiteUnLot.clear();
+        this.tPromotion.clear();
+        this.listCategorie.getSelectionModel().clearSelection();
+        this.listPromotionActive.getSelectionModel().clearSelection();
     }
 }

@@ -20,6 +20,7 @@ public class View
 {
 
     private final Stage primaryStage;
+    private final TextField tUrl;
     private final PaneEntete pEntete;
     private final PaneAdmin pAdmin;
     private final SceneProduits sProduits;
@@ -30,16 +31,21 @@ public class View
     private final sceneAdresse sAdresse;
     private final ScenePaiement sPaiement;
     private final SceneErreur404 sErreur404;
-
+    
+    //Zone admin
+    
+    private final SceneCreationCompte sCreationCompteAdmin;    
     private final SceneProduitsAdmin sProduitAdmin;
     private final SceneModifierProduit sModifierProduit;
-
+    private final SceneUtilisateurAdmin sUtilisateurAdmin;
+    private final SceneModifierUtilisateur sModifierUtilisateur;
     private final SceneCommande sCommande;
 
 
     public View(Stage primaryStage)
     {
         this.primaryStage = primaryStage;
+        this.tUrl = new TextField();
         this.pEntete = new PaneEntete();
         this.pAdmin = new PaneAdmin();
         this.sProduits = new SceneProduits();
@@ -50,9 +56,14 @@ public class View
         this.sAdresse = new sceneAdresse();
         this.sPaiement = new ScenePaiement();
         this.sErreur404 = new SceneErreur404();
-
+        
+        //Produit admin
         this.sProduitAdmin = new SceneProduitsAdmin();
         this.sModifierProduit = new SceneModifierProduit();
+        //Utilisateur admin
+        this.sUtilisateurAdmin = new SceneUtilisateurAdmin();
+        this.sModifierUtilisateur = new SceneModifierUtilisateur();
+        this.sCreationCompteAdmin = new SceneCreationCompte();
 
         this.sCommande = new SceneCommande();
 
@@ -72,6 +83,9 @@ public class View
 
         sProduitAdmin.init();
         sModifierProduit.init();
+        sUtilisateurAdmin.init();
+        sModifierUtilisateur.init();
+        sCreationCompteAdmin.init();
 
         sCommande.init();
 
@@ -102,12 +116,22 @@ public class View
             case Scenes.SCENE_PAIEMENT:
                 changerScene(sPaiement);
                 break;
-
-            case Scenes.SCENE_ADMIN:
-                changerScene(sProduitAdmin);
+            case Scenes.SCENE_ADMIN_PRODUIT:
+                changerScene(sProduitAdmin); 
                 break;
+            case Scenes.SCENE_ADMIN_UTILISATEUR:
+                changerScene(sUtilisateurAdmin);
+                break;
+            case Scenes.SCENE_CREATION_PRODUIT: 
+            //pas de break
             case Scenes.SCENE_MODIFIER_PRODUIT:
                 changerScene(sModifierProduit);
+                break;
+            case Scenes.SCENE_MODIFIER_UTILISATEUR:
+                changerScene(sModifierUtilisateur);
+                break;
+            case Scenes.SCENE_CREATION_COMPTE_ADMIN:
+                changerScene(sCreationCompteAdmin);
                 break;
             case Scenes.SCENE_COMMANDES:
                 changerScene(sCommande);
@@ -167,6 +191,11 @@ public class View
     {
         return sCreationCompte;
     }
+    
+    public SceneCreationCompte getSCreationCompteAdmin()
+    {
+        return sCreationCompteAdmin;
+    }
 
     public SceneProfil getsProfil()
     {
@@ -188,14 +217,24 @@ public class View
         return sModifierProduit;
     }
 
+    public SceneModifierUtilisateur getsModifierUtilisateur()
+    {
+        return sModifierUtilisateur;
+    }
+
     public ArrayList<PaneProduit> getPanesProduit()
     {
         return sProduits.getPanesProduit();
     }
 
-     public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
+    public ArrayList<PaneProduitAdmin> getPanesProduitAdmin()
     {
         return sProduitAdmin.getPanesProduitAdmin();
+    }
+    
+    public ArrayList<PaneUtilisateurAdmin> getPanesUtilisateurAdmin()
+    {
+        return sUtilisateurAdmin.getPanesProduitAdmin();
     }
 
     public ArrayList<PaneProduitPanier> getPanesProduitPanier()
@@ -221,6 +260,24 @@ public class View
     public PaneAdmin getpAdmin()
     {
         return pAdmin;
+    }
+
+    public TextField gettUrl()
+    {
+        return tUrl;
+    }
+    
+    public void setUrl(String url)
+    {
+        if(!url.isEmpty())
+            tUrl.setText("patissier.com/" + url);
+        else
+            tUrl.setText("patissier.com");
+    }
+    
+    public String getUrl()
+    {
+        return tUrl.getText().substring(14);
     }
 
     public void setPrixPanier(double prixTotal)

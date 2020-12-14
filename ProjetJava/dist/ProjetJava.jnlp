@@ -8,8 +8,13 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ProjetJava.jar" size="87615" download="eager" />
+    <jar href="ProjetJava.jar" size="101866" download="eager" />
     <jar href="lib\bcprov-jdk15to18-167.jar" size="4540667" download="eager" />
+    <jar href="lib\commons-codec-1.11.jar" size="335042" download="eager" />
+    <jar href="lib\commons-logging-1.2.jar" size="61829" download="eager" />
+    <jar href="lib\httpclient-4.5.13.jar" size="780321" download="eager" />
+    <jar href="lib\httpcore-4.4.13.jar" size="328593" download="eager" />
+    <jar href="lib\httpmime-4.5.13.jar" size="41790" download="eager" />
     <jar href="lib\mysql-connector-java-8.0.22.jar" size="2389216" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="ProjetJava" >

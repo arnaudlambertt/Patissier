@@ -7,9 +7,14 @@ package CONTROLLER;
 
 import CONSTANT.Couleurs;
 import CONSTANT.Scenes;
+import MODEL.Produit;
+import MODEL.Utilisateur;
 import VIEW.PaneProduit;
 import VIEW.PaneProduitAdmin;
 import VIEW.PaneProduitPanier;
+import VIEW.PaneUtilisateurAdmin;
+import java.io.File;
+import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.scene.Cursor;
@@ -43,6 +48,8 @@ public class EventController
     public void deconnecterUtilisateur(ActionEvent event)
     {
         controller.getModel().deconnecterUtilisateur();
+        controller.getView().getpAdmin().setVisible(false);
+        controller.getView().getpEntete().setVisible(true);
         afficherAccueil(event);
     }
 
@@ -62,13 +69,10 @@ public class EventController
             {
                 controller.mettreAJourUtilisateur();
                 controller.getModel().updateUtilisateur();
-            } 
-        }
-        else
-            {
-                controller.getView().getsProfil().getlEmailDejaExistant().setVisible(true);
             }
-        
+        } else
+            controller.getView().getsProfil().getlEmailDejaExistant().setVisible(true);
+
         controller.changerScene(Scenes.SCENE_PROFIL);
 
     }
@@ -81,12 +85,13 @@ public class EventController
         else
         {
             controller.getView().getSConnexion().getlEmailOuMdpIncorrect().setVisible(false);
-            if(controller.getUtilisateur().getRole().equals("Administrateur"))
+            if (controller.getUtilisateur().getRole().equals("Administrateur"))
             {
                 controller.getView().getpEntete().setVisible(false);
                 controller.getView().getpAdmin().setVisible(true);
-                controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
-            }else{
+                GestionProduitAdmin(event);
+            } else
+            {
                 controller.getView().getpEntete().setVisible(true);
                 controller.getView().getpAdmin().setVisible(false);
                 if (controller.redirectionCommande())
@@ -121,10 +126,49 @@ public class EventController
         }
     }
 
+    public void creerCompteAdmin(ActionEvent event)
+    {
+        String nom = controller.getView().getSCreationCompteAdmin().gettNom().getText();
+        String prenom = controller.getView().getSCreationCompteAdmin().gettPrenom().getText();
+        String email = controller.getView().getSCreationCompteAdmin().gettEmail().getText();
+        String role = "Administrateur";
+        String motDePasse = controller.getView().getSCreationCompteAdmin().getpMotDePasse().getText();
+
+        if (!nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !motDePasse.isEmpty())
+        {
+            Utilisateur u = controller.getModel().getUtilisateurSelectionne();
+            u.setNom(nom);
+            u.setPrenom(prenom);
+            u.setEmail(email);
+            u.setRole(role);
+
+            if (controller.getModel().creerUtilisateurAdmin(motDePasse))
+                controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
+        } else
+            controller.getView().getSCreationCompteAdmin().setInformationsIncorrectesVisible();
+    }
+
     public void redirectionCreerCompte(ActionEvent event)
     {
         controller.getView().getCreationCompte().clearTextField();
         controller.changerScene(Scenes.SCENE_CREATION_COMPTE);
+    }
+
+    public void redirectionCreerUtilisateurAdmin(ActionEvent event)
+    {
+        controller.getView().getSCreationCompteAdmin().clearTextField();
+        controller.changerScene(Scenes.SCENE_CREATION_COMPTE_ADMIN);
+    }
+
+    public void redirectionCreerProduitAdmin(ActionEvent event)
+    {
+        controller.getView().getsModifierProduit().clearTextField();
+        controller.getModel().resetProduitSelectionne();
+        controller.changerScene(Scenes.SCENE_CREATION_PRODUIT);
+        Platform.runLater(() ->
+        {
+            controller.getModel().updateImagesProduit();
+        });
     }
 
     public void afficherAccueil(ActionEvent event)
@@ -142,39 +186,49 @@ public class EventController
             case "Gros\nélectroménager":
                 controller.getModel().filtreCategorie("Gros électroménager");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/gros-electromenager");
                 break;
             case "Cuisine\nCuisson":
                 controller.getModel().filtreCategorie("Cuisine Cuisson");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/cuisine-cuisson");
                 break;
             case "Maison\nEntretien":
                 controller.getModel().filtreCategorie("Maison Entretien");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/maison-entretien");
                 break;
             case "Beauté\nSanté":
                 controller.getModel().filtreCategorie("Beauté Santé");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/beaute-sante");
                 break;
             case "Objets\nconnectés":
                 controller.getModel().filtreCategorie("Objets connectés");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/objets-connectes");
                 break;
             case "Smartphone\nTéléphonie":
                 controller.getModel().filtreCategorie("Smartphone Téléphonie");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/produits/categorie/smartphone-telephonie");
                 break;
             case "Informatique\nTablette":
                 controller.getModel().filtreCategorie("Informatique Tablette");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/informatique-tablette");
                 break;
             case "TV Image\nSon":
                 controller.getModel().filtreCategorie("TV, Image Son");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/tv-image-son");
                 break;
             case "Console\nGaming":
                 controller.getModel().filtreCategorie("Console Gaming");
                 controller.changerScene(Scenes.SCENE_PRODUITS);
+                controller.setUrl("produits/categorie/console-gaming");
         }
+        
     }
 
     public void afficherRecherche(ActionEvent event)
@@ -185,7 +239,7 @@ public class EventController
             controller.setRedirectionCommande(false);
             controller.getModel().filtreRecherche(recherche);
             controller.changerScene(Scenes.SCENE_PRODUITS);
-            controller.getView().getpEntete().requestFocus();
+            controller.setUrl("produits/recherche="+recherche);
         }
     }
 
@@ -206,20 +260,20 @@ public class EventController
             } else
                 controller.changerScene(Scenes.SCENE_ADRESSE);
     }
-    
+
     public void GestionProduitAdmin(ActionEvent event)
     {
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(true);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(false);
-        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT); // ZONE ADMIN
     }
-    
+
     public void GestionUtilisateurAdmin(ActionEvent event)
     {
-        
+
         controller.getView().getpAdmin().getbAjoutProduit().setVisible(false);
         controller.getView().getpAdmin().getbAjoutUtilisateur().setVisible(true);
-        controller.changerScene(Scenes.SCENE_ADMIN); // ZONE ADMIN
+        controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); // ZONE ADMIN
     }
 
     public void afficherCommandesUtilisateur(ActionEvent event)
@@ -230,7 +284,8 @@ public class EventController
     public void ajouterProduitPanier(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
-        controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex());
+        if (controller.getModel().ajouterAuPanier(((PaneProduit) source.getParent().getParent()).getIndex()))
+            afficherPanier(event);
     }
 
     public void changementQuantitePanier(ActionEvent event)
@@ -270,7 +325,6 @@ public class EventController
     {
         if (!controller.getModel().stockSuffisantPanier())
             controller.changerScene(Scenes.SCENE_PANIER);
-
         else if (controller.getModel().validerCommande())
         {
             controller.setRedirectionCommande(false);
@@ -305,13 +359,111 @@ public class EventController
         else
             controller.changerScene(Scenes.SCENE_PROFIL);
     }
-    
-    public void modifierProduitAdmin(ActionEvent event)
+
+    public void modifierProduitAdminRedirection(ActionEvent event)
     {
         Button source = ((Button) event.getSource());
         controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
-        System.out.println(controller.getModel().getProduitSelectionne().toString());
         controller.changerScene(Scenes.SCENE_MODIFIER_PRODUIT);
+        Platform.runLater(() ->
+        {
+            controller.getModel().updateImagesProduit();
+        });
+    }
+
+    public void modifierUtilisateurAdminRedirection(ActionEvent event)
+    {
+        Button source = ((Button) event.getSource());
+        controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
+        controller.changerScene(Scenes.SCENE_MODIFIER_UTILISATEUR);
+    }
+
+    public void modifierUtilisateurSelectionne(ActionEvent event)
+    {
+        String nom = controller.getView().getsModifierUtilisateur().gettNom().getText();
+        String prenom = controller.getView().getsModifierUtilisateur().gettPrenom().getText();
+        String email = controller.getView().getsModifierUtilisateur().gettEmail().getText();
+        String role = controller.getView().getsModifierUtilisateur().getSelectRole();
+
+        if (!nom.isEmpty() && !prenom.isEmpty() && !email.isEmpty() && !role.isEmpty())
+        {
+            Utilisateur u = controller.getModel().getUtilisateurSelectionne();
+            u.setNom(nom);
+            u.setPrenom(prenom);
+            u.setEmail(email);
+            u.setRole(role);
+
+            if (controller.getModel().updateUtilisateurSelectionne())
+                controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR); //zone admin utilisateur
+        } else
+            controller.getView().getsModifierUtilisateur().setUtiliisateurIncompleteVisible();
+    }
+
+    public void supprimerUtilisateurAdministrateur(ActionEvent event)
+    {
+
+        Button source = ((Button) event.getSource());
+        controller.getModel().setUtilisateurSelectionne(controller.getModel().getTousLesUtilisateurs().get(((PaneUtilisateurAdmin) source.getParent().getParent()).getIndex()));
+
+        if (controller.getModel().supprimerUtilisateurSelectionnee())
+            controller.changerScene(Scenes.SCENE_ADMIN_UTILISATEUR);
+    }
+
+    public void supprimerProduitAdministrateur(ActionEvent event)
+    {
+
+        Button source = ((Button) event.getSource());
+        controller.getModel().setProduitSelectionne(controller.getModel().getTousLesProduits().get(((PaneProduitAdmin) source.getParent().getParent()).getIndex()));
+        System.out.println(controller.getModel().getProduitSelectionne().toString());
+        if (controller.getModel().supprimerProduitSelectionnee())
+            controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
+    }
+
+    public void modifierProduitSelectionne(ActionEvent event)
+    {
+        String nom = controller.getView().getsModifierProduit().gettNom().getText();
+        String categorie = controller.getView().getsModifierProduit().getSelectCategorie();
+        String fournisseur = controller.getView().getsModifierProduit().gettFournisseur().getText();
+        String prixUnitaire = controller.getView().getsModifierProduit().gettPrixUnitaire().getText();
+        String stock = controller.getView().getsModifierProduit().gettStock().getText();
+        String quantiteUnLot = controller.getView().getsModifierProduit().gettQuantiteUnLot().getText();
+        String prixUnLot = controller.getView().getsModifierProduit().gettPrixUnLot().getText();
+        String promotion = controller.getView().getsModifierProduit().gettPromotion().getText();
+        boolean promotionActive = controller.getView().getsModifierProduit().getSelectPromotion();
+        String image = controller.getView().getsModifierProduit().getcbListImages().getSelectionModel().getSelectedItem();
+
+        if (!nom.isEmpty() && !fournisseur.isEmpty() && !prixUnitaire.isEmpty() && !stock.isEmpty()
+                && !quantiteUnLot.isEmpty() && !prixUnLot.isEmpty() && !promotion.isEmpty())
+        {
+            Produit p = controller.getModel().getProduitSelectionne();
+
+            p.setNom(nom);
+            p.setCategorie(categorie);
+            p.setNomFournisseur(fournisseur);
+            p.setPrixUnitaire(Double.parseDouble(prixUnitaire));
+            p.setStock(Integer.parseInt(stock));
+            p.setQuantiteUnLot(Integer.parseInt(quantiteUnLot));
+            p.setPrixUnLot(Double.parseDouble(prixUnLot));
+            p.setPromotion(Double.parseDouble(promotion) / 100);
+            p.setPromotionActive(promotionActive);
+            p.setLienImage(image);
+            if ((p.getId() == 0 && controller.getModel().validerCreationProduit())
+                    || (p.getId() != 0 && controller.getModel().updateProduitSelectionne()))
+                controller.changerScene(Scenes.SCENE_ADMIN_PRODUIT);
+
+        } else
+            controller.getView().getsModifierProduit().setProduitIncompleteVisible();
+    }
+
+    public void uploadImage(ActionEvent event)
+    {
+        File temp = controller.getFileChooser().showOpenDialog(null);
+        if (temp != null)
+            if (controller.getModel().uploadImageProduit(temp))
+            {
+                controller.getView().getsModifierProduit().getcbListImages().getItems().add(temp.getName());
+                controller.getView().getsModifierProduit().getcbListImages().getSelectionModel().select(temp.getName());
+            }
     }
 
     public void hoverButtonOrange(Button ceButton)
