@@ -1,6 +1,8 @@
 # Patissier
 
 JavaFX shopping app
+Also the queries being called from the client with password in clear is bad practice, don't do this at home ;)
+The PHP backend code is however missing
 
 ### Authors
 
